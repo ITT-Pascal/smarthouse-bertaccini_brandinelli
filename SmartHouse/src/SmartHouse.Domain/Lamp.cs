@@ -1,6 +1,6 @@
 ﻿namespace SmartHouse.Domain
 {
-    //Commit a
+    //Commit ab
     public class Lamp
     {
         int a = 0;

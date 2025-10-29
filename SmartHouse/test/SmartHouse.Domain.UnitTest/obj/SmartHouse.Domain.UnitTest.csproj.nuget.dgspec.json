@@ -10,14 +10,14 @@
         "projectUniqueName": "C:\\Users\\enrico.brandinelli\\source\\repos\\smarthouse-bertaccini_brandinelli\\SmartHouse\\src\\SmartHouse.Domain\\SmartHouse.Domain.csproj",
         "projectName": "SmartHouse.Domain",
         "projectPath": "C:\\Users\\enrico.brandinelli\\source\\repos\\smarthouse-bertaccini_brandinelli\\SmartHouse\\src\\SmartHouse.Domain\\SmartHouse.Domain.csproj",
-        "packagesPath": "C:\\Users\\w11\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\enrico.brandinelli\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\enrico.brandinelli\\source\\repos\\smarthouse-bertaccini_brandinelli\\SmartHouse\\src\\SmartHouse.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\w11\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\enrico.brandinelli\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -76,14 +76,14 @@
         "projectUniqueName": "C:\\Users\\enrico.brandinelli\\source\\repos\\smarthouse-bertaccini_brandinelli\\SmartHouse\\test\\SmartHouse.Domain.UnitTest\\SmartHouse.Domain.UnitTest.csproj",
         "projectName": "SmartHouse.Domain.UnitTest",
         "projectPath": "C:\\Users\\enrico.brandinelli\\source\\repos\\smarthouse-bertaccini_brandinelli\\SmartHouse\\test\\SmartHouse.Domain.UnitTest\\SmartHouse.Domain.UnitTest.csproj",
-        "packagesPath": "C:\\Users\\w11\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\enrico.brandinelli\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\enrico.brandinelli\\source\\repos\\smarthouse-bertaccini_brandinelli\\SmartHouse\\test\\SmartHouse.Domain.UnitTest\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\w11\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\enrico.brandinelli\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
