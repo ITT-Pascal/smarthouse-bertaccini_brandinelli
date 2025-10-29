@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmartHouse.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d172ccbf5e25e939353ff96715ccdb8ddc901fdb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f3e5436b4e838f40ecee099c7c9a34fca6b0c53f")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmartHouse.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmartHouse.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
