@@ -3,8 +3,6 @@
     //Commit ab
     public class Lamp
     {
-        int a = 0;
-        string b = "test";
-        int prova;
+        public bool IsOn { get; private set; }
     }
 }
