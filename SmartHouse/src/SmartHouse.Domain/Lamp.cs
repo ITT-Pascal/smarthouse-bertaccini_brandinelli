@@ -1,7 +1,7 @@
 ﻿namespace SmartHouse.Domain
 {
     //Commit ba
-    public class Lamp
+    public class Lamp : AbstractLamp
     {
         public bool IsOn { get; private set; }
 
@@ -17,13 +17,13 @@
             
         }
 
-        public void SwitchOnOff()
+        public override void SwitchOnOff()
         {
             IsOn = !IsOn;
 
         }
 
-        public void ChangeBrightness(int newBrightness)
+        public override void ChangeBrightness(int newBrightness)
         {
             if (newBrightness > MinBrightness && IsOn == true)
                 Brightness = Math.Min(newBrightness, MaxBrightness);

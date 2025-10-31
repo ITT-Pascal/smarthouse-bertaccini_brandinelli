@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.Domain
 {
-    public class EcoLamp
+    public class EcoLamp : AbstractLamp
     {
         public bool IsOn { get; private set; }
 
@@ -22,20 +22,19 @@ namespace SmartHouse.Domain
 
         }
 
-        public void SwitchOnOff()
+        public override void SwitchOnOff()
         {
             IsOn = !IsOn;
 
         }
 
-        public void ChangeBrightness(int newBrightness)
+        public override void ChangeBrightness(int newBrightness)
         {
             if (newBrightness > MinBrightness && IsOn == true)
                 Brightness = Math.Min(newBrightness, MaxBrightness);
             else
                 IsOn = false;
         }
-
 
     }
 }
