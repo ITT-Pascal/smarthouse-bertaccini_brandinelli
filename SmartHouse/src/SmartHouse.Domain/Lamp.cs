@@ -3,9 +3,9 @@
     //Commit ba
     public class Lamp : AbstractLamp
     {
-        public bool IsOn { get; private set; }
+        public override bool IsOn { get; set; }
 
-        public int Brightness { get; private set; }
+        public override int Brightness { get; set; }
 
         const int MinBrightness = 0;
         const int MaxBrightness = 100;
