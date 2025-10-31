@@ -1,6 +1,6 @@
 ﻿namespace SmartHouse.Domain
 {
-    //Commit b
+    //Commit ba
     public class Lamp
     {
         public bool IsOn => Brightness > 0;
