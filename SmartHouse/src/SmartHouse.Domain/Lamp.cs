@@ -3,7 +3,7 @@
     //Commit ba
     public class Lamp
     {
-        public bool IsOn => Brightness > 0;
+        public bool IsOn { get; private set; }
 
         public int Brightness { get; private set; }
 
@@ -13,14 +13,22 @@
         public Lamp()
         {           
             Brightness = 0;
+            IsOn = false;
+            
         }
 
+        public void SwitchOnOff()
+        {
+            IsOn = !IsOn;
+
+        }
 
         public void ChangeBrightness(int newBrightness)
         {
-            if(newBrightness >= MinBrightness)
+            if (newBrightness > MinBrightness && IsOn == true)
                 Brightness = Math.Min(newBrightness, MaxBrightness);
-
+            else
+                IsOn = false;
         }
         
 

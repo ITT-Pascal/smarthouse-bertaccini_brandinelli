@@ -19,28 +19,46 @@
         {
             Lamp newLamp = new Lamp();
 
+            newLamp.SwitchOnOff();
+
             newLamp.ChangeBrightness(101);
 
             Assert.Equal(100, newLamp.Brightness);
         }
 
         [Fact]
-        public void When_BrightnessIs0_LampIsOff()
+        public void When_LampIsOnButBrightnessIs0_LampIsOff()
         {
             Lamp newLamp = new Lamp();
+
+            newLamp.SwitchOnOff();
+
+            newLamp.SwitchOnOff();
 
             Assert.False(newLamp.IsOn);
         }
 
         [Fact]
-        public void When_BrightnessIs50_LampIsOn()
+        public void When_BrightnessIs50AndLampIsOn_LampIsOn()
         {
             Lamp newLamp = new Lamp();
+
+            newLamp.SwitchOnOff();
 
             newLamp.ChangeBrightness(50);
 
             Assert.True(newLamp.IsOn);
             Assert.Equal(50, newLamp.Brightness);
+        }
+
+        [Fact]
+        public void When_BrightnessIs50ButLampIsOff_LampIsOff()
+        {
+            Lamp newLamp = new Lamp();
+
+            newLamp.ChangeBrightness(50);
+
+            Assert.False(newLamp.IsOn);
         }
     }
 }
