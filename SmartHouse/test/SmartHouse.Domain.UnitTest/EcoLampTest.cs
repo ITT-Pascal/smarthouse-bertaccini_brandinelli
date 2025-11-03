@@ -1,6 +1,5 @@
 ﻿namespace SmartHouse.Domain.UnitTest
 {
-    //Commit aaa
     public class EcoLampTest
     {
 
