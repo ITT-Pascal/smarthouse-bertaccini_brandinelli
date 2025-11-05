@@ -59,6 +59,20 @@
 
             Assert.False(newEcoLamp.IsOn);
         }
+
+        [Fact]
+
+        public void When_DateTimeIsEarlierThan22AndLampIsOff_LampCanTurnOn()
+        {
+            EcoLamp newlamp = new EcoLamp();
+
+            DateTime Time = DateTime.Parse("22:00");
+
+            newlamp.SwitchOnOff();
+
+
+
+        }
     }
 
 }

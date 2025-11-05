@@ -12,7 +12,8 @@ namespace SmartHouse.Domain
 
         public override int Brightness { get;  set; }
 
-       
+        const int EveneningShutOffTime = 22;
+        const int MorningStartingTime = 4;
 
         const int MinBrightness = 0;
         const int MaxBrightness = 50;
@@ -26,8 +27,10 @@ namespace SmartHouse.Domain
 
         public override void SwitchOnOff()
         {
-            IsOn = !IsOn;
-
+            if (DateTime.UtcNow.Hour < 22 && DateTime.UtcNow.Hour > 4)
+                IsOn = !IsOn;
+            else
+                IsOn = false;
         }
 
         public override void ChangeBrightness(int newBrightness)
