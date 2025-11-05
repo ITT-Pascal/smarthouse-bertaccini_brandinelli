@@ -12,8 +12,8 @@ namespace SmartHouse.Domain
 
         public override int Brightness { get;  set; }
 
-        const int EveneningShutOffTime = 22;
-        const int MorningStartingTime = 4;
+        const int ShutOffTimeFirstLimit = 8;
+        const int ShutOffTimeSecondLimit = 18;
 
         const int MinBrightness = 0;
         const int MaxBrightness = 50;
@@ -21,13 +21,17 @@ namespace SmartHouse.Domain
         public EcoLamp()
         {
             Brightness = 0;
-            IsOn = false;
+            while(DateTime.UtcNow.Hour < ShutOffTimeFirstLimit || DateTime.UtcNow.Hour > ShutOffTimeSecondLimit)
+            {
+                IsOn = false;
+            }
+               
             
         }
         //Commit
         public override void SwitchOnOff()
         {
-            if (DateTime.UtcNow.Hour < 22 && DateTime.UtcNow.Hour > 4)
+            if (DateTime.UtcNow.Hour < ShutOffTimeFirstLimit || DateTime.UtcNow.Hour > ShutOffTimeSecondLimit)
                 IsOn = !IsOn;
             else
                 IsOn = false;

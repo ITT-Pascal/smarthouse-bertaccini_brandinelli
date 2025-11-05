@@ -62,15 +62,59 @@
 
         [Fact]
 
-        public void When_DateTimeIsEarlierThan22AndLampIsOff_LampCanTurnOn()
+        public void When_DateTimeIsEarlierThan8AndLampIsOff_LampCanTurnOn()
         {
             EcoLamp newlamp = new EcoLamp();
 
-            DateTime Time = DateTime.Parse("22:00");
+            DateTime Time = DateTime.Parse("2025-11-05 07:59 ");
 
             newlamp.SwitchOnOff();
 
+            Assert.True(newlamp.IsOn);
 
+        }
+
+        [Fact]
+
+        public void When_DateTimeIsLaterThan18AndLampIsOff_LampCanTurnOn()
+        {
+            EcoLamp newlamp = new EcoLamp();
+
+            DateTime Time = DateTime.Parse("2025-11-05 18:01 ");
+
+            newlamp.SwitchOnOff();
+
+            Assert.True(newlamp.IsOn);
+
+        }
+
+
+        [Fact]
+
+        public void When_DateTimeIsLaterThanBetween18And8AndLampIsOff_LampCannotTurnOn()
+        {
+            EcoLamp newlamp = new EcoLamp();
+
+            DateTime Time = DateTime.Parse("2025-11-05 23:59 ");
+
+            newlamp.SwitchOnOff();
+
+            Assert.False(newlamp.IsOn);
+
+        }
+
+
+        [Fact]
+
+        public void When_DateTimeIsBetween18And8AndLampIsOn_LampTurnsOff()
+        {
+            EcoLamp newlamp = new EcoLamp();
+
+            newlamp.SwitchOnOff();
+
+            DateTime Time = DateTime.Parse("2025-11-05 23:59 ");
+        
+            Assert.False(newlamp.IsOn);
 
         }
     }
