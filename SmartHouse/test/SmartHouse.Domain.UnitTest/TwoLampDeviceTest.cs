@@ -132,6 +132,30 @@
             Assert.Equal(25, newTwoLampDevice.Lamps[1].Brightness);
         }
 
+        [Fact]
+        public void When_WantToChangeBrightnessTo25AndTheLampSelectedIs0ButIsOff_ItCannotChangeBrightness()
+        {
+            TwoLampDevice newTwoLampDevice = new TwoLampDevice();
+
+            newTwoLampDevice.AddEcoLamp();
+            newTwoLampDevice.ChangeBrightness(25, 0);
+
+            Assert.Equal(0, newTwoLampDevice.Lamps[0].Brightness);
+        }
+        
+        [Fact]
+        public void When_WantToChangeBrightnessTo25AndTheLampSelectedIs1ButIsOff_ItCannotChangeBrightness()
+        {
+            TwoLampDevice newTwoLampDevice = new TwoLampDevice();
+
+            newTwoLampDevice.AddEcoLamp();
+            newTwoLampDevice.AddLamp();
+            newTwoLampDevice.ChangeBrightness(25, 1);
+
+            Assert.Equal(0, newTwoLampDevice.Lamps[1].Brightness);
+        }
+
+
 
 
 
