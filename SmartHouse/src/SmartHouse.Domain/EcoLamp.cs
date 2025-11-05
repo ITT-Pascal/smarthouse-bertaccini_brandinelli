@@ -24,7 +24,7 @@ namespace SmartHouse.Domain
             IsOn = false;
             
         }
-
+        //Commit
         public override void SwitchOnOff()
         {
             if (DateTime.UtcNow.Hour < 22 && DateTime.UtcNow.Hour > 4)
