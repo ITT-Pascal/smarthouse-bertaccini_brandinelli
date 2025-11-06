@@ -43,19 +43,21 @@ namespace SmartHouse.Domain
 
         public void SwitchOnOff(int selectedLamp)
         {
-            if (selectedLamp == 0)
-                Lamps[0].SwitchOnOff();
-            else
-                Lamps[1].SwitchOnOff();
+
+            if (selectedLamp < 0 || selectedLamp >= Lamps.Count)
+                throw new ArgumentException("Selected lamp doesn't exist");
+
+            Lamps[selectedLamp].SwitchOnOff();
+            
 
         }
 
         public void ChangeBrightness(int newBrightness, int selectedLamp)
         {
-            if (selectedLamp == 0)
-                Lamps[0].ChangeBrightness(newBrightness);
-            else
-                Lamps[1].ChangeBrightness(newBrightness);
+            if (selectedLamp < 0 || selectedLamp >= Lamps.Count)
+                throw new ArgumentException("Selected lamp doesn't exist");
+
+            Lamps[selectedLamp].ChangeBrightness(newBrightness);
 
 
 

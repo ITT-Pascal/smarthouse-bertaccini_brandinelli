@@ -58,7 +58,7 @@
             newEcoLamp.ChangeBrightness(25);
 
             Assert.False(newEcoLamp.IsOn);
-        }
+        }     
 
        
     }

@@ -10,10 +10,7 @@ namespace SmartHouse.Domain
     {
         public override bool IsOn { get;  set; }
 
-        public override int Brightness { get;  set; }
-
-        const int ShutOffTimeFirstLimit = 8;
-        const int ShutOffTimeSecondLimit = 18;
+        public override int Brightness { get;  set; }      
 
         const int MinBrightness = 0;
         const int MaxBrightness = 50;
