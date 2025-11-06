@@ -21,20 +21,15 @@ namespace SmartHouse.Domain
         public EcoLamp()
         {
             Brightness = 0;
-            while(DateTime.UtcNow.Hour < ShutOffTimeFirstLimit || DateTime.UtcNow.Hour > ShutOffTimeSecondLimit)
-            {
-                IsOn = false;
-            }
+           IsOn = false;
+            
                
             
         }
         //Commit
         public override void SwitchOnOff()
         {
-            if (DateTime.UtcNow.Hour < ShutOffTimeFirstLimit || DateTime.UtcNow.Hour > ShutOffTimeSecondLimit)
-                IsOn = !IsOn;
-            else
-                IsOn = false;
+            IsOn = !IsOn;
         }
 
         public override void ChangeBrightness(int newBrightness)
