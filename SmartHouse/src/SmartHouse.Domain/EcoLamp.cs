@@ -21,10 +21,7 @@ namespace SmartHouse.Domain
         public EcoLamp()
         {
             Brightness = 0;
-           IsOn = false;
-            
-               
-            
+            IsOn = false;                           
         }
         //Commit
         public override void SwitchOnOff()
