@@ -15,7 +15,7 @@ namespace SmartHouse.Domain
 
         public abstract void SwitchOnOff();
 
-       public abstract void ChangeBrightness(int newBrightness);
+        public abstract void ChangeBrightness(int newBrightness);
         
 
 

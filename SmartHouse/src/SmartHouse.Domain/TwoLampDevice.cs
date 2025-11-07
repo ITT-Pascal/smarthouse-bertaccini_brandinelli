@@ -15,7 +15,7 @@ namespace SmartHouse.Domain
         {
 
             Lamps = new List<AbstractLamp>();
-            
+  
 
         }
 
