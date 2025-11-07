@@ -3,6 +3,8 @@
     //Commit ba
     public class Lamp : AbstractLamp
     {
+
+        public Guid Id = new Guid();
         public override bool IsOn { get; set; }
 
         public override int Brightness { get; set; }
