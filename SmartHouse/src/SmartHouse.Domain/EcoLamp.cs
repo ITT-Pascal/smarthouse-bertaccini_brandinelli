@@ -8,9 +8,9 @@ namespace SmartHouse.Domain
 {
     public class EcoLamp : AbstractLamp
     {
-        public override bool IsOn { get;  set; }
+        public override bool IsOn { get; protected set; }
 
-        public override int Brightness { get;  set; }      
+        public override int Brightness { get;  protected set; }      
 
         const int MinBrightness = 0;
         const int MaxBrightness = 50;

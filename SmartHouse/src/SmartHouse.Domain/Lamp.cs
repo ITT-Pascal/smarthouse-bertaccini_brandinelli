@@ -5,9 +5,9 @@
     {
 
         public Guid Id = new Guid();
-        public override bool IsOn { get; set; }
+        public override bool IsOn { get; protected set; }
 
-        public override int Brightness { get; set; }
+        public override int Brightness { get; protected set; }
 
         const int MinBrightness = 0;
         const int MaxBrightness = 100;

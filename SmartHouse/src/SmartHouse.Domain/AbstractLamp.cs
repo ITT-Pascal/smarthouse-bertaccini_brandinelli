@@ -9,9 +9,9 @@ namespace SmartHouse.Domain
     public abstract class AbstractLamp
     {
 
-        public abstract bool IsOn { get; set; }
+        public abstract bool IsOn { get; protected set; }
 
-        public abstract int Brightness { get; set; }
+        public abstract int Brightness { get; protected set; }
 
         public abstract void SwitchOnOff();
 

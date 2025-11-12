@@ -9,57 +9,59 @@ namespace SmartHouse.Domain
     public class TwoLampDevice
     {
 
-        public List<AbstractLamp> Lamps { get; private set; } 
+        public AbstractLamp Lamp1 { get; private set; }
+        public AbstractLamp Lamp2 { get; private set; }
 
-        public TwoLampDevice()
+        public TwoLampDevice(Lamp lamp1, EcoLamp lamp2)
         {
+            Lamp1 = lamp1;
+            Lamp2 = lamp2;
+ 
+        }
 
-            Lamps = new List<AbstractLamp>();
-  
+        public TwoLampDevice(Lamp lamp1, Lamp lamp2)
+        {
+            Lamp1 = lamp1;
+            Lamp2 = lamp2;
 
         }
 
-        public void AddEcoLamp()
+        public TwoLampDevice(EcoLamp lamp1, EcoLamp lamp2)
         {
-            if (Lamps.Count < 2)
-            {
-                Lamps.Add(new EcoLamp());
+            Lamp1 = lamp1;
+            Lamp2 = lamp2;
 
-            }
-            
-
-        }
-
-        public void AddLamp()
-        {
-            if (Lamps.Count < 2)
-            {
-                Lamps.Add(new Lamp());
-
-            }
-
-
-        }
+        }    
 
         public void SwitchOnOff(int selectedLamp)
         {
 
-            if (selectedLamp < 0 || selectedLamp >= Lamps.Count)
-                throw new ArgumentException("Selected lamp doesn't exist");
+            if (selectedLamp < 1 || selectedLamp > 2)
+                throw new ArgumentException("Selected lamp doesn't exist, Must select either 1 or 2");
 
-            Lamps[selectedLamp].SwitchOnOff();
+           if(selectedLamp == 1)
+           {
+                Lamp1.SwitchOnOff();           
+           }else
+           {
+                Lamp2.SwitchOnOff();
+           }
             
-
         }
 
         public void ChangeBrightness(int newBrightness, int selectedLamp)
         {
-            if (selectedLamp < 0 || selectedLamp >= Lamps.Count)
-                throw new ArgumentException("Selected lamp doesn't exist");
+            if (selectedLamp < 1 || selectedLamp > 2)
+                throw new ArgumentException("Selected lamp doesn't exist, Must select either 1 or 2");
 
-            Lamps[selectedLamp].ChangeBrightness(newBrightness);
-
-
+            if (selectedLamp == 1)
+            {
+                Lamp1.ChangeBrightness(newBrightness);
+            }
+            else
+            {
+                Lamp2.ChangeBrightness(newBrightness);
+            }
 
         }
 
