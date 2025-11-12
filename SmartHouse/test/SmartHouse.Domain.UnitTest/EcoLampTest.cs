@@ -59,18 +59,6 @@
 
             Assert.False(newEcoLamp.IsOn);
         }
-
-        [Fact]
-
-        public void When_TimerIsSetAndLampIsOff_LampTurnsOnAndThenTurnsOffWhenTimerIsOver()
-        {
-            EcoLamp newlamp = new EcoLamp();
-
-            
-
-
-
-        }
        
     }
 
