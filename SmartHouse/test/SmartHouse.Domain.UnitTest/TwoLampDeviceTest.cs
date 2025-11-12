@@ -2,157 +2,113 @@
 {
     public class TwoLampDeviceTest
     {
+        Lamp testLamp = new Lamp();
+        Lamp testLamp2 = new Lamp();
+        EcoLamp testEcoLamp = new EcoLamp();
+        EcoLamp testEcoLamp2 = new EcoLamp();
+
         [Fact]
         public void When_TryToAddANewEcoLampAndTheNumberOfLampIsLessThan2_CanAddANewEcoLamp()
         {
-            TwoLampDevice newTwoLampDevice = new TwoLampDevice();
+            TwoLampDevice newTwoLampDevice = new TwoLampDevice(testLamp, testEcoLamp);
 
-            newTwoLampDevice.AddEcoLamp();
-
-            Assert.IsType<EcoLamp>(newTwoLampDevice.Lamps[0]);
-        }
-
-        [Fact]
-        public void When_TryToAddANewEcoLampAndTheNumberOfLampIsGreaterThan2_CannotAddANewEcoLamp()
-        {
-            TwoLampDevice newTwoLampDevice = new TwoLampDevice();
-
-            newTwoLampDevice.AddEcoLamp();
-            newTwoLampDevice.AddEcoLamp();
-            newTwoLampDevice.AddEcoLamp();
-
-            Assert.Equal(2, newTwoLampDevice.Lamps.Count);
+            Assert.IsType<Lamp>(newTwoLampDevice.Lamp1);
+            Assert.IsType<EcoLamp>(newTwoLampDevice.Lamp2);
         }
 
         [Fact]
         public void When_TryToAddANewLampAndTheNumberOfLampIsLessThan2_CanAddANewLamp()
         {
-            TwoLampDevice newTwoLampDevice = new TwoLampDevice();
+            TwoLampDevice newTwoLampDevice = new TwoLampDevice(testLamp, testEcoLamp);
 
-            newTwoLampDevice.AddLamp();
-
-            Assert.IsType<Lamp>(newTwoLampDevice.Lamps[0]);
-        }
-
-        [Fact]
-        public void When_TryToAddANewLampAndTheNumberOfLampIsGreaterThan2_CannotAddANewLamp()
-        {
-            TwoLampDevice newTwoLampDevice = new TwoLampDevice();
-
-            newTwoLampDevice.AddLamp();
-            newTwoLampDevice.AddLamp();
-            newTwoLampDevice.AddLamp();
-
-            Assert.Equal(2, newTwoLampDevice.Lamps.Count);
-        }
-
-        [Fact]
-        public void When_TryToAddTwoNewDifferentLamps_CanAddTwoNewDifferentLamps()
-        {
-            TwoLampDevice newTwoLampDevice = new TwoLampDevice();
-
-            newTwoLampDevice.AddEcoLamp();
-            newTwoLampDevice.AddLamp();
-
-            Assert.Equal(2, newTwoLampDevice.Lamps.Count);
-            Assert.IsType<EcoLamp>(newTwoLampDevice.Lamps[0]);
-            Assert.IsType<Lamp>(newTwoLampDevice.Lamps[1]);
-        }
-
-        [Fact]
-        public void When_TheSelectedLampIs0AndItIsOff_ItCanTurnOn()
-        {
-            TwoLampDevice newTwoLampDevice = new TwoLampDevice();
-
-            newTwoLampDevice.AddLamp();
-            newTwoLampDevice.SwitchOnOff(0);
-
-            Assert.True(newTwoLampDevice.Lamps[0].IsOn);
+            Assert.IsType<Lamp>(newTwoLampDevice.Lamp1);
+            Assert.IsType<EcoLamp>(newTwoLampDevice.Lamp2);
         }
 
         [Fact]
         public void When_TheSelectedLampIs1AndItIsOff_ItCanTurnOn()
         {
-            TwoLampDevice newTwoLampDevice = new TwoLampDevice();
+            TwoLampDevice newTwoLampDevice = new TwoLampDevice(testLamp, testEcoLamp);
 
-            newTwoLampDevice.AddLamp();
-            newTwoLampDevice.AddLamp();
             newTwoLampDevice.SwitchOnOff(1);
 
-            Assert.True(newTwoLampDevice.Lamps[1].IsOn);
+            Assert.True(newTwoLampDevice.Lamp1.IsOn);
         }
 
         [Fact]
-        public void When_TheSelectedLampIs0AndItIsOn_ItCanTurnOff()
+        public void When_TheSelectedLampIs2AndItIsOff_ItCanTurnOn()
         {
-            TwoLampDevice newTwoLampDevice = new TwoLampDevice();
+            TwoLampDevice newTwoLampDevice = new TwoLampDevice(testLamp, testEcoLamp);
 
-            newTwoLampDevice.AddLamp();
-            newTwoLampDevice.SwitchOnOff(0);
-            newTwoLampDevice.SwitchOnOff(0);
+            newTwoLampDevice.SwitchOnOff(2);
 
-            Assert.False(newTwoLampDevice.Lamps[0].IsOn);
+            Assert.True(newTwoLampDevice.Lamp2.IsOn);
         }
 
         [Fact]
         public void When_TheSelectedLampIs1AndItIsOn_ItCanTurnOff()
         {
-            TwoLampDevice newTwoLampDevice = new TwoLampDevice();
+            TwoLampDevice newTwoLampDevice = new TwoLampDevice(testLamp, testEcoLamp);
 
-            newTwoLampDevice.AddLamp();
-            newTwoLampDevice.AddLamp();
             newTwoLampDevice.SwitchOnOff(1);
             newTwoLampDevice.SwitchOnOff(1);
 
-            Assert.False(newTwoLampDevice.Lamps[1].IsOn);
+            Assert.False(newTwoLampDevice.Lamp1.IsOn);
         }
 
         [Fact]
-        public void When_WantToChangeBrightnessTo25AndTheLampSelectedIs0_ItCanChangeBrightness()
+        public void When_TheSelectedLampIs2AndItIsOn_ItCanTurnOff()
         {
-            TwoLampDevice newTwoLampDevice = new TwoLampDevice();
+            TwoLampDevice newTwoLampDevice = new TwoLampDevice(testLamp, testEcoLamp);
 
-            newTwoLampDevice.AddLamp();
-            newTwoLampDevice.SwitchOnOff(0);
-            newTwoLampDevice.ChangeBrightness(25, 0);
+            newTwoLampDevice.SwitchOnOff(2);
+            newTwoLampDevice.SwitchOnOff(2);
 
-            Assert.Equal(25, newTwoLampDevice.Lamps[0].Brightness);
+            Assert.False(newTwoLampDevice.Lamp2.IsOn);
         }
 
         [Fact]
         public void When_WantToChangeBrightnessTo25AndTheLampSelectedIs1_ItCanChangeBrightness()
         {
-            TwoLampDevice newTwoLampDevice = new TwoLampDevice();
+            TwoLampDevice newTwoLampDevice = new TwoLampDevice(testLamp, testEcoLamp);
 
-            newTwoLampDevice.AddLamp();
-            newTwoLampDevice.AddEcoLamp();
             newTwoLampDevice.SwitchOnOff(1);
             newTwoLampDevice.ChangeBrightness(25, 1);
 
-            Assert.Equal(25, newTwoLampDevice.Lamps[1].Brightness);
+            Assert.Equal(25, newTwoLampDevice.Lamp1.Brightness);
         }
 
         [Fact]
-        public void When_WantToChangeBrightnessTo25AndTheLampSelectedIs0ButIsOff_ItCannotChangeBrightness()
+        public void When_WantToChangeBrightnessTo25AndTheLampSelectedIs2_ItCanChangeBrightness()
         {
-            TwoLampDevice newTwoLampDevice = new TwoLampDevice();
+            TwoLampDevice newTwoLampDevice = new TwoLampDevice(testLamp, testEcoLamp);
 
-            newTwoLampDevice.AddEcoLamp();
-            newTwoLampDevice.ChangeBrightness(25, 0);
+            newTwoLampDevice.SwitchOnOff(2);
+            newTwoLampDevice.ChangeBrightness(25, 2);
 
-            Assert.Equal(0, newTwoLampDevice.Lamps[0].Brightness);
+            Assert.Equal(25, newTwoLampDevice.Lamp2.Brightness);
         }
-        
+
         [Fact]
         public void When_WantToChangeBrightnessTo25AndTheLampSelectedIs1ButIsOff_ItCannotChangeBrightness()
         {
-            TwoLampDevice newTwoLampDevice = new TwoLampDevice();
+            TwoLampDevice newTwoLampDevice = new TwoLampDevice(testLamp, testEcoLamp);
 
-            newTwoLampDevice.AddEcoLamp();
-            newTwoLampDevice.AddLamp();
             newTwoLampDevice.ChangeBrightness(25, 1);
 
-            Assert.Equal(0, newTwoLampDevice.Lamps[1].Brightness);
+            Assert.Equal(0, newTwoLampDevice.Lamp1.Brightness);
+            Assert.False(newTwoLampDevice.Lamp1.IsOn);
+        }
+        
+        [Fact]
+        public void When_WantToChangeBrightnessTo25AndTheLampSelectedIs2ButIsOff_ItCannotChangeBrightness()
+        {
+            TwoLampDevice newTwoLampDevice = new TwoLampDevice(testLamp, testEcoLamp);
+
+            newTwoLampDevice.ChangeBrightness(25, 2);
+
+            Assert.Equal(0, newTwoLampDevice.Lamp2.Brightness);
+            Assert.False(newTwoLampDevice.Lamp2.IsOn);
         }
 
 
