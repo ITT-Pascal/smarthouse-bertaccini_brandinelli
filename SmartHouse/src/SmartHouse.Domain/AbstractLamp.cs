@@ -12,6 +12,7 @@ namespace SmartHouse.Domain
         public abstract bool IsOn { get; protected set; }
 
         public abstract int Brightness { get; protected set; }
+        public abstract string Name { get; set; }
 
         public abstract void SwitchOnOff();
 

@@ -15,14 +15,32 @@ namespace SmartHouse.Domain
             Lamps = new List<AbstractLamp>();
         }
 
-        public void AddEcoLamp()
-        {           
-             Lamps.Add(new EcoLamp());           
+        public void AddLamp(string name)
+        {
+            Lamps.Add(new Lamp(name));
         }
 
-        public void AddLamp()
-        {         
-             Lamps.Add(new Lamp());          
+        public void AddEcoLamp(string name)
+        {
+            Lamps.Add(new EcoLamp(name));
+        }
+
+        public void RemoveLamp()
+        {
+            Lamps.Remove(new Lamp());
+        }
+
+        public void RemoveEcoLamp()
+        {
+            Lamps.Remove(new EcoLamp());
+        }
+
+        public void SingleLampSwitchOnOff(string name)
+        {
+            if (name < 0 || name >= Lamps.Count)
+                throw new ArgumentException("Selected lamp doesn't exist");
+
+            Lamps.SwitchOnOff(name);
         }
 
         public void SingleLampSwitchOnOff(int selectedLamp)
