@@ -4,7 +4,7 @@
     public class Lamp : AbstractLamp
     {
 
-        public Guid Id = new Guid();
+        public Guid Id { get; private set; }
         public override bool IsOn { get; protected set; }
 
         public override int Brightness { get; protected set; }
@@ -19,7 +19,7 @@
             Brightness = 0;
             IsOn = false;
             Name = name;
-            
+            Id = new Guid();
         }
 
         public override void SwitchOnOff()
