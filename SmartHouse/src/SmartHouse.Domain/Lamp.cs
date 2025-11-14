@@ -9,18 +9,10 @@
 
         public override int Brightness { get; protected set; }
 
-        public string Name { get; set; }
+        public override string Name { get; set; }
 
         const int MinBrightness = 0;
         const int MaxBrightness = 100;
-
-        public Lamp()
-        {
-            Brightness = 0;
-            IsOn = false;
-            Name = string.Empty;
-
-        }
 
         public Lamp(string name)
         {           

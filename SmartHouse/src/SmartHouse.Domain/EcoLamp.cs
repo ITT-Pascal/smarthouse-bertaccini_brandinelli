@@ -10,31 +10,33 @@ namespace SmartHouse.Domain
     {
         public override bool IsOn { get; protected set; }
         public override int Brightness { get;  protected set; }
-        private TimeSpan Timer = new TimeSpan(0, 1, 30, 0); // 0 day, 1 hours, 30 minutes, 0 seconds
-        private DateTime ShutOffHour;
+        public override string Name { get; set; }
+        //private TimeSpan Timer = new TimeSpan(0, 1, 30, 0); // 0 day, 1 hours, 30 minutes, 0 seconds
+        //private DateTime ShutOffHour;
 
         const int MinBrightness = 0;
         const int MaxBrightness = 50;
 
-        public EcoLamp()
+        public EcoLamp(string name)
         {
             Brightness = 0;
-            IsOn = false;                           
+            IsOn = false;
+            Name = name;
         }
         public void EcoTimer()
         {           
-            ShutOffHour = DateTime.UtcNow.Add(Timer);
+            //ShutOffHour = DateTime.UtcNow.Add(Timer);
 
             if (!IsOn)
             {
                 IsOn = true;            
             }
 
-            while (DateTime.UtcNow <= ShutOffHour)
-            {
-                if (DateTime.UtcNow == ShutOffHour)
-                    IsOn = false;
-            }
+            //while (DateTime.UtcNow <= ShutOffHour)
+            //{
+            //    if (DateTime.UtcNow == ShutOffHour)
+            //        IsOn = false;
+            //}
         }
 
         public override void SwitchOnOff()
