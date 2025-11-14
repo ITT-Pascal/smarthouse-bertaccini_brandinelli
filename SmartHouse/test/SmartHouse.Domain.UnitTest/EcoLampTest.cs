@@ -6,7 +6,7 @@
         [Fact]
         public void When_BrightnessIsNegative_BrightnessRemainsZero()
         {
-            EcoLamp newEcoLamp = new EcoLamp();
+            EcoLamp newEcoLamp = new EcoLamp("Lepri");
 
             newEcoLamp.ChangeBrightness(-1);
 
@@ -16,7 +16,7 @@
         [Fact]
         public void When_BrightnessIsHigherThan50_BrightnessIs50()
         {
-            EcoLamp newEcoLamp = new EcoLamp();
+            EcoLamp newEcoLamp = new EcoLamp("Lepri");
 
             newEcoLamp.SwitchOnOff();
 
@@ -28,7 +28,7 @@
         [Fact]
         public void When_LampIsOnButBrightnessIs0_LampIsOff()
         {
-            EcoLamp newEcoLamp = new EcoLamp();
+            EcoLamp newEcoLamp = new EcoLamp("Lepri");
 
             newEcoLamp.SwitchOnOff();
 
@@ -40,7 +40,7 @@
         [Fact]
         public void When_BrightnessIs25AndLampIsOn_LampIsOn()
         {
-            EcoLamp newEcoLamp = new EcoLamp();
+            EcoLamp newEcoLamp = new EcoLamp("Lepri");
 
             newEcoLamp.SwitchOnOff();
 
@@ -53,7 +53,7 @@
         [Fact]
         public void When_BrightnessIs25ButLampIsOff_LampIsOff()
         {
-            EcoLamp newEcoLamp = new EcoLamp();
+            EcoLamp newEcoLamp = new EcoLamp("Lepri");
 
             newEcoLamp.ChangeBrightness(25);
 

@@ -2,10 +2,10 @@
 {
     public class TwoLampDeviceTest
     {
-        Lamp testLamp = new Lamp();
-        Lamp testLamp2 = new Lamp();
-        EcoLamp testEcoLamp = new EcoLamp();
-        EcoLamp testEcoLamp2 = new EcoLamp();
+        Lamp testLamp = new Lamp("Stefano");
+        Lamp testLamp2 = new Lamp("Stefano");
+        EcoLamp testEcoLamp = new EcoLamp("Lepri");
+        EcoLamp testEcoLamp2 = new EcoLamp("Lepri");
 
         [Fact]
         public void When_TryToAddANewEcoLampAndTheNumberOfLampIsLessThan2_CanAddANewEcoLamp()

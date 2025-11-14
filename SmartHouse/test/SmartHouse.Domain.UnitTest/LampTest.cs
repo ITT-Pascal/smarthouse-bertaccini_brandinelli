@@ -6,7 +6,7 @@
         [Fact]
         public void When_BrightnessIsNegative_BrightnessRemainsZero()
         {
-            Lamp newLamp = new Lamp();
+            Lamp newLamp = new Lamp("Stefano");
 
             newLamp.ChangeBrightness(-1);
 
@@ -16,7 +16,7 @@
         [Fact]
         public void When_BrightnessIsHigherThan100_BrightnessIs100()
         {
-            Lamp newLamp = new Lamp();
+            Lamp newLamp = new Lamp("Stefano");
 
             newLamp.SwitchOnOff();
 
@@ -28,7 +28,7 @@
         [Fact]
         public void When_LampIsOnButBrightnessIs0_LampIsOff()
         {
-            Lamp newLamp = new Lamp();
+            Lamp newLamp = new Lamp("Stefano");
 
             newLamp.SwitchOnOff();
 
@@ -40,7 +40,7 @@
         [Fact]
         public void When_BrightnessIs50AndLampIsOn_LampIsOn()
         {
-            Lamp newLamp = new Lamp();
+            Lamp newLamp = new Lamp("Stefano");
 
             newLamp.SwitchOnOff();
 
@@ -53,7 +53,7 @@
         [Fact]
         public void When_BrightnessIs50ButLampIsOff_LampIsOff()
         {
-            Lamp newLamp = new Lamp();
+            Lamp newLamp = new Lamp("Stefano");
 
             newLamp.ChangeBrightness(50);
 

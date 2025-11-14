@@ -7,7 +7,7 @@
         {
             LampsRow newLampsRow = new LampsRow();
 
-            newLampsRow.AddEcoLamp();
+            newLampsRow.AddEcoLamp("Lepri");
 
             Assert.IsType<EcoLamp>(newLampsRow.Lamps[0]);
         }
@@ -17,7 +17,7 @@
         {
             LampsRow newLampsRow = new LampsRow();
 
-            newLampsRow.AddLamp();
+            newLampsRow.AddLamp("Stefano");
 
             Assert.IsType<Lamp>(newLampsRow.Lamps[0]);
         }
@@ -27,8 +27,8 @@
         {
             LampsRow newLampsRow = new LampsRow();
 
-            newLampsRow.AddEcoLamp();
-            newLampsRow.AddLamp();
+            newLampsRow.AddEcoLamp("Lepri");
+            newLampsRow.AddLamp("Stefano");
 
             Assert.Equal(2, newLampsRow.Lamps.Count);
             Assert.IsType<EcoLamp>(newLampsRow.Lamps[0]);
@@ -40,8 +40,8 @@
         {
             LampsRow newLampsRow = new LampsRow();
 
-            newLampsRow.AddLamp();
-            newLampsRow.SingleLampSwitchOnOff(0);
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.SingleLampSwitchOnOff("Stefano");
 
             Assert.True(newLampsRow.Lamps[0].IsOn);
         }
@@ -51,9 +51,9 @@
         {
             LampsRow newLampsRow = new LampsRow();
 
-            newLampsRow.AddLamp();
-            newLampsRow.AddLamp();
-            newLampsRow.SingleLampSwitchOnOff(1);
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.SingleLampSwitchOnOff("Stefano");
 
             Assert.True(newLampsRow.Lamps[1].IsOn);
         }
@@ -63,7 +63,7 @@
         {
             LampsRow newLampsRow = new LampsRow();
 
-            newLampsRow.AddLamp();
+            newLampsRow.AddLamp("Stefano");
             newLampsRow.SingleLampSwitchOnOff(0);
             newLampsRow.SingleLampSwitchOnOff(0);
 
@@ -75,8 +75,8 @@
         {
             LampsRow newLampsRow = new LampsRow();
 
-            newLampsRow.AddLamp();
-            newLampsRow.AddLamp();
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddLamp("Stefano");
             newLampsRow.SingleLampSwitchOnOff(1);
             newLampsRow.SingleLampSwitchOnOff(1);
 
@@ -88,7 +88,7 @@
         {
             LampsRow newLampsRow = new LampsRow();
 
-            newLampsRow.AddLamp();
+            newLampsRow.AddLamp("Stefano");
             newLampsRow.SingleLampSwitchOnOff(0);
             newLampsRow.SingleLampChangeBrightness(25, 0);
 
@@ -100,8 +100,8 @@
         {
             LampsRow newLampsRow = new LampsRow();
 
-            newLampsRow.AddLamp();
-            newLampsRow.AddEcoLamp();
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddEcoLamp("Lepri");
             newLampsRow.SingleLampSwitchOnOff(1);
             newLampsRow.SingleLampChangeBrightness(25, 1);
 
@@ -113,7 +113,7 @@
         {
             LampsRow newLampsRow = new LampsRow();
 
-            newLampsRow.AddEcoLamp();
+            newLampsRow.AddEcoLamp("Lepri");
             newLampsRow.SingleLampChangeBrightness(25, 0);
 
             Assert.Equal(0, newLampsRow.Lamps[0].Brightness);
@@ -124,8 +124,8 @@
         {
             LampsRow newLampsRow = new LampsRow();
 
-            newLampsRow.AddEcoLamp();
-            newLampsRow.AddLamp();
+            newLampsRow.AddEcoLamp("Lepri");
+            newLampsRow.AddLamp("Stefano");
             newLampsRow.SingleLampChangeBrightness(25, 1);
 
             Assert.Equal(0, newLampsRow.Lamps[1].Brightness);
@@ -136,8 +136,8 @@
         {
             LampsRow newLampsRow = new LampsRow();
 
-            newLampsRow.AddLamp();
-            newLampsRow.AddLamp();
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddLamp("Stefano");
             newLampsRow.AllLampsSwitchOnOff();
 
             Assert.True(newLampsRow.Lamps[0].IsOn);
@@ -149,8 +149,8 @@
         {
             LampsRow newLampsRow = new LampsRow();
 
-            newLampsRow.AddLamp();
-            newLampsRow.AddLamp();
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddLamp("Stefano");
             newLampsRow.AllLampsSwitchOnOff();
             newLampsRow.AllLampsSwitchOnOff();
 
@@ -163,8 +163,8 @@
         {
             LampsRow newLampsRow = new LampsRow();
 
-            newLampsRow.AddLamp();
-            newLampsRow.AddLamp();
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddLamp("Stefano");
             newLampsRow.AllLampsSwitchOnOff();
             newLampsRow.AllLampsChangeBrightness(25);
 
@@ -177,8 +177,8 @@
         {
             LampsRow newLampsRow = new LampsRow();
 
-            newLampsRow.AddLamp();
-            newLampsRow.AddLamp();
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddLamp("Stefano");
             newLampsRow.AllLampsChangeBrightness(25);
 
             Assert.Equal(0, newLampsRow.Lamps[0].Brightness);
