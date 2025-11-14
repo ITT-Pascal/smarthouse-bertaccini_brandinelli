@@ -23,17 +23,30 @@ namespace SmartHouse.Domain
         public void AddEcoLamp(string name)
         {
             Lamps.Add(new EcoLamp(name));
-        }        
-
-        public void RemoveLamp()
-        {
-            Lamps.Remove(new Lamp());
         }
 
-        public void RemoveEcoLamp()
+        public void AddLampInPosition(AbstractLamp lamp, int position)
         {
-            Lamps.Remove(new EcoLamp());
+            Lamps.Insert(position, lamp);
         }
+
+        public void RemoveLamp(string name)
+        {
+            for(int i = 0; i < Lamps.Count; i++)
+            {
+                if (Lamps[i].Name == name)
+                {
+                    Lamps.RemoveAt(i);
+                }
+            }
+        }
+
+        public void RemoveLampInPosition(string name, int position)
+        {
+            Lamps.RemoveAt(position);
+        }
+
+
 
         public void SingleLampSwitchOnOff(string name)
         {
@@ -56,24 +69,7 @@ namespace SmartHouse.Domain
                 }
             }
         }
-
-
-
-        public void SingleLampSwitchOnOff(int selectedLamp)
-        {
-            if (selectedLamp < 0 || selectedLamp >= Lamps.Count)
-                throw new ArgumentException("Selected lamp doesn't exist");
-
-            Lamps[selectedLamp].SwitchOnOff();
-        }
-
-        public void SingleLampChangeBrightness(int newBrightness, int selectedLamp)
-        {
-            if (selectedLamp < 0 || selectedLamp >= Lamps.Count)
-                throw new ArgumentException("Selected lamp doesn't exist");
-
-            Lamps[selectedLamp].ChangeBrightness(newBrightness);
-        }
+      
 
         public void AllLampsSwitchOnOff()
         {
