@@ -59,6 +59,7 @@
 
             Assert.False(newEcoLamp.IsOn);
         }
+              
        
     }
 
