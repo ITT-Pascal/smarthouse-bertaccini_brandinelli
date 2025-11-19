@@ -34,7 +34,7 @@
 
             newEcoLamp.SwitchOnOff();
 
-            Assert.False(newEcoLamp.IsOn);
+            Assert.Equal(DeviceStatus.Off, newEcoLamp.Status);
         }
 
         [Fact]
@@ -46,7 +46,7 @@
 
             newEcoLamp.ChangeBrightness(25);
 
-            Assert.True(newEcoLamp.IsOn);
+            Assert.Equal(DeviceStatus.On, newEcoLamp.Status);
             Assert.Equal(25, newEcoLamp.Brightness);
         }
 
@@ -57,7 +57,7 @@
 
             newEcoLamp.ChangeBrightness(25);
 
-            Assert.False(newEcoLamp.IsOn);
+            Assert.Equal(DeviceStatus.Off, newEcoLamp.Status);
         }
               
        

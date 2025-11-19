@@ -2,38 +2,34 @@
 {
     //Commit ba
     public class Lamp : AbstractLamp
-    {
-
-        public Guid Id { get; private set; }
-        public override bool IsOn { get; protected set; }
-
-        public override int Brightness { get; protected set; }
-
-        public override string Name { get; set; }
+    {       
 
         const int MinBrightness = 0;
+        const int DefaultBrightness = 50;
         const int MaxBrightness = 100;
 
-        public Lamp(string name)
-        {           
-            Brightness = 0;
-            IsOn = false;
-            Name = name;
-            Id = new Guid();
+        public Lamp(string name):base(name)
+        {                       
         }
 
         public override void SwitchOnOff()
         {
-            IsOn = !IsOn;
+            if (Status == DeviceStatus.Off) 
+            {
+                Status = DeviceStatus.On;
+            }else if(Status == DeviceStatus.On)
+            {
+                Status = DeviceStatus.Off;
+            }
 
         }
 
         public override void ChangeBrightness(int newBrightness)
         {
-            if (newBrightness > MinBrightness && IsOn == true)
+            if (newBrightness > MinBrightness && Status == DeviceStatus.On)
                 Brightness = Math.Min(newBrightness, MaxBrightness);
             else
-                IsOn = false;
+                Status = DeviceStatus.Off;
         }
         
 

@@ -32,7 +32,7 @@
 
             newTwoLampDevice.SwitchOnOff(1);
 
-            Assert.True(newTwoLampDevice.Lamp1.IsOn);
+            Assert.Equal(DeviceStatus.On, newTwoLampDevice.Lamp1.Status);
         }
 
         [Fact]
@@ -42,7 +42,7 @@
 
             newTwoLampDevice.SwitchOnOff(2);
 
-            Assert.True(newTwoLampDevice.Lamp2.IsOn);
+            Assert.Equal(DeviceStatus.On, newTwoLampDevice.Lamp2.Status);
         }
 
         [Fact]
@@ -53,7 +53,7 @@
             newTwoLampDevice.SwitchOnOff(1);
             newTwoLampDevice.SwitchOnOff(1);
 
-            Assert.False(newTwoLampDevice.Lamp1.IsOn);
+            Assert.Equal(DeviceStatus.Off, newTwoLampDevice.Lamp1.Status);
         }
 
         [Fact]
@@ -64,7 +64,7 @@
             newTwoLampDevice.SwitchOnOff(2);
             newTwoLampDevice.SwitchOnOff(2);
 
-            Assert.False(newTwoLampDevice.Lamp2.IsOn);
+            Assert.Equal(DeviceStatus.Off, newTwoLampDevice.Lamp2.Status);
         }
 
         [Fact]
@@ -97,7 +97,7 @@
             newTwoLampDevice.ChangeBrightness(25, 1);
 
             Assert.Equal(0, newTwoLampDevice.Lamp1.Brightness);
-            Assert.False(newTwoLampDevice.Lamp1.IsOn);
+            Assert.Equal(DeviceStatus.Off, newTwoLampDevice.Lamp1.Status);
         }
         
         [Fact]
@@ -108,7 +108,7 @@
             newTwoLampDevice.ChangeBrightness(25, 2);
 
             Assert.Equal(0, newTwoLampDevice.Lamp2.Brightness);
-            Assert.False(newTwoLampDevice.Lamp2.IsOn);
+            Assert.Equal(DeviceStatus.Off, newTwoLampDevice.Lamp2.Status);
         }
 
 

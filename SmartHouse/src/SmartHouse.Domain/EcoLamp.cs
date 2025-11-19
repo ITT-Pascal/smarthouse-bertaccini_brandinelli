@@ -8,48 +8,51 @@ namespace SmartHouse.Domain
 {
     public class EcoLamp : AbstractLamp
     {
-        public override bool IsOn { get; protected set; }
-        public override int Brightness { get;  protected set; }
-        public override string Name { get; set; }
+        
         //private TimeSpan Timer = new TimeSpan(0, 1, 30, 0); // 0 day, 1 hours, 30 minutes, 0 seconds
         //private DateTime ShutOffHour;
 
         const int MinBrightness = 0;
-        const int MaxBrightness = 50;
+        const int DefautBrightness = 30;
+        const int MaxBrightness = 70;
 
-        public EcoLamp(string name)
+        public EcoLamp(string name): base(name)
         {
-            Brightness = 0;
-            IsOn = false;
-            Name = name;
         }
-        public void EcoTimer()
-        {           
-            //ShutOffHour = DateTime.UtcNow.Add(Timer);
+        //public void EcoTimer()
+        //{           
+        //    //ShutOffHour = DateTime.UtcNow.Add(Timer);
 
-            if (!IsOn)
-            {
-                IsOn = true;            
-            }
+        //    //if (!IsOn)
+        //    //{
+        //    //    IsOn = true;            
+        //    //}
 
-            //while (DateTime.UtcNow <= ShutOffHour)
-            //{
-            //    if (DateTime.UtcNow == ShutOffHour)
-            //        IsOn = false;
-            //}
-        }
+        //    //while (DateTime.UtcNow <= ShutOffHour)
+        //    //{
+        //    //    if (DateTime.UtcNow == ShutOffHour)
+        //    //        IsOn = false;
+        //    //}
+        //}
 
         public override void SwitchOnOff()
         {
-            IsOn = !IsOn;
+            if (Status == DeviceStatus.Off)
+            {
+                Status = DeviceStatus.On;
+            }
+            else if (Status == DeviceStatus.On)
+            {
+                Status = DeviceStatus.Off;
+            }
         }
 
         public override void ChangeBrightness(int newBrightness)
         {
-            if (newBrightness > MinBrightness && IsOn == true)
+            if (newBrightness > MinBrightness && Status == DeviceStatus.On)
                 Brightness = Math.Min(newBrightness, MaxBrightness);
             else
-                IsOn = false;
+                Status = DeviceStatus.Off;
         }
 
     }

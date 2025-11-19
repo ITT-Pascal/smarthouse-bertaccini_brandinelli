@@ -43,7 +43,7 @@
             newLampsRow.AddLamp("Stefano");
             newLampsRow.SingleLampSwitchOnOff("Stefano");
 
-            Assert.True(newLampsRow.Lamps[0].IsOn);
+            Assert.Equal(DeviceStatus.On, newLampsRow.Lamps[0].Status);
         }
 
         [Fact]
@@ -64,8 +64,8 @@
             LampsRow newLampsRow = new LampsRow();
 
             newLampsRow.AddLamp("Stefano");
-            newLampsRow.SingleLampSwitchOnOff(0);
-            newLampsRow.SingleLampSwitchOnOff(0);
+            newLampsRow.SingleLampSwitchOnOff("Stefano");
+            newLampsRow.SingleLampSwitchOnOff("Stefano");
 
             Assert.False(newLampsRow.Lamps[0].IsOn);
         }
@@ -76,9 +76,9 @@
             LampsRow newLampsRow = new LampsRow();
 
             newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.SingleLampSwitchOnOff(1);
-            newLampsRow.SingleLampSwitchOnOff(1);
+            newLampsRow.AddLamp("Stefano2");
+            newLampsRow.SingleLampSwitchOnOff("Stefano2");
+            newLampsRow.SingleLampSwitchOnOff("Stefano2");
 
             Assert.False(newLampsRow.Lamps[1].IsOn);
         }
@@ -89,8 +89,8 @@
             LampsRow newLampsRow = new LampsRow();
 
             newLampsRow.AddLamp("Stefano");
-            newLampsRow.SingleLampSwitchOnOff(0);
-            newLampsRow.SingleLampChangeBrightness(25, 0);
+            newLampsRow.SingleLampSwitchOnOff("Stefano");
+            newLampsRow.SingleLampChangeBrightness(25, "Stefano");
 
             Assert.Equal(25, newLampsRow.Lamps[0].Brightness);
         }
@@ -102,8 +102,8 @@
 
             newLampsRow.AddLamp("Stefano");
             newLampsRow.AddEcoLamp("Lepri");
-            newLampsRow.SingleLampSwitchOnOff(1);
-            newLampsRow.SingleLampChangeBrightness(25, 1);
+            newLampsRow.SingleLampSwitchOnOff("Lepri");
+            newLampsRow.SingleLampChangeBrightness(25, "Lepri");
 
             Assert.Equal(25, newLampsRow.Lamps[1].Brightness);
         }

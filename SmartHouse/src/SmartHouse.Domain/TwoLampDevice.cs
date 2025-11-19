@@ -12,27 +12,12 @@ namespace SmartHouse.Domain
         public AbstractLamp Lamp1 { get; private set; }
         public AbstractLamp Lamp2 { get; private set; }
 
-        public TwoLampDevice(Lamp lamp1, EcoLamp lamp2)
+        public TwoLampDevice(AbstractLamp lamp1, AbstractLamp lamp2)
         {
             Lamp1 = lamp1;
             Lamp2 = lamp2;
  
         }
-
-        public TwoLampDevice(Lamp lamp1, Lamp lamp2)
-        {
-            Lamp1 = lamp1;
-            Lamp2 = lamp2;
-
-        }
-
-        public TwoLampDevice(EcoLamp lamp1, EcoLamp lamp2)
-        {
-            Lamp1 = lamp1;
-            Lamp2 = lamp2;
-
-        }    
-
         public void SwitchOnOff(int selectedLamp)
         {
 
