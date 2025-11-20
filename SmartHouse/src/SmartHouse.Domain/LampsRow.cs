@@ -13,21 +13,23 @@ namespace SmartHouse.Domain
 
         public LampsRow(string name, List<AbstractLamp> lamps)
         {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Il nome non è valido");
+            Name = name;
+            Lamps = lamps;
+            //if (string.IsNullOrWhiteSpace(name))
+            //    throw new ArgumentException("Il nome non è valido");
 
-            if (lamps == null)
-                throw new ArgumentNullException(nameof(lamps));
+            //if (lamps == null)
+            //    throw new ArgumentNullException(nameof(lamps));
 
-            foreach (var lamp in lamps)
-            {
-                if (lamp == null)
-                    throw new ArgumentException("La lampada non è valida");
+            //foreach (var lamp in lamps)
+            //{
+            //    if (lamp == null)
+            //        throw new ArgumentException("La lampada non è valida");
 
-                Lamps.Add(lamp);
+            //    Lamps.Add(lamp);
 
 
-            }
+            //}
         }
 
         public void AddLamp(string name)

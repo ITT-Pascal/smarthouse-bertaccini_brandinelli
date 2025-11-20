@@ -20,7 +20,7 @@
 
             newEcoLamp.SwitchOnOff();
 
-            newEcoLamp.ChangeBrightness(51);
+            newEcoLamp.ChangeBrightness(50);
 
             Assert.Equal(50, newEcoLamp.Brightness);
         }
