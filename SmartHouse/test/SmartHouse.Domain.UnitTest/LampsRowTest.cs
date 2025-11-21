@@ -289,7 +289,6 @@
         }
 
         [Fact]
-
         public void When_SwitchOffIsGivenAnId_LampWithThatIdIsSwitchedOff()
         {
             List<AbstractLamp> lamps = new List<AbstractLamp>();
@@ -308,7 +307,6 @@
         }
 
         [Fact]
-
         public void When_SwitchOnIsGivenAName_LampWithThatNameIsSwitchedOn()
         {
             List<AbstractLamp> lamps = new List<AbstractLamp>();
@@ -325,7 +323,6 @@
         }
 
         [Fact]
-
         public void When_SwitchOffIsGivenAName_LampWithThatNameIsSwitchedOff()
         {
             List<AbstractLamp> lamps = new List<AbstractLamp>();
