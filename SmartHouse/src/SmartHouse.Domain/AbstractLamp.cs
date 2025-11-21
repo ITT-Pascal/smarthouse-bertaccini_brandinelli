@@ -54,12 +54,14 @@ namespace SmartHouse.Domain
 
         public virtual void Dimmer()
         {
-            Math.Max(MinBrightness, Brightness - DefaultStep);
+            if(Status == DeviceStatus.On)
+                Math.Max(MinBrightness, Brightness - DefaultStep);
         }
 
         public virtual void Brighten()
         {
-            Math.Min(MaxBrightness, Brightness + DefaultStep);
+            if (Status == DeviceStatus.On)
+                Math.Min(MaxBrightness, Brightness + DefaultStep);
         }
 
         public virtual void SwitchOnOff()

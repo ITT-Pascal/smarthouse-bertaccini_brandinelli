@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace SmartHouse.Domain
 {
@@ -60,9 +61,39 @@ namespace SmartHouse.Domain
             }
         }
 
+        public void RemoveLamp(Guid id)
+        {
+            for (int i = 0; i < Lamps.Count; i++)
+            {
+                if (Lamps[i].Id == id)
+                {
+                    Lamps.RemoveAt(i);
+                }
+            }
+        }
+
         public void RemoveLampInPosition(string name, int position)
         {
             Lamps.RemoveAt(position);
+        }
+
+        public void SwitchOn(Guid id)
+        {
+            for(int i = 0; i<Lamps.Count;i++)
+            {
+                if (Lamps[i].Id == id)
+                    Lamps[i].SwitchOn();
+            }
+
+        }
+        public void SwitchOff(Guid id)
+        {
+            for (int i = 0; i < Lamps.Count; i++)
+            {
+                if (Lamps[i].Id == id)
+                    Lamps[i].SwitchOff();
+            }
+
         }
 
 
@@ -88,6 +119,17 @@ namespace SmartHouse.Domain
                 }
             }
         }
+
+        public void SingleLampChangeBrightness(int newbrightness, Guid id)
+        {
+            for (int i = 0; i < Lamps.Count; i++)
+            {
+                if (Lamps[i].Id == id)
+                {
+                    Lamps[i].ChangeBrightness(newbrightness);
+                }
+            }
+        }
       
 
         public void AllLampsSwitchOnOff()
@@ -106,6 +148,8 @@ namespace SmartHouse.Domain
                 Lamps[i].ChangeBrightness(newBrightness);
             }
         }
+
+
 
 
 
