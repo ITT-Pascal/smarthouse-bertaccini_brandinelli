@@ -15,9 +15,11 @@ namespace SmartHouse.Domain
         {
             Name = name;
             Lamps = lamps;
-            //if (string.IsNullOrWhiteSpace(name))
-            //    throw new ArgumentException("Il nome non è valido");
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Il nome non è valido");
 
+
+            //Tests must be adapted for this to work
             //if (lamps == null)
             //    throw new ArgumentNullException(nameof(lamps));
 
