@@ -59,5 +59,37 @@
 
             Assert.Equal(DeviceStatus.Off, newLamp.Status);
         }
+
+        [Fact]
+        public void When_TheLampIsOff_TheBrigthnessIsMinBrigthness()
+        {
+            Lamp newLamp = new Lamp("Stefano");
+
+            Assert.Equal(newLamp.MinBrightness, newLamp.Brightness);
+            Assert.Equal(DeviceStatus.Off, newLamp.Status);
+        }
+
+        [Fact]
+        public void When_TheLampIsOn_TheBrigthnessIsDefaultBrigthness()
+        {
+            Lamp newLamp = new Lamp("Stefano");
+
+            newLamp.SwitchOn();
+
+            Assert.Equal(newLamp.DefaultBrightness, newLamp.Brightness);
+            Assert.Equal(DeviceStatus.On, newLamp.Status);
+        }
+
+        [Fact]
+        public void When_TheLampIsOnAndWantTurnOff_TheBrigthnessIsMinBrigthness()
+        {
+            Lamp newLamp = new Lamp("Stefano");
+
+            newLamp.SwitchOn();
+            newLamp.SwitchOff();
+
+            Assert.Equal(newLamp.MinBrightness, newLamp.Brightness);
+            Assert.Equal(DeviceStatus.Off, newLamp.Status);
+        }
     }
 }
