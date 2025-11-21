@@ -14,26 +14,26 @@
         }
 
         [Fact]
-        public void When_BrightnessIsHigherThan100_BrightnessIs100()
+        public void When_TheLampIsOffAndWantToToggle_TheLampTurnOn()
         {
             Lamp newLamp = new Lamp("Stefano");
 
             newLamp.SwitchOnOff();
 
-            newLamp.ChangeBrightness(101);
-
-            Assert.Equal(100, newLamp.Brightness);
+            Assert.Equal(newLamp.DefaultBrightness, newLamp.Brightness);
+            Assert.Equal(DeviceStatus.On, newLamp.Status);
         }
 
         [Fact]
-        public void When_LampIsOnButBrightnessIs0_LampIsOff()
+        public void When_TheLampIsOnAndWantToToggle_TheLampTurnOff()
         {
             Lamp newLamp = new Lamp("Stefano");
 
-            newLamp.SwitchOnOff();
+            newLamp.SwitchOn();
 
             newLamp.SwitchOnOff();
 
+            Assert.Equal(newLamp.MinBrightness, newLamp.Brightness);
             Assert.Equal(DeviceStatus.Off, newLamp.Status);
         }
 
@@ -61,7 +61,7 @@
         }
 
         [Fact]
-        public void When_TheLampIsOff_TheBrigthnessIsMinBrigthness()
+        public void When_TheLampIsOff_TheBrightnessIsMinBrigthness()
         {
             Lamp newLamp = new Lamp("Stefano");
 
@@ -70,7 +70,7 @@
         }
 
         [Fact]
-        public void When_TheLampIsOn_TheBrigthnessIsDefaultBrigthness()
+        public void When_TheLampIsOn_TheBrightnessIsDefaultBrigthness()
         {
             Lamp newLamp = new Lamp("Stefano");
 
@@ -81,7 +81,7 @@
         }
 
         [Fact]
-        public void When_TheLampIsOnAndWantTurnOff_TheBrigthnessIsMinBrigthness()
+        public void When_TheLampIsOnAndWantTurnOff_TheBrightnessIsMinBrigthness()
         {
             Lamp newLamp = new Lamp("Stefano");
 
@@ -90,6 +90,52 @@
 
             Assert.Equal(newLamp.MinBrightness, newLamp.Brightness);
             Assert.Equal(DeviceStatus.Off, newLamp.Status);
+        }
+
+        [Fact]
+        public void When_TheLampIsOffAndWantToDimmer_TheBrightnessRemainsTheSame()
+        {
+            Lamp newLamp = new Lamp("Stefano");
+
+            newLamp.Dimmer();
+
+            Assert.Equal(newLamp.MinBrightness, newLamp.Brightness);
+            Assert.Equal(DeviceStatus.Off, newLamp.Status);
+        }
+
+        [Fact]
+        public void When_TheLampIsOnAndWantToDimmer_TheBrightnessDiminishes()
+        {
+            Lamp newLamp = new Lamp("Stefano");
+
+            newLamp.SwitchOn();
+            newLamp.Dimmer();
+
+            Assert.Equal(40, newLamp.Brightness);
+            Assert.Equal(DeviceStatus.On, newLamp.Status);
+        }
+
+        [Fact]
+        public void When_TheLampIsOffAndWantToBrighten_TheBrightnessRemainsTheSame()
+        {
+            Lamp newLamp = new Lamp("Stefano");
+
+            newLamp.Brighten();
+
+            Assert.Equal(newLamp.MinBrightness, newLamp.Brightness);
+            Assert.Equal(DeviceStatus.Off, newLamp.Status);
+        }
+
+        [Fact]
+        public void When_TheLampIsOnAndWantToBrighten_TheBrightnessIncreases()
+        {
+            Lamp newLamp = new Lamp("Stefano");
+
+            newLamp.SwitchOn();
+            newLamp.Brighten();
+
+            Assert.Equal(60, newLamp.Brightness);
+            Assert.Equal(DeviceStatus.On, newLamp.Status);
         }
     }
 }
