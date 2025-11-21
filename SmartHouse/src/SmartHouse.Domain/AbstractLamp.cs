@@ -36,6 +36,7 @@ namespace SmartHouse.Domain
             {
                 Status = DeviceStatus.On;
                 Brightness = DefaultBrightness;
+                LastUpdateTime = DateTime.UtcNow;
             }
                             
         }
@@ -46,6 +47,7 @@ namespace SmartHouse.Domain
             {
                 Status = DeviceStatus.Off;
                 Brightness = MinBrightness;
+                LastUpdateTime = DateTime.UtcNow;
             }
                 
 
@@ -55,13 +57,21 @@ namespace SmartHouse.Domain
         public virtual void Dimmer()
         {
             if(Status == DeviceStatus.On)
+            {
                 Brightness = Math.Max(MinBrightness, Brightness - DefaultStep);
+                LastUpdateTime = DateTime.UtcNow;
+            }
+               
         }
 
         public virtual void Brighten()
         {
             if (Status == DeviceStatus.On)
+            {
                 Brightness = Math.Min(MaxBrightness, Brightness + DefaultStep);
+                LastUpdateTime = DateTime.UtcNow;
+            }
+                
         }
 
         public virtual void SwitchOnOff()
@@ -70,18 +80,24 @@ namespace SmartHouse.Domain
             {
                 Status = DeviceStatus.On;
                 Brightness = DefaultBrightness;
+                LastUpdateTime = DateTime.UtcNow;
             }
             else if (Status == DeviceStatus.On)
             {
                 Status = DeviceStatus.Off;
                 Brightness = MinBrightness;
+                LastUpdateTime = DateTime.UtcNow;
             }
         }
 
         public virtual void ChangeBrightness(int newBrightness)
         {
             if (newBrightness > MinBrightness && Status == DeviceStatus.On)
+            {
                 Brightness = Math.Min(newBrightness, MaxBrightness);
+                LastUpdateTime = DateTime.UtcNow;
+            }
+                
 
         }
 

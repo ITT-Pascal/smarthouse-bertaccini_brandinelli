@@ -18,6 +18,72 @@ namespace SmartHouse.Domain
             Lamp2 = lamp2;
  
         }
+
+        public void SwitchOn(int selectedLamp)
+        {
+
+            if (selectedLamp < 1 || selectedLamp > 2)
+                throw new ArgumentException("Selected lamp doesn't exist, Must select either 1 or 2");
+
+            if (selectedLamp == 1)
+            {
+                Lamp1.SwitchOn();
+            }
+            else
+            {
+                Lamp2.SwitchOn();
+            }
+        }
+
+        public void SwitchOff(int selectedLamp)
+        {
+
+            if (selectedLamp < 1 || selectedLamp > 2)
+                throw new ArgumentException("Selected lamp doesn't exist, Must select either 1 or 2");
+
+            if (selectedLamp == 1)
+            {
+                Lamp1.SwitchOff();
+            }
+            else
+            {
+                Lamp2.SwitchOff();
+            }
+        }
+
+        public void Dimmer(int selectedLamp)
+        {
+
+            if (selectedLamp < 1 || selectedLamp > 2)
+                throw new ArgumentException("Selected lamp doesn't exist, Must select either 1 or 2");
+
+            if (selectedLamp == 1)
+            {
+                Lamp1.Dimmer();
+            }
+            else
+            {
+                Lamp2.Dimmer();
+            }
+        }
+
+        public void Brighten(int selectedLamp)
+        {
+
+            if (selectedLamp < 1 || selectedLamp > 2)
+                throw new ArgumentException("Selected lamp doesn't exist, Must select either 1 or 2");
+
+            if (selectedLamp == 1)
+            {
+                Lamp1.Brighten();
+            }
+            else
+            {
+                Lamp2.Brighten();
+            }
+        }
+
+
         public void SwitchOnOff(int selectedLamp)
         {
 

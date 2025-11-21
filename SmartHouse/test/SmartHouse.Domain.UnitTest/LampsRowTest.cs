@@ -2,6 +2,7 @@
 {
     public class LampsRowTest
     {
+
         [Fact]
         public void When_TryToAddANewEcoLamp_CanAddANewEcoLamp()
         {
@@ -377,8 +378,8 @@
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
             AbstractLamp lamp = new Lamp("Lepri");
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddLamp("Stefan2");
+            newLampsRow.AddEcoLamp("Stefano");
+            newLampsRow.AddEcoLamp("Stefan2");
 
             newLampsRow.AddLampInPosition(lamp, 1);
 
@@ -393,8 +394,8 @@
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
             AbstractLamp ecoLamp = new EcoLamp("Lepri");
 
-            newLampsRow.AddEcoLamp("Stefano");
-            newLampsRow.AddEcoLamp("Stefan2");
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddLamp("Stefan2");
 
             newLampsRow.AddLampInPosition(ecoLamp, 1);
 
