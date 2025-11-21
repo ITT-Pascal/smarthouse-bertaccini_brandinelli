@@ -17,7 +17,8 @@ namespace SmartHouse.Domain
         public abstract int MinBrightness {get; }
         public abstract int DefaultBrightness{ get; }
         public abstract int MaxBrightness { get; }
-        private int Defaultstep { get; set; }
+
+        private const int DefaultStep = 10;
         
         public AbstractLamp(string name)
         {
@@ -29,17 +30,49 @@ namespace SmartHouse.Domain
             LastUpdateTime = DateTime.UtcNow;
         }
 
-        
+        public virtual void SwitchOn()
+        {
+            if (Status == DeviceStatus.Off)
+            {
+                Status = DeviceStatus.On;
+                Brightness = DefaultBrightness;
+            }
+                            
+        }
+
+        public virtual void SwitchOff()
+        {
+            if (Status == DeviceStatus.On)
+            {
+                Status = DeviceStatus.Off;
+                Brightness = MinBrightness;
+            }
+                
+
+           
+        }
+
+        public virtual void Dimmer()
+        {
+            Math.Max(MinBrightness, Brightness - DefaultStep);
+        }
+
+        public virtual void Brighten()
+        {
+            Math.Min(MaxBrightness, Brightness + DefaultStep);
+        }
 
         public virtual void SwitchOnOff()
         {
             if (Status == DeviceStatus.Off)
             {
                 Status = DeviceStatus.On;
+                Brightness = DefaultBrightness;
             }
             else if (Status == DeviceStatus.On)
             {
                 Status = DeviceStatus.Off;
+                Brightness = MinBrightness;
             }
         }
 
@@ -47,8 +80,7 @@ namespace SmartHouse.Domain
         {
             if (newBrightness > MinBrightness && Status == DeviceStatus.On)
                 Brightness = Math.Min(newBrightness, MaxBrightness);
-            else
-                throw new ArgumentException("Brightness can't be changed");
+
         }
 
         
