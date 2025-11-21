@@ -14,14 +14,7 @@
 
         public override void SwitchOnOff()
         {
-            if (Status == DeviceStatus.Off) 
-            {
-                Status = DeviceStatus.On;
-            }else if(Status == DeviceStatus.On)
-            {
-                Status = DeviceStatus.Off;
-            }
-
+            base.SwitchOnOff();
         }
 
         public override void ChangeBrightness(int newBrightness)
