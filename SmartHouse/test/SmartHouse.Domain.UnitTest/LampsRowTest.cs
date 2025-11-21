@@ -201,7 +201,6 @@
         }
 
         [Fact]
-
         public void When_RemoveLampIsGivenAName_RemoveLampWithThatName()
         {
             List<AbstractLamp> lamps = new List<AbstractLamp>();
@@ -218,7 +217,6 @@
         }
 
         [Fact]
-
         public void When_RemoveLampIsGivenAName_RemoveAllLampsWithThatName()
         {
             List<AbstractLamp> lamps = new List<AbstractLamp>();
@@ -236,7 +234,6 @@
         }
 
         [Fact]
-
         public void When_RemoveLampIsGivenAnId_RemoveLampWithThatId()
         {
             List<AbstractLamp> lamps = new List<AbstractLamp>();
@@ -254,7 +251,6 @@
         }
 
         [Fact]
-
         public void When_RemoveLampIsGivenAPosition_RemoveLampInThatPosition()
         {
             List<AbstractLamp> lamps = new List<AbstractLamp>();
@@ -271,7 +267,6 @@
         }
 
         [Fact]
-
         public void When_SwitchOnIsGivenAnId_LampWithThatIdIsSwitchedOn()
         {
             List<AbstractLamp> lamps = new List<AbstractLamp>();
@@ -339,7 +334,6 @@
         }
 
         [Fact]
-
         public void When_AllLampSwitchOn_AllLampsAreSwitchedOn()
         {
             List<AbstractLamp> lamps = new List<AbstractLamp>();
@@ -358,7 +352,6 @@
         }
 
         [Fact]
-
         public void When_AllLampSwitchOff_AllLampsAreSwitchedOff()
         {
             List<AbstractLamp> lamps = new List<AbstractLamp>();
@@ -377,6 +370,98 @@
 
         }
 
+        [Fact]
+        public void When_WantToAddANewLampInAPosition_CanAddItOnThatPosition()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
+            AbstractLamp lamp = new Lamp("Lepri");
 
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddLamp("Stefan2");
+
+            newLampsRow.AddLampInPosition(lamp, 1);
+
+            Assert.Equal(lamp, lamps[1]);
+            Assert.Equal(DeviceStatus.Off, lamp.Status);
+        }
+
+        [Fact]
+        public void When_WantToAddANewEcoLampInAPosition_CanAddItOnThatPosition()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
+            AbstractLamp ecoLamp = new EcoLamp("Lepri");
+
+            newLampsRow.AddEcoLamp("Stefano");
+            newLampsRow.AddEcoLamp("Stefan2");
+
+            newLampsRow.AddLampInPosition(ecoLamp, 1);
+
+            Assert.Equal(ecoLamp, lamps[1]);
+            Assert.Equal(DeviceStatus.Off, ecoLamp.Status);
+        }
+
+        [Fact]
+        public void When_WantToChangeBrightnessTo25AndTheLampSelectedIs0WithItsIDButIsOff_ItCannotChangeBrightness()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddEcoLamp("Lepri");
+            Guid id = newLampsRow.Lamps[0].Id;
+            newLampsRow.SingleLampChangeBrightness(25, id);
+
+            Assert.Equal(DeviceStatus.Off, newLampsRow.Lamps[0].Status);
+            Assert.Equal(newLampsRow.Lamps[0].MinBrightness, newLampsRow.Lamps[0].Brightness);
+        }
+
+        [Fact]
+        public void When_WantToChangeBrightnessTo25AndTheLampSelectedIs0WithItsIDAndIsOn_ItCanChangeBrightness()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddEcoLamp("Lepri");
+            Guid id = newLampsRow.Lamps[0].Id;
+            newLampsRow.SwitchOn(id);
+            newLampsRow.SingleLampChangeBrightness(25, id);
+
+            Assert.Equal(DeviceStatus.On, newLampsRow.Lamps[0].Status);
+            Assert.Equal(25, newLampsRow.Lamps[0].Brightness);
+        }
+
+        [Fact]
+        public void When_WantToChangeBrightnessTo25AndTheEcoLampSelectedIs1WithItsIDButIsOff_ItCannotChangeBrightness()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddEcoLamp("Lepri");
+            Guid id = newLampsRow.Lamps[1].Id;
+            newLampsRow.SingleLampChangeBrightness(25, id);
+
+            Assert.Equal(DeviceStatus.Off, newLampsRow.Lamps[1].Status);
+            Assert.Equal(newLampsRow.Lamps[1].MinBrightness, newLampsRow.Lamps[1].Brightness);
+        }
+
+        [Fact]
+        public void When_WantToChangeBrightnessTo25AndTheEcoLampSelectedIs0WithItsIDAndIsOn_ItCanChangeBrightness()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddEcoLamp("Lepri");
+            Guid id = newLampsRow.Lamps[1].Id;
+            newLampsRow.SwitchOn(id);
+            newLampsRow.SingleLampChangeBrightness(25, id);
+
+            Assert.Equal(DeviceStatus.On, newLampsRow.Lamps[1].Status);
+            Assert.Equal(25, newLampsRow.Lamps[1].Brightness);
+        }
     }
 }
