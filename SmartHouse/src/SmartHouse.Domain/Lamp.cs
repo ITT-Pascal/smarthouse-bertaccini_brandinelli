@@ -4,26 +4,19 @@
     public class Lamp : AbstractLamp
     {       
 
-        const int MinBrightness = 0;
-        const int DefaultBrightness = 50;
-        const int MaxBrightness = 100;
+        const int ThisMinBrightness = 0;
+        const int ThisDefaultBrightness = 50;
+        const int ThisMaxBrightness = 100;
+
+        public override int MaxBrightness => ThisMaxBrightness;
+        public override int MinBrightness => ThisMinBrightness;
+        public override int DefaultBrightness => ThisDefaultBrightness;
 
         public Lamp(string name):base(name)
         {                       
         }
 
-        public override void SwitchOnOff()
-        {
-            base.SwitchOnOff();
-        }
-
-        public override void ChangeBrightness(int newBrightness)
-        {
-            if (newBrightness > MinBrightness && Status == DeviceStatus.On)
-                Brightness = Math.Min(newBrightness, MaxBrightness);
-            else
-                Status = DeviceStatus.Off;
-        }
+        
         
 
     }

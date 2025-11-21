@@ -12,9 +12,13 @@ namespace SmartHouse.Domain
         //private TimeSpan Timer = new TimeSpan(0, 1, 30, 0); // 0 day, 1 hours, 30 minutes, 0 seconds
         //private DateTime ShutOffHour;
 
-        const int MinBrightness = 0;
-        const int DefautBrightness = 30;
-        const int MaxBrightness = 70;
+        const int ThisMinBrightness = 0;
+        const int ThisDefaultBrightness = 30;
+        const int ThisMaxBrightness = 70;
+
+        public override int MaxBrightness => ThisMaxBrightness;
+        public override int MinBrightness => ThisMinBrightness;
+        public override int DefaultBrightness => ThisDefaultBrightness;
 
         public EcoLamp(string name): base(name)
         {
@@ -35,18 +39,7 @@ namespace SmartHouse.Domain
         //    //}
         //}
 
-        public override void SwitchOnOff()
-        {
-            base.SwitchOnOff();
-        }
-
-        public override void ChangeBrightness(int newBrightness)
-        {
-            if (newBrightness > MinBrightness && Status == DeviceStatus.On)
-                Brightness = Math.Min(newBrightness, MaxBrightness);
-            else
-                Status = DeviceStatus.Off;
-        }
+       
 
     }
 }
