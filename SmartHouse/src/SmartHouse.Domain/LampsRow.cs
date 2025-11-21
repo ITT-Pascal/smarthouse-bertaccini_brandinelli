@@ -96,6 +96,40 @@ namespace SmartHouse.Domain
 
         }
 
+        public void SwitchOn(string name)
+        {
+            for (int i = 0; i < Lamps.Count; i++)
+            {
+                if (Lamps[i].Name == name)
+                    Lamps[i].SwitchOn();
+            }
+        }
+
+        public void SwitchOff(string name)
+        {
+            for (int i = 0; i < Lamps.Count; i++)
+            {
+                if (Lamps[i].Name == name)
+                    Lamps[i].SwitchOff();
+            }
+        }
+
+        public void AllSwitchOn()
+        {
+            for (int i = 0; i < Lamps.Count; i++)
+            {
+                Lamps[i].SwitchOn();
+            }
+        }
+
+        public void AllSwitchOff()
+        {
+            for (int i = 0; i < Lamps.Count; i++)
+            {
+                Lamps[i].SwitchOff();
+            }
+        }
+
 
 
         public void SingleLampSwitchOnOff(string name)

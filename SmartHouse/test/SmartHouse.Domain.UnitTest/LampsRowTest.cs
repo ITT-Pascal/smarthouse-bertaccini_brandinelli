@@ -199,5 +199,148 @@
             Assert.Equal(0, newLampsRow.Lamps[0].Brightness);
             Assert.Equal(0, newLampsRow.Lamps[1].Brightness);
         }
+
+        [Fact]
+
+        public void When_RemoveLampIsGivenAName_RemoveLampWithThatName()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgo", lamps);
+            
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddLamp("Stefano2");
+            newLampsRow.RemoveLamp("Stefano");
+
+
+            Assert.Equal("Stefano2", newLampsRow.Lamps[0].Name);
+
+        }
+
+        [Fact]
+
+        public void When_RemoveLampIsGivenAName_RemoveAllLampsWithThatName()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgo", lamps);
+
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddLamp("Stefano2");
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.RemoveLamp("Stefano");
+
+
+            Assert.Equal(1, newLampsRow.Lamps.Count);
+
+        }
+
+        [Fact]
+
+        public void When_RemoveLampIsGivenAnId_RemoveLampWithThatId()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgo", lamps);
+
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddLamp("Stefano2");
+            Guid id = newLampsRow.Lamps[0].Id;
+            newLampsRow.RemoveLamp(id);
+
+
+            Assert.Equal("Stefano2", newLampsRow.Lamps[0].Name);
+
+        }
+
+        [Fact]
+
+        public void When_RemoveLampIsGivenAPosition_RemoveLampInThatPosition()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgo", lamps);
+
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddLamp("Stefano2");
+            newLampsRow.RemoveLampInPosition("Stefano", 0);
+
+
+            Assert.Equal("Stefano2", newLampsRow.Lamps[0].Name);
+
+        }
+
+        [Fact]
+
+        public void When_SwitchOnIsGivenAnId_LampWithThatIdIsSwitchedOn()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgo", lamps);
+
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddLamp("Stefano2");
+            Guid id = newLampsRow.Lamps[0].Id;
+            newLampsRow.SwitchOn(id);
+
+
+            Assert.Equal(DeviceStatus.On, newLampsRow.Lamps[0].Status);
+
+        }
+
+        [Fact]
+
+        public void When_SwitchOffIsGivenAnId_LampWithThatIdIsSwitchedOff()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgo", lamps);
+
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddLamp("Stefano2");
+            Guid id = newLampsRow.Lamps[0].Id;
+            newLampsRow.AllLampsSwitchOnOff();
+            newLampsRow.SwitchOff(id);
+
+
+            Assert.Equal(DeviceStatus.Off, newLampsRow.Lamps[0].Status);
+
+        }
+
+        [Fact]
+
+        public void When_SwitchOnIsGivenAName_LampWithThatNameIsSwitchedOn()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgo", lamps);
+
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddLamp("Stefano2");           
+            newLampsRow.SwitchOn("Stefano");
+
+
+            Assert.Equal(DeviceStatus.On, newLampsRow.Lamps[0].Status);
+
+        }
+
+        [Fact]
+
+        public void When_SwitchOffIsGivenAName_LampWithThatNameIsSwitchedOff()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgo", lamps);
+
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddLamp("Stefano2");
+            newLampsRow.SwitchOff("Stefano");
+
+
+            Assert.Equal(DeviceStatus.Off, newLampsRow.Lamps[0].Status);
+
+        }
+
+
     }
 }
