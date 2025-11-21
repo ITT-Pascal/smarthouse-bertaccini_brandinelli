@@ -341,6 +341,45 @@
 
         }
 
+        [Fact]
+
+        public void When_AllLampSwitchOn_AllLampsAreSwitchedOn()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgo", lamps);
+
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddLamp("Stefano2");
+            newLampsRow.AllSwitchOn();
+
+
+            Assert.Equal(DeviceStatus.On, newLampsRow.Lamps[0].Status);
+            Assert.Equal(DeviceStatus.On, newLampsRow.Lamps[1].Status);
+
+
+        }
+
+        [Fact]
+
+        public void When_AllLampSwitchOff_AllLampsAreSwitchedOff()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgo", lamps);
+
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddLamp("Stefano2");
+            newLampsRow.AllSwitchOn();
+            newLampsRow.AllSwitchOff();
+
+
+            Assert.Equal(DeviceStatus.Off, newLampsRow.Lamps[0].Status);
+            Assert.Equal(DeviceStatus.Off, newLampsRow.Lamps[1].Status);
+
+
+        }
+
 
     }
 }
