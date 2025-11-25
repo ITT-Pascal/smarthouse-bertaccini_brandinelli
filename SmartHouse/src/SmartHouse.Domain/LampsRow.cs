@@ -183,7 +183,131 @@ namespace SmartHouse.Domain
             }
         }
 
+        public AbstractLamp? FindLampWithMaxBrightness()
+        {
+            AbstractLamp? lamp = Lamps[0];
 
+            foreach(AbstractLamp l in Lamps)
+            {
+                if (l.Brightness > lamp.Brightness)
+                    lamp = l;
+            }
+
+            return lamp;            
+        }
+
+        public AbstractLamp? FindLampWithMinBrightness()
+        {
+            AbstractLamp? lamp = Lamps[0];
+
+            foreach (AbstractLamp l in Lamps)
+            {
+                if (l.Brightness < lamp.Brightness)
+                    lamp = l;
+            }
+
+            return lamp;
+        }
+
+        public List<AbstractLamp> FindLampsByIntensityRange(int min, int max)
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+
+            foreach(AbstractLamp l in Lamps)
+            {
+                if (l.Brightness >= min && l.Brightness <= max)
+                    lamps.Add(l);
+
+            }
+
+            return lamps;
+        }
+
+        public List<AbstractLamp> FindAllOn()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+
+            foreach(AbstractLamp l in Lamps)
+            {
+                if (l.Status == DeviceStatus.On)
+                    lamps.Add(l);
+            }
+            
+            return lamps;
+
+        }
+
+        public List<AbstractLamp> FindAllOff()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+
+            foreach (AbstractLamp l in Lamps)
+            {
+                if (l.Status == DeviceStatus.Off)
+                    lamps.Add(l);
+            }
+
+            return lamps;
+
+        }
+
+        public AbstractLamp? FindLampById(Guid id)
+        {
+            AbstractLamp? lamp = Lamps[0];
+
+            foreach(AbstractLamp l in Lamps)
+            {
+                if (l.Id == id)
+                    lamp = l;
+            }
+
+            return lamp;
+         
+        }
+
+        
+
+        public List<AbstractLamp> SortByIntensity(bool descending)
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            
+
+            if(!descending)
+            {
+                foreach (AbstractLamp l in Lamps)
+                {
+                    int count = 0;
+                    while (lamps.Contains(l) == false)
+                    {
+                        if (count == lamps.Count)
+                            lamps.Add(l);
+                        else if (l.Brightness <= lamps[count].Brightness)
+                            lamps.Insert(count, l);
+
+                        count++;
+                    }
+                   
+                }
+            } else
+            {
+                foreach (AbstractLamp l in Lamps)
+                {
+                    int count = 0;
+                    while (lamps.Contains(l) == false)
+                    {
+                        if (count == lamps.Count)
+                            lamps.Add(l);
+                        else if (l.Brightness >= lamps[count].Brightness)
+                            lamps.Insert(count, l);
+
+                        count++;
+                    }
+                }
+            }
+
+            return lamps;
+                
+        }
 
 
 

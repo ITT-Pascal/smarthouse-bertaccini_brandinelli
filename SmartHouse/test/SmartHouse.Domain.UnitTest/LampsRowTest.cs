@@ -464,5 +464,219 @@
             Assert.Equal(DeviceStatus.On, newLampsRow.Lamps[1].Status);
             Assert.Equal(25, newLampsRow.Lamps[1].Brightness);
         }
+
+        [Fact]
+
+        public void When_LampsRowHas3LampsAndThe2HasTheHighestBrightness_Return2Lamp()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddEcoLamp("Lepri");
+            newLampsRow.AddLamp("Stefanetto");
+            newLampsRow.SwitchOn("Lepri");
+            newLampsRow.SwitchOn("Stefano");
+            newLampsRow.SwitchOn("Stefanetto");
+            newLampsRow.SingleLampChangeBrightness(65, "Lepri");
+
+            Assert.Equal(newLampsRow.Lamps[1], newLampsRow.FindLampWithMaxBrightness());
+
+        }
+
+        [Fact]
+
+        public void When_LampsRowHas3LampsAndThe3HasTheHighestBrightness_Return3Lamp()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddEcoLamp("Lepri");
+            newLampsRow.AddLamp("Stefanetto");
+            newLampsRow.SwitchOn("Stefanetto");
+            newLampsRow.SwitchOn("Stefano");
+            newLampsRow.SwitchOn("Lepri");
+            newLampsRow.SingleLampChangeBrightness(65, "Stefanetto");
+
+            Assert.Equal(newLampsRow.Lamps[2], newLampsRow.FindLampWithMaxBrightness());
+
+        }
+
+        [Fact]
+
+        public void When_LampsRowHas3LampsAndThe2HasTheLowestBrightness_Return2Lamp()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddEcoLamp("Lepri");
+            newLampsRow.AddLamp("Stefanetto");
+            newLampsRow.SwitchOn("Lepri");
+            newLampsRow.SwitchOn("Stefano");
+            newLampsRow.SwitchOn("Stefanetto");
+
+            Assert.Equal(newLampsRow.Lamps[1], newLampsRow.FindLampWithMinBrightness());
+
+        }
+
+        [Fact]
+
+        public void When_LampsRowHas3LampsAndThe3HasTheLowestBrightness_Return3Lamp()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddEcoLamp("Lepri");
+            newLampsRow.AddLamp("Stefanetto");
+            newLampsRow.SwitchOn("Stefanetto");
+            newLampsRow.SwitchOn("Stefano");
+            newLampsRow.SwitchOn("Lepri");
+            newLampsRow.SingleLampChangeBrightness(25, "Stefanetto");
+
+            Assert.Equal(newLampsRow.Lamps[2], newLampsRow.FindLampWithMinBrightness());
+
+        }
+
+        [Fact]
+
+        public void When_LampsRowHas3LampsAnd2OfThemAreInsideTheBrightnessRange30_50_ReturnAListWithThose2Lamps()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddEcoLamp("Lepri");
+            newLampsRow.AddLamp("Stefanetto");
+            newLampsRow.SwitchOn("Stefanetto");
+            newLampsRow.SwitchOn("Stefano");
+            newLampsRow.SwitchOn("Lepri");
+            newLampsRow.SingleLampChangeBrightness(25, "Stefanetto");
+
+            List<AbstractLamp> lamp = new List<AbstractLamp>() { newLampsRow.Lamps[0], newLampsRow.Lamps[1] };
+
+            Assert.Equal(lamp, newLampsRow.FindLampsByIntensityRange(30, 50));
+
+
+        }
+
+
+        [Fact]
+
+        public void When_LampsRowHas3LampsAnd2OfThemAreInsideTheBrightnessRange20_30_ReturnAListWithThose2Lamps()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddEcoLamp("Lepri");
+            newLampsRow.AddLamp("Stefanetto");
+            newLampsRow.SwitchOn("Stefanetto");
+            newLampsRow.SwitchOn("Stefano");
+            newLampsRow.SwitchOn("Lepri");
+            newLampsRow.SingleLampChangeBrightness(25, "Stefanetto");
+
+            List<AbstractLamp> lamp = new List<AbstractLamp>() { newLampsRow.Lamps[1], newLampsRow.Lamps[2] };
+
+            Assert.Equal(lamp, newLampsRow.FindLampsByIntensityRange(20, 30));
+
+
+        }
+
+        [Fact]
+
+        public void When_LampsRowHas3LampsAnd2OfThemAreOn_ReturnAListWithThose2Lamps()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddEcoLamp("Lepri");
+            newLampsRow.AddLamp("Stefanetto");
+            newLampsRow.SwitchOn("Lepri");
+            newLampsRow.SwitchOn("Stefano");
+
+            List<AbstractLamp> lamp = new List<AbstractLamp>() { newLampsRow.Lamps[0], newLampsRow.Lamps[1] };
+
+            Assert.Equal(lamp, newLampsRow.FindAllOn());
+        }
+
+        [Fact]
+
+        public void When_LampsRowHas3LampsAnd1OfThemIsOff_ReturnAListWithThatLamp()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddEcoLamp("Lepri");
+            newLampsRow.AddLamp("Stefanetto");
+            newLampsRow.SwitchOn("Lepri");
+            newLampsRow.SwitchOn("Stefano");
+
+            List<AbstractLamp> lamp = new List<AbstractLamp>() { newLampsRow.Lamps[2]};
+
+            Assert.Equal(lamp, newLampsRow.FindAllOff());
+        }
+
+        [Fact]
+
+        public void When_FindLampById_ReturnCorrectLamp()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddEcoLamp("Lepri");
+            newLampsRow.AddLamp("Stefanetto");
+            Guid id = newLampsRow.Lamps[1].Id;
+
+            Assert.Equal(newLampsRow.Lamps[1], newLampsRow.FindLampById(id));
+        }
+
+        [Fact]
+
+        public void When_SortListInAscendingOrder_SortTheListCorrectly()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddEcoLamp("Lepri");
+            newLampsRow.AddLamp("Stefanetto");
+            newLampsRow.SwitchOn("Stefanetto");
+            newLampsRow.SwitchOn("Stefano");
+            newLampsRow.SwitchOn("Lepri");
+            newLampsRow.SingleLampChangeBrightness(85, "Stefanetto");
+
+            List<AbstractLamp> lamp = new List<AbstractLamp>() { newLampsRow.Lamps[1], newLampsRow.Lamps[0], newLampsRow.Lamps[2] };
+
+            Assert.Equal(lamp, newLampsRow.SortByIntensity(false));
+        }
+
+        [Fact]
+
+        public void When_SortListInDescendingOrder_SortTheListCorrectly()
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
+
+            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddEcoLamp("Lepri");
+            newLampsRow.AddLamp("Stefanetto");
+            newLampsRow.SwitchOn("Stefanetto");
+            newLampsRow.SwitchOn("Stefano");
+            newLampsRow.SwitchOn("Lepri");
+            newLampsRow.SingleLampChangeBrightness(85, "Stefanetto");
+
+            List<AbstractLamp> lamp = new List<AbstractLamp>() { newLampsRow.Lamps[2], newLampsRow.Lamps[0], newLampsRow.Lamps[1] };
+
+            Assert.Equal(lamp, newLampsRow.SortByIntensity(true));
+        }
+
+
+
     }
 }
