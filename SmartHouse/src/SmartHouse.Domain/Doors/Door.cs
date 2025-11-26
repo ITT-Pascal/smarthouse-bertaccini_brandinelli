@@ -15,7 +15,10 @@ namespace SmartHouse.Domain.Doors
         public Door(string name)
         {
             Id = Guid.NewGuid();
-            Name = name;
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentException("The name isn't valid");
+            else
+                Name = name;
             Status = DoorStatus.Closed;
         }
 

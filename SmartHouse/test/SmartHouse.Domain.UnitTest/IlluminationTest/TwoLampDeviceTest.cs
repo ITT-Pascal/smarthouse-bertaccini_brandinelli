@@ -1,6 +1,6 @@
 ﻿using SmartHouse.Domain.Illumination;
 
-namespace SmartHouse.Domain.UnitTest
+namespace SmartHouse.Domain.UnitTest.IlluminationTest
 {
     public class TwoLampDeviceTest
     {
