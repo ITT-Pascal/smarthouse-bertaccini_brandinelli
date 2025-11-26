@@ -1,4 +1,6 @@
-﻿namespace SmartHouse.Domain.UnitTest
+﻿using SmartHouse.Domain.Illumination;
+
+namespace SmartHouse.Domain.UnitTest
 {
     public class TwoLampDeviceTest
     {
