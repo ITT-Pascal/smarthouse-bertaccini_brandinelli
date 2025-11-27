@@ -22,7 +22,7 @@ namespace SmartHouse.Domain.ThermostastDevice
         public Thermostat(string name)
         {
             Id = Guid.NewGuid();
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("The name isn't valid");
             else
                 Name = name;
@@ -52,22 +52,7 @@ namespace SmartHouse.Domain.ThermostastDevice
                 throw new ArgumentException("New temperature isn't valid");
 
             Temperature = newTemperature;
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        }      
 
     }
 }

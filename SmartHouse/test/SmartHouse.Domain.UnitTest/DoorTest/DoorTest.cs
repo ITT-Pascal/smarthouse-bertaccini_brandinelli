@@ -1,5 +1,6 @@
-﻿using SmartHouse.Domain.Illumination;
-using SmartHouse.Domain.Doors;
+﻿using SmartHouse.Domain.Doors;
+using SmartHouse.Domain.Illumination;
+using SmartHouse.Domain.ThermostastDevice;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,23 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
     public class DoorTest
     {
         [Fact]
+
+        public void When_GivenANullStringAsAName_ThrowArgumentException()
+        {
+            Assert.Throws<ArgumentException>(() => new Door(null, 1234));
+        }
+
+        [Fact]
         public void When_TheNameOfTheDoorIsEmpty_TheNameIsNotValid()
         {
             Assert.Throws<ArgumentException>(() => new Door(string.Empty, 1234));
+        }
+
+        [Fact]
+
+        public void When_GivenANameThatIsOnlySpaces_ThrowArgumentException()
+        {
+            Assert.Throws<ArgumentException>(() => new Door("    ", 1234));
         }
 
         [Fact]

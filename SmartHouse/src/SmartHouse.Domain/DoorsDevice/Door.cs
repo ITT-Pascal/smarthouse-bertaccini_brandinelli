@@ -17,7 +17,7 @@ namespace SmartHouse.Domain.Doors
         public Door(string name, int pin)
         {
             Id = Guid.NewGuid();
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("The name isn't valid");
             else
                 Name = name;

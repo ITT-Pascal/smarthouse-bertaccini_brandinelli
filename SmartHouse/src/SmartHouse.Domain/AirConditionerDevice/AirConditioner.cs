@@ -1,4 +1,5 @@
 ﻿using SmartHouse.Domain.Doors;
+using SmartHouse.Domain.ThermostastDevice;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
@@ -93,6 +94,6 @@ namespace SmartHouse.Domain.AirConditionerDevice
             else
                 throw new ArgumentException("Before decreasing the fan speed you must turn on the air conditioner");
             
-        }
+        }     
     }
 }

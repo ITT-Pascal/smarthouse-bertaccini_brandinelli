@@ -5,6 +5,8 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
     public class EcoLampTest
     {
 
+        
+
         [Fact]
         public void When_BrightnessIsNegative_BrightnessRemainsZero()
         {
@@ -139,6 +141,8 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             Assert.Equal(40, newEcoLamp.Brightness);
             Assert.Equal(DeviceStatus.On, newEcoLamp.Status);
         }
+
+        
     }
 
 }
