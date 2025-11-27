@@ -13,13 +13,7 @@ namespace SmartHouse.Domain.AirConditionerDevice
         public Guid Id { get; set; }
         public string Name { get; set; }
         public AirConditionerStatus Status { get; set; }
-        public double Temperature { get; set; }
         public FanSpeed FanSpeed { get; set; }
-
-        public double MinTemperature { get; } = 16.0;
-        public double DefaulTemperature { get; } = 20.0;
-        public double MaxTemperature { get; } = 26.0;
-        public double DefaultJump { get;}= 0.1;
 
         public AirConditioner(string name)
         {
@@ -29,72 +23,23 @@ namespace SmartHouse.Domain.AirConditionerDevice
             else
                 Name = name;
             Status = AirConditionerStatus.Off;
-            Temperature = DefaulTemperature;
             FanSpeed = FanSpeed.Medium;
         }
 
-        public void TurnOn() => Status = AirConditionerStatus.On;
-
-        public void TurnOff() => Status = AirConditionerStatus.Off;
-
-        public void IncreaseTemperature()
+        public void TurnOn()
         {
             if (Status == AirConditionerStatus.On)
-                Temperature += DefaultJump;
+                throw new ArgumentException("Before turning the air conditioner on you must turn off it");
             else
-                throw new ArgumentException("Before increasing the temperature you must turn on the air conditioner");
+                Status = AirConditionerStatus.On;
         }
 
-        public void IncreaseTemperature(double temperature)
+        public void TurnOff()
         {
-            if (Status == AirConditionerStatus.On)
-            {
-                var increasedTemperature = Temperature + temperature;
-                if (increasedTemperature >= MaxTemperature)
-                    Temperature = MaxTemperature;
-                else
-                    Temperature = increasedTemperature;
-            }
+            if (Status == AirConditionerStatus.Off)
+                throw new ArgumentException("Before turning the air conditioner off you must turn on it");
             else
-                throw new ArgumentException("Before increasing the temperature you must turn on the air conditioner");
-        }
-
-        public void DecreaseTemperature(double temperature)
-        {
-            if (Status == AirConditionerStatus.On)
-            {
-                var decreasedTemperature = Temperature - temperature;
-                if (decreasedTemperature <= MinTemperature)
-                    Temperature = MinTemperature;
-                else
-                    Temperature = decreasedTemperature;
-            }
-            else
-                throw new ArgumentException("Before decreasing the temperature you must turn on the air conditioner");
-        }
-
-        public void DecreaseTemperature()
-        {
-            if (Status == AirConditionerStatus.On)
-                Temperature -= DefaultJump;
-            else
-                throw new ArgumentException("Before decreasing the temperature you must turn on the air conditioner");
-        }
-
-        public void SetMaxTemperature()
-        {
-            if (Status == AirConditionerStatus.On)
-                Temperature = MaxTemperature;
-            else
-                throw new ArgumentException("Before setting to the max temperature you must turn on the air conditioner");
-        }
-
-        public void SetMinTemperature()
-        {
-            if (Status == AirConditionerStatus.On)
-                Temperature = MinTemperature;
-            else
-                throw new ArgumentException("Before setting to the min temperature you must turn on the air conditioner");
+                Status = AirConditionerStatus.Off;
         }
 
         public void SetFanSpeedLow()

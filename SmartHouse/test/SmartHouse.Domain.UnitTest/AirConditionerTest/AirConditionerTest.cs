@@ -27,6 +27,16 @@ namespace SmartHouse.Domain.UnitTest.AirConditionerTest
         }
 
         [Fact]
+        public void When_TheAirConditionerIsOn_CannotTurnOnIt()
+        {
+            AirConditioner newAirConditioner = new AirConditioner("Pino");
+
+            newAirConditioner.TurnOn();
+
+            Assert.Throws<ArgumentException>(() => newAirConditioner.TurnOn());
+        }
+
+        [Fact]
         public void When_TheAirConditionerIsOn_CanTurnOffIt()
         {
             AirConditioner newAirConditioner = new AirConditioner("Pino");
@@ -38,154 +48,13 @@ namespace SmartHouse.Domain.UnitTest.AirConditionerTest
         }
 
         [Fact]
-        public void When_TheAirConditionerIsOffAndWantToIncreaseTemperature_CannotIncreaseIt()
+        public void When_TheAirConditionerIsOff_CannotTurnOffIt()
         {
             AirConditioner newAirConditioner = new AirConditioner("Pino");
 
-            Assert.Throws<ArgumentException>(() => newAirConditioner.IncreaseTemperature());
-            Assert.Equal(AirConditionerStatus.Off, newAirConditioner.Status);
+            Assert.Throws<ArgumentException>(() => newAirConditioner.TurnOff());
         }
 
-        [Fact]
-        public void When_TheAirConditionerIsOnAndWantToIncreaseTemperature_CanIncreaseIt()
-        {
-            AirConditioner newAirConditioner = new AirConditioner("Pino");
-
-            newAirConditioner.TurnOn();
-            newAirConditioner.IncreaseTemperature();
-
-            Assert.Equal(20.1, newAirConditioner.Temperature);
-            Assert.Equal(AirConditionerStatus.On, newAirConditioner.Status);
-        }
-
-        [Fact]
-        public void When_TheAirConditionerIsOffAndWantToDecreaseTemperature_CannotDecreaseIt()
-        {
-            AirConditioner newAirConditioner = new AirConditioner("Pino");
-
-            Assert.Throws<ArgumentException>(() => newAirConditioner.DecreaseTemperature());
-            Assert.Equal(AirConditionerStatus.Off, newAirConditioner.Status);
-        }
-
-        [Fact]
-        public void When_TheAirConditionerIsOnAndWantToDecreaseTemperature_CanDecreaseIt()
-        {
-            AirConditioner newAirConditioner = new AirConditioner("Pino");
-
-            newAirConditioner.TurnOn();
-            newAirConditioner.DecreaseTemperature();
-
-            Assert.Equal(19.9, newAirConditioner.Temperature);
-            Assert.Equal(AirConditionerStatus.On, newAirConditioner.Status);
-        }
-
-        [Fact]
-        public void When_TheAirConditionerIsOffAndWantToIncreaseTemperatureTo22_CannotIncreaseIt()
-        {
-            AirConditioner newAirConditioner = new AirConditioner("Pino");
-
-            Assert.Throws<ArgumentException>(() => newAirConditioner.IncreaseTemperature(2.0));
-            Assert.Equal(AirConditionerStatus.Off, newAirConditioner.Status);
-        }
-
-        [Fact]
-        public void When_TheAirConditionerIsOnAndWantToIncreaseTemperatureTo22_CanIncreaseIt()
-        {
-            AirConditioner newAirConditioner = new AirConditioner("Pino");
-
-            newAirConditioner.TurnOn();
-            newAirConditioner.IncreaseTemperature(2.0);
-
-            Assert.Equal(22.0, newAirConditioner.Temperature);
-            Assert.Equal(AirConditionerStatus.On, newAirConditioner.Status);
-        }
-
-        [Fact]
-        public void When_TheAirConditionerIsOnAndWantToIncreaseTemperatureToTheMax_CanIncreaseIt()
-        {
-            AirConditioner newAirConditioner = new AirConditioner("Pino");
-
-            newAirConditioner.TurnOn();
-            newAirConditioner.IncreaseTemperature(20.0);
-
-            Assert.Equal(newAirConditioner.MaxTemperature, newAirConditioner.Temperature);
-            Assert.Equal(AirConditionerStatus.On, newAirConditioner.Status);
-        }
-
-        [Fact]
-        public void When_TheAirConditionerIsOffAndWantToDecreaseTemperatureTo18_CannotDecreaseIt()
-        {
-            AirConditioner newAirConditioner = new AirConditioner("Pino");
-
-            Assert.Throws<ArgumentException>(() => newAirConditioner.DecreaseTemperature(2.0));
-            Assert.Equal(AirConditionerStatus.Off, newAirConditioner.Status);
-        }
-
-        [Fact]
-        public void When_TheAirConditionerIsOnAndWantToDecreaseTemperatureTo18_CanDecreaseIt()
-        {
-            AirConditioner newAirConditioner = new AirConditioner("Pino");
-
-            newAirConditioner.TurnOn();
-            newAirConditioner.DecreaseTemperature(2.0);
-
-            Assert.Equal(18.0, newAirConditioner.Temperature);
-            Assert.Equal(AirConditionerStatus.On, newAirConditioner.Status);
-        }
-
-        [Fact]
-        public void When_TheAirConditionerIsOnAndWantToDecreaseTemperatureToTheMin_CanDecreaseIt()
-        {
-            AirConditioner newAirConditioner = new AirConditioner("Pino");
-
-            newAirConditioner.TurnOn();
-            newAirConditioner.DecreaseTemperature(20.0);
-
-            Assert.Equal(newAirConditioner.MinTemperature, newAirConditioner.Temperature);
-            Assert.Equal(AirConditionerStatus.On, newAirConditioner.Status);
-        }
-
-        [Fact]
-        public void When_TheAirConditionerIsOffAndWantToSetItOnMaxTemperature_CannotDoIt()
-        {
-            AirConditioner newAirConditioner = new AirConditioner("Pino");
-
-            Assert.Throws<ArgumentException>(() => newAirConditioner.SetMaxTemperature());
-            Assert.Equal(AirConditionerStatus.Off, newAirConditioner.Status);
-        }
-
-        [Fact]
-        public void When_TheAirConditionerIsOnAndWantToSetItOnMaxTemperature_CanDoIt()
-        {
-            AirConditioner newAirConditioner = new AirConditioner("Pino");
-
-            newAirConditioner.TurnOn();
-            newAirConditioner.SetMaxTemperature();
-
-            Assert.Equal(newAirConditioner.MaxTemperature, newAirConditioner.Temperature);
-            Assert.Equal(AirConditionerStatus.On, newAirConditioner.Status);
-        }
-
-        [Fact]
-        public void When_TheAirConditionerIsOffAndWantToSetItOnMinTemperature_CannotDoIt()
-        {
-            AirConditioner newAirConditioner = new AirConditioner("Pino");
-
-            Assert.Throws<ArgumentException>(() => newAirConditioner.SetMinTemperature());
-            Assert.Equal(AirConditionerStatus.Off, newAirConditioner.Status);
-        }
-
-        [Fact]
-        public void When_TheAirConditionerIsOnAndWantToSetItOnMinTemperature_CanDoIt()
-        {
-            AirConditioner newAirConditioner = new AirConditioner("Pino");
-
-            newAirConditioner.TurnOn();
-            newAirConditioner.SetMinTemperature();
-
-            Assert.Equal(newAirConditioner.MinTemperature, newAirConditioner.Temperature);
-            Assert.Equal(AirConditionerStatus.On, newAirConditioner.Status);
-        }
 
         [Fact]
         public void When_TheAirConditionerIsOffAndWantToSetItOnLowFanSpeed_CannotDoIt()
