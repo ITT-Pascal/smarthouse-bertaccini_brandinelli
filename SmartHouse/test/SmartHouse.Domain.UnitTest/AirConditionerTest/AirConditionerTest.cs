@@ -1,4 +1,5 @@
 ﻿using SmartHouse.Domain.Doors;
+using SmartHouse.Domain.Abstractions;
 using SmartHouse.Domain.AirConditionerDevice;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace SmartHouse.Domain.UnitTest.AirConditionerTest
 
             newAirConditioner.TurnOn();
 
-            Assert.Equal(AirConditionerStatus.On, newAirConditioner.Status);
+            Assert.Equal(DeviceStatus.On, newAirConditioner.Status);
         }
 
         [Fact]
@@ -44,7 +45,7 @@ namespace SmartHouse.Domain.UnitTest.AirConditionerTest
             newAirConditioner.TurnOn();
             newAirConditioner.TurnOff();
 
-            Assert.Equal(AirConditionerStatus.Off, newAirConditioner.Status);
+            Assert.Equal(DeviceStatus.Off, newAirConditioner.Status);
         }
 
         [Fact]
@@ -62,7 +63,7 @@ namespace SmartHouse.Domain.UnitTest.AirConditionerTest
             AirConditioner newAirConditioner = new AirConditioner("Pino");
 
             Assert.Throws<ArgumentException>(() => newAirConditioner.SetFanSpeedLow());
-            Assert.Equal(AirConditionerStatus.Off, newAirConditioner.Status);
+            Assert.Equal(DeviceStatus.Off, newAirConditioner.Status);
         }
 
         [Fact]
@@ -74,7 +75,7 @@ namespace SmartHouse.Domain.UnitTest.AirConditionerTest
             newAirConditioner.SetFanSpeedLow();
 
             Assert.Equal(FanSpeed.Low, newAirConditioner.FanSpeed);
-            Assert.Equal(AirConditionerStatus.On, newAirConditioner.Status);
+            Assert.Equal(DeviceStatus.On, newAirConditioner.Status);
         }
 
         [Fact]
@@ -83,7 +84,7 @@ namespace SmartHouse.Domain.UnitTest.AirConditionerTest
             AirConditioner newAirConditioner = new AirConditioner("Pino");
 
             Assert.Throws<ArgumentException>(() => newAirConditioner.SetFanSpeedMedium());
-            Assert.Equal(AirConditionerStatus.Off, newAirConditioner.Status);
+            Assert.Equal(DeviceStatus.Off, newAirConditioner.Status);
         }
 
         [Fact]
@@ -95,7 +96,7 @@ namespace SmartHouse.Domain.UnitTest.AirConditionerTest
             newAirConditioner.SetFanSpeedMedium();
 
             Assert.Equal(FanSpeed.Medium, newAirConditioner.FanSpeed);
-            Assert.Equal(AirConditionerStatus.On, newAirConditioner.Status);
+            Assert.Equal(DeviceStatus.On, newAirConditioner.Status);
         }
 
         [Fact]
@@ -104,7 +105,7 @@ namespace SmartHouse.Domain.UnitTest.AirConditionerTest
             AirConditioner newAirConditioner = new AirConditioner("Pino");
 
             Assert.Throws<ArgumentException>(() => newAirConditioner.SetFanSpeedHigh());
-            Assert.Equal(AirConditionerStatus.Off, newAirConditioner.Status);
+            Assert.Equal(DeviceStatus.Off, newAirConditioner.Status);
         }
 
         [Fact]
@@ -116,7 +117,7 @@ namespace SmartHouse.Domain.UnitTest.AirConditionerTest
             newAirConditioner.SetFanSpeedHigh();
 
             Assert.Equal(FanSpeed.High, newAirConditioner.FanSpeed);
-            Assert.Equal(AirConditionerStatus.On, newAirConditioner.Status);
+            Assert.Equal(DeviceStatus.On, newAirConditioner.Status);
         }
 
         [Fact]
@@ -125,7 +126,7 @@ namespace SmartHouse.Domain.UnitTest.AirConditionerTest
             AirConditioner newAirConditioner = new AirConditioner("Pino");
 
             Assert.Throws<ArgumentException>(() => newAirConditioner.IncreaseFanSpeed());
-            Assert.Equal(AirConditionerStatus.Off, newAirConditioner.Status);
+            Assert.Equal(DeviceStatus.Off, newAirConditioner.Status);
             Assert.Equal(FanSpeed.Medium, newAirConditioner.FanSpeed);
         }
 
@@ -137,7 +138,7 @@ namespace SmartHouse.Domain.UnitTest.AirConditionerTest
             newAirConditioner.TurnOn();
             newAirConditioner.IncreaseFanSpeed();
 
-            Assert.Equal(AirConditionerStatus.On, newAirConditioner.Status);
+            Assert.Equal(DeviceStatus.On, newAirConditioner.Status);
             Assert.Equal(FanSpeed.High, newAirConditioner.FanSpeed);
         }
 
@@ -150,7 +151,7 @@ namespace SmartHouse.Domain.UnitTest.AirConditionerTest
             newAirConditioner.IncreaseFanSpeed();
 
             Assert.Throws<ArgumentException>(() => newAirConditioner.IncreaseFanSpeed());
-            Assert.Equal(AirConditionerStatus.On, newAirConditioner.Status);
+            Assert.Equal(DeviceStatus.On, newAirConditioner.Status);
             Assert.Equal(FanSpeed.High, newAirConditioner.FanSpeed);
         }
 
@@ -160,7 +161,7 @@ namespace SmartHouse.Domain.UnitTest.AirConditionerTest
             AirConditioner newAirConditioner = new AirConditioner("Pino");
 
             Assert.Throws<ArgumentException>(() => newAirConditioner.DecreaseFanSpeed());
-            Assert.Equal(AirConditionerStatus.Off, newAirConditioner.Status);
+            Assert.Equal(DeviceStatus.Off, newAirConditioner.Status);
             Assert.Equal(FanSpeed.Medium, newAirConditioner.FanSpeed);
         }
 
@@ -172,7 +173,7 @@ namespace SmartHouse.Domain.UnitTest.AirConditionerTest
             newAirConditioner.TurnOn();
             newAirConditioner.DecreaseFanSpeed();
 
-            Assert.Equal(AirConditionerStatus.On, newAirConditioner.Status);
+            Assert.Equal(DeviceStatus.On, newAirConditioner.Status);
             Assert.Equal(FanSpeed.Low, newAirConditioner.FanSpeed);
         }
 
@@ -185,7 +186,7 @@ namespace SmartHouse.Domain.UnitTest.AirConditionerTest
             newAirConditioner.DecreaseFanSpeed();
 
             Assert.Throws<ArgumentException>(() => newAirConditioner.DecreaseFanSpeed());
-            Assert.Equal(AirConditionerStatus.On, newAirConditioner.Status);
+            Assert.Equal(DeviceStatus.On, newAirConditioner.Status);
             Assert.Equal(FanSpeed.Low, newAirConditioner.FanSpeed);
         }
     }

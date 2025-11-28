@@ -1,4 +1,5 @@
-﻿using SmartHouse.Domain.Doors;
+﻿using SmartHouse.Domain.Abstractions;
+using SmartHouse.Domain.Doors;
 using SmartHouse.Domain.ThermostastDevice;
 using System;
 using System.Collections.Generic;
@@ -9,43 +10,34 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.Domain.AirConditionerDevice
 {
-    public class AirConditioner
+    public class AirConditioner: AbstractDevice 
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public AirConditionerStatus Status { get; set; }
         public FanSpeed FanSpeed { get; set; }
 
-        public AirConditioner(string name)
+        public AirConditioner(string name): base(name)
         {
-            Id = Guid.NewGuid();
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentException("The name isn't valid");
-            else
-                Name = name;
-            Status = AirConditionerStatus.Off;
             FanSpeed = FanSpeed.Medium;
         }
 
         public void TurnOn()
         {
-            if (Status == AirConditionerStatus.On)
+            if (Status == DeviceStatus.On)
                 throw new ArgumentException("Before turning the air conditioner on you must turn off it");
             else
-                Status = AirConditionerStatus.On;
+                Status = DeviceStatus.On;
         }
 
         public void TurnOff()
         {
-            if (Status == AirConditionerStatus.Off)
+            if (Status == DeviceStatus.Off)
                 throw new ArgumentException("Before turning the air conditioner off you must turn on it");
             else
-                Status = AirConditionerStatus.Off;
+                Status = DeviceStatus.Off;
         }
 
         public void SetFanSpeedLow()
         {
-            if (Status == AirConditionerStatus.On)
+            if (Status == DeviceStatus.On)
                 FanSpeed = FanSpeed.Low;
             else
                 throw new ArgumentException("Before setting the fan speed to low you must turn on the air conditioner");
@@ -53,7 +45,7 @@ namespace SmartHouse.Domain.AirConditionerDevice
 
         public void SetFanSpeedMedium()
         {
-            if (Status == AirConditionerStatus.On)
+            if (Status == DeviceStatus.On)
                 FanSpeed = FanSpeed.Medium;
             else
                 throw new ArgumentException("Before setting the fan speed to medium you must turn on the air conditioner");
@@ -61,7 +53,7 @@ namespace SmartHouse.Domain.AirConditionerDevice
 
         public void SetFanSpeedHigh()
         {
-            if (Status == AirConditionerStatus.On)
+            if (Status == DeviceStatus.On)
                 FanSpeed = FanSpeed.High;
             else
                 throw new ArgumentException("Before setting the fan speed to high you must turn on the air conditioner");
@@ -69,7 +61,7 @@ namespace SmartHouse.Domain.AirConditionerDevice
 
         public void IncreaseFanSpeed()
         {
-            if (Status == AirConditionerStatus.On)
+            if (Status == DeviceStatus.On)
                 if (FanSpeed == FanSpeed.Low)
                     FanSpeed = FanSpeed.Medium;
                 else if (FanSpeed == FanSpeed.Medium)
@@ -84,7 +76,7 @@ namespace SmartHouse.Domain.AirConditionerDevice
 
         public void DecreaseFanSpeed()
         {
-            if (Status == AirConditionerStatus.On)
+            if (Status == DeviceStatus.On)
                 if (FanSpeed == FanSpeed.High)
                     FanSpeed = FanSpeed.Medium;
                 else if (FanSpeed == FanSpeed.Medium)
