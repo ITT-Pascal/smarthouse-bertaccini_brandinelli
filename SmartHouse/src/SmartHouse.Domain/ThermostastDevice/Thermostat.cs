@@ -8,11 +8,8 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.Domain.ThermostastDevice
 {
-    public class Thermostat
+    public class Thermostat: AbstractDevice
     {
-        public Guid Id { get; private set; }
-        public string Name { get; private set; }
-        public DeviceStatus Status { get; private set; }
         public double Temperature { get; private set; }
 
         public const double MinTemperature = 15;
@@ -20,13 +17,8 @@ namespace SmartHouse.Domain.ThermostastDevice
         public const double MaxTemperature = 30;
         public const double DefaultJump = 0.1;
 
-        public Thermostat(string name)
+        public Thermostat(string name): base(name)
         {
-            Id = Guid.NewGuid();
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("The name isn't valid");
-            else
-                Name = name;
             Status = DeviceStatus.On;
             Temperature = DefaultTemperature;
         }

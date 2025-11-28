@@ -1,4 +1,5 @@
 ﻿using System;
+using SmartHouse.Domain.Abstractions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -7,32 +8,26 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.Domain.Doors
 {
-    public class Door
+    public class Door: AbstractDevice
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
         public int PIN { get; set; }
-        public DoorStatus Status { get; set; }
+        public DoorStatus DoorStatus { get; set; }
 
-        public Door(string name, int pin)
+        public Door(string name, int pin): base(name)
         {
-            Id = Guid.NewGuid();
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("The name isn't valid");
-            else
-                Name = name;
             if (pin < 4)
                 throw new ArgumentException("PIN must have at least 4 digits");
             else
                 PIN = pin;
-            Status = DoorStatus.Closed;
+            DoorStatus = DoorStatus.Closed;
+            Status = DeviceStatus.Unknown;
         }
 
         public void OpenDoor()
         {
-            if (Status == DoorStatus.Closed)
-                Status = DoorStatus.Open;
-            else if (Status == DoorStatus.Locked)
+            if (DoorStatus == DoorStatus.Closed)
+                DoorStatus = DoorStatus.Open;
+            else if (DoorStatus == DoorStatus.Locked)
                 throw new ArgumentException("The door must be unlocked before being opened");
             else
                 throw new ArgumentException("The door must be closed before being opened");
@@ -40,16 +35,16 @@ namespace SmartHouse.Domain.Doors
 
         public void CloseDoor()
         {
-            if (Status == DoorStatus.Open)
-                Status = DoorStatus.Closed;
+            if (DoorStatus == DoorStatus.Open)
+                DoorStatus = DoorStatus.Closed;
             else
                 throw new ArgumentException("The door must be open before being closed");
         }
 
         public void LockDoor()
         {
-            if (Status == DoorStatus.Closed)
-                Status = DoorStatus.Locked;
+            if (DoorStatus == DoorStatus.Closed)
+                DoorStatus = DoorStatus.Locked;
             else
                 throw new ArgumentException("The door must be closed before being locked");
 
@@ -59,8 +54,8 @@ namespace SmartHouse.Domain.Doors
         {
             if (PIN == pin)
             {
-                if (Status == DoorStatus.Locked)
-                    Status = DoorStatus.Closed;
+                if (DoorStatus == DoorStatus.Locked)
+                    DoorStatus = DoorStatus.Closed;
                 else
                     throw new ArgumentException("The door must be locked before being unlocked");
             }
