@@ -1,4 +1,5 @@
 ﻿using SmartHouse.Domain.Illumination;
+using SmartHouse.Domain.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

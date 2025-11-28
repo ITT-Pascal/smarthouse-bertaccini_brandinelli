@@ -1,4 +1,5 @@
 ﻿using SmartHouse.Domain.Illumination;
+using SmartHouse.Domain.Abstractions;
 
 namespace SmartHouse.Domain.UnitTest.IlluminationTest
 {
