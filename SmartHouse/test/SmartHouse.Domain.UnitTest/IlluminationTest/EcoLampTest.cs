@@ -143,7 +143,36 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             Assert.Equal(DeviceStatus.On, newEcoLamp.Status);
         }
 
-        
+        [Fact]
+        public void CheckAutoOff_ShouldTurnOff_WhenTimeHasElapsed()
+        {
+            var lamp = new EcoLamp("Eco Lamp");
+            lamp.SwitchOn();
+
+            // Simula il passare del tempo
+            typeof(EcoLamp)
+                .GetField("autoOffAtUtc", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                ?.SetValue(lamp, DateTime.UtcNow.AddMinutes(-1));
+
+            lamp.CheckAutoOff();
+
+            Assert.Equal(DeviceStatus.Off, lamp.Status);
+            Assert.Equal(lamp.MinBrightness, lamp.Brightness);
+        }
+
+        [Fact]
+        public void CheckAutoOff_ShouldNotTurnOff_WhenTimeNotElapsed()
+        {
+            var lamp = new EcoLamp("Eco Lamp");
+            lamp.SwitchOn();
+
+            lamp.CheckAutoOff();
+
+            Assert.Equal(DeviceStatus.On, lamp.Status);
+            Assert.Equal(lamp.DefaultBrightness, lamp.Brightness);
+        }
+
+
     }
 
 }
