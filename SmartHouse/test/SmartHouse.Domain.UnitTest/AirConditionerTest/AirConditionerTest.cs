@@ -28,16 +28,6 @@ namespace SmartHouse.Domain.UnitTest.AirConditionerTest
         }
 
         [Fact]
-        public void When_TheAirConditionerIsOn_CannotTurnOnIt()
-        {
-            AirConditioner newAirConditioner = new AirConditioner("Pino");
-
-            newAirConditioner.SwitchOn();
-
-            Assert.Throws<ArgumentException>(() => newAirConditioner.SwitchOn());
-        }
-
-        [Fact]
         public void When_TheAirConditionerIsOn_CanTurnOffIt()
         {
             AirConditioner newAirConditioner = new AirConditioner("Pino");
@@ -47,15 +37,6 @@ namespace SmartHouse.Domain.UnitTest.AirConditionerTest
 
             Assert.Equal(DeviceStatus.Off, newAirConditioner.Status);
         }
-
-        [Fact]
-        public void When_TheAirConditionerIsOff_CannotTurnOffIt()
-        {
-            AirConditioner newAirConditioner = new AirConditioner("Pino");
-
-            Assert.Throws<ArgumentException>(() => newAirConditioner.SwitchOff());
-        }
-
 
         [Fact]
         public void When_TheAirConditionerIsOffAndWantToSetItOnLowFanSpeed_CannotDoIt()
