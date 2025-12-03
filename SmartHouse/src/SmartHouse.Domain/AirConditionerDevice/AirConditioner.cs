@@ -19,22 +19,6 @@ namespace SmartHouse.Domain.AirConditionerDevice
             FanSpeed = FanSpeed.Medium;
         }
 
-        public void TurnOn()
-        {
-            if (Status == DeviceStatus.On)
-                throw new ArgumentException("Before turning the air conditioner on you must turn off it");
-            else
-                Status = DeviceStatus.On;
-        }
-
-        public void TurnOff()
-        {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Before turning the air conditioner off you must turn on it");
-            else
-                Status = DeviceStatus.Off;
-        }
-
         public void SetFanSpeedLow()
         {
             if (Status == DeviceStatus.On)
