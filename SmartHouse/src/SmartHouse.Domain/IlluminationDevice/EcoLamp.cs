@@ -9,9 +9,6 @@ namespace SmartHouse.Domain.Illumination
 {
     public class EcoLamp : AbstractLamp
     {
-        
-       
-
         const int ThisMinBrightness = 0;
         const int ThisDefaultBrightness = 30;
         const int ThisMaxBrightness = 70;
@@ -25,9 +22,7 @@ namespace SmartHouse.Domain.Illumination
         public override int MinBrightness => ThisMinBrightness;
         public override int DefaultBrightness => ThisDefaultBrightness;
 
-        public EcoLamp(string name): base(name)
-        {
-        }       
+        public EcoLamp(string name): base(name) { } 
 
         public override void SwitchOn()
         {
@@ -90,8 +85,5 @@ namespace SmartHouse.Domain.Illumination
             if (autoOffAtUtc.HasValue)
                 autoOffAtUtc = DateTime.UtcNow.AddMinutes(DefaultAutoOffMinutes);
         }
-
-
-
     }
 }

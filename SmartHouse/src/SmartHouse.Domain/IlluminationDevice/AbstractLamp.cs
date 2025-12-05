@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.Domain
 {
-    public abstract class AbstractLamp: AbstractDevice
+    public abstract class AbstractLamp : AbstractDevice
     {      
         public int Brightness { get; protected set; }      
         public abstract int MinBrightness {get; }
@@ -17,7 +17,7 @@ namespace SmartHouse.Domain
 
         private const int DefaultStep = 10;
         
-        public AbstractLamp(string name): base(name)
+        public AbstractLamp(string name) : base(name)
         {          
             Brightness = 0;          
         }
@@ -28,8 +28,7 @@ namespace SmartHouse.Domain
             {
                 base.SwitchOn();
                 Brightness = DefaultBrightness;
-            }
-                            
+            }             
         }
 
         public override void SwitchOff()
@@ -39,9 +38,6 @@ namespace SmartHouse.Domain
                 base.SwitchOff();
                 Brightness = MinBrightness;
             }
-                
-
-           
         }
 
         public virtual void Dimmer()
@@ -50,8 +46,7 @@ namespace SmartHouse.Domain
             {
                 Brightness = Math.Max(MinBrightness, Brightness - DefaultStep);
                 LastUpdateTime = DateTime.UtcNow;
-            }
-               
+            }  
         }
 
         public virtual void Brighten()
@@ -60,8 +55,7 @@ namespace SmartHouse.Domain
             {
                 Brightness = Math.Min(MaxBrightness, Brightness + DefaultStep);
                 LastUpdateTime = DateTime.UtcNow;
-            }
-                
+            }  
         }
 
         public virtual void SwitchOnOff()
@@ -87,13 +81,6 @@ namespace SmartHouse.Domain
                 Brightness = Math.Min(newBrightness, MaxBrightness);
                 LastUpdateTime = DateTime.UtcNow;
             }
-                
-
         }
-
-        
-        
-
-
     }
 }

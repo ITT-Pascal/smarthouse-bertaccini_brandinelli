@@ -14,7 +14,7 @@ namespace SmartHouse.Domain.AirConditionerDevice
     {
         public FanSpeed FanSpeed { get; set; }
 
-        public AirConditioner(string name): base(name)
+        public AirConditioner(string name) : base(name)
         {
             FanSpeed = FanSpeed.Medium;
         }
@@ -54,8 +54,6 @@ namespace SmartHouse.Domain.AirConditionerDevice
                     throw new ArgumentException("The fan speed is already at maximum");
             else
                 throw new ArgumentException("Before increasing the fan speed you must turn on the air conditioner");
-
-            
         }
 
         public void DecreaseFanSpeed()
@@ -69,7 +67,6 @@ namespace SmartHouse.Domain.AirConditionerDevice
                     throw new ArgumentException("The fan speed is already at minimum");
             else
                 throw new ArgumentException("Before decreasing the fan speed you must turn on the air conditioner");
-            
         }     
     }
 }

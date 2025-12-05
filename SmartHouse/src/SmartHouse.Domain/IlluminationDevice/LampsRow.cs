@@ -130,18 +130,15 @@ namespace SmartHouse.Domain.Illumination
                 Lamps[i].SwitchOff();
             }
         }
-
-
-
         public void SingleLampSwitchOnOff(string name)
         {
-           for(int i = 0; i<Lamps.Count;i++)
-           {
+            for(int i = 0; i<Lamps.Count;i++)
+            {
                 if (Lamps[i].Name == name)
                 {
                     Lamps[i].SwitchOnOff();
                 }
-           }
+            }
         }
 
         public void SingleLampChangeBrightness(int newbrightness, string name)
@@ -173,16 +170,15 @@ namespace SmartHouse.Domain.Illumination
             {
                 Lamps[i].SwitchOnOff();
             }
-
         }
 
        public void AllLampsChangeBrightness(int newBrightness)
-        {
+       {
             for (int i = 0; i < Lamps.Count; i++)
             {               
                 Lamps[i].ChangeBrightness(newBrightness);
             }
-        }
+       }
 
         public AbstractLamp? FindLampWithMaxBrightness()
         {
@@ -218,7 +214,6 @@ namespace SmartHouse.Domain.Illumination
             {
                 if (l.Brightness >= min && l.Brightness <= max)
                     lamps.Add(l);
-
             }
 
             return lamps;
@@ -235,7 +230,6 @@ namespace SmartHouse.Domain.Illumination
             }
             
             return lamps;
-
         }
 
         public List<AbstractLamp> FindAllOff()
@@ -249,7 +243,6 @@ namespace SmartHouse.Domain.Illumination
             }
 
             return lamps;
-
         }
 
         public AbstractLamp? FindLampById(Guid id)
@@ -266,14 +259,11 @@ namespace SmartHouse.Domain.Illumination
          
         }
 
-        
-
         public List<AbstractLamp> SortByIntensity(bool descending)
         {
             List<AbstractLamp> lamps = new List<AbstractLamp>();
-            
 
-            if(!descending)
+            if (!descending)
             {
                 foreach (AbstractLamp l in Lamps)
                 {
@@ -287,9 +277,10 @@ namespace SmartHouse.Domain.Illumination
 
                         count++;
                     }
-                   
+
                 }
-            } else
+            }
+            else
             {
                 foreach (AbstractLamp l in Lamps)
                 {

@@ -35,7 +35,6 @@ namespace SmartHouse.Domain.Abstractions
                 Status = DeviceStatus.On;
                 LastUpdateTime = DateTime.UtcNow;
             }
-
         }
 
         public virtual void SwitchOff()
