@@ -4,7 +4,7 @@ using SmartHouse.Domain.Abstractions;
 namespace SmartHouse.Domain.UnitTest.IlluminationTest
 {
     public class LampsRowTest
-    {
+    {      
 
         [Fact]
         public void When_TryToAddANewEcoLamp_CanAddANewEcoLamp()

@@ -149,7 +149,6 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             var lamp = new EcoLamp("Eco Lamp");
             lamp.SwitchOn();
 
-            // Simula il passare del tempo
             typeof(EcoLamp)
                 .GetField("autoOffAtUtc", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
                 ?.SetValue(lamp, DateTime.UtcNow.AddMinutes(-1));
