@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartHouse.Domain.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -157,6 +158,122 @@ namespace SmartHouse.Domain.IlluminationDevice
                 if (i.Name == name)
                     i.SwitchOnOff();
             }
+        }
+
+        public void AllLampsChangeBrightness(int newbrightness)
+        {
+            foreach(AbstractLamp lamp in Lamps)
+            {
+                lamp.ChangeBrightness(newbrightness);
+            }
+        }
+
+        public void SingleLampChangeBrightness(int newbrightness, string name)
+        {
+            foreach(AbstractLamp lamp in Lamps)
+            {
+                if (lamp.Name == name)
+                    lamp.ChangeBrightness(newbrightness);
+            }
+        }
+
+        public void SingleLampChangeBrightness(int newbrightness, Guid id)
+        {
+            foreach (AbstractLamp lamp in Lamps)
+            {
+                if (lamp.Id == id)
+                    lamp.ChangeBrightness(newbrightness);
+            }
+        }
+
+        public AbstractLamp? FindLampWithMaxBrightness()
+        {
+            AbstractLamp? lamp = Lamps[0, 0];
+
+            foreach(AbstractLamp l in Lamps)
+            {
+                if (l.Brightness > lamp.Brightness)
+                    lamp = l;
+            }
+
+            return lamp;
+        }
+
+        public AbstractLamp? FindLampWithMinBrightness()
+        {
+            AbstractLamp? lamp = Lamps[0, 0];
+
+            foreach (AbstractLamp l in Lamps)
+            {
+                if (l.Brightness < lamp.Brightness)
+                    lamp = l;
+            }
+
+            return lamp;
+        }
+
+        public AbstractLamp[,] FindLampByIntensityRange(int min, int max)
+        {
+            AbstractLamp[,] lamps = new AbstractLamp[Lamps.GetLength(0) , Lamps.GetLength(1)];
+
+            for(int r = 0; r<Lamps.GetLength(0); r++)
+            {
+                for(int c = 0; c<Lamps.GetLength(1); c++)
+                {
+                    if (Lamps[r, c].Brightness >= min && Lamps[r, c].Brightness <= max)
+                        lamps[r, c] = Lamps[r, c];
+                }
+            }
+
+            return lamps;
+        }
+
+        public AbstractLamp[,] FindAllOn()
+        {
+            AbstractLamp[,] lamps = new AbstractLamp[Lamps.GetLength(0), Lamps.GetLength(1)];
+
+            for (int r = 0; r < Lamps.GetLength(0); r++)
+            {
+                for (int c = 0; c < Lamps.GetLength(1); c++)
+                {
+                    if (Lamps[r, c].Status == DeviceStatus.On)
+                        lamps[r, c] = Lamps[r, c];
+                }
+            }
+
+            return lamps;
+        }
+
+        public AbstractLamp[,] FindAllOff()
+        {
+            AbstractLamp[,] lamps = new AbstractLamp[Lamps.GetLength(0), Lamps.GetLength(1)];
+
+            for (int r = 0; r < Lamps.GetLength(0); r++)
+            {
+                for (int c = 0; c < Lamps.GetLength(1); c++)
+                {
+                    if (Lamps[r, c].Status == DeviceStatus.Off)
+                        lamps[r, c] = Lamps[r, c];
+                }
+            }
+
+            return lamps;
+        }
+
+        public AbstractLamp? FindLampById(Guid id)
+        {
+            AbstractLamp? lamp = Lamps[0,0];
+
+            for (int r = 0; r < Lamps.GetLength(0); r++)
+            {
+                for (int c = 0; c < Lamps.GetLength(1); c++)
+                {
+                    if (Lamps[r, c].Id == id)
+                        lamp = Lamps[r, c];
+                }
+            }
+
+            return lamp;
         }
     }
 }
