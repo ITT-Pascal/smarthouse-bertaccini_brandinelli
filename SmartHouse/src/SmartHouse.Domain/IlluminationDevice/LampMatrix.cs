@@ -275,5 +275,10 @@ namespace SmartHouse.Domain.IlluminationDevice
 
             return lamp;
         }
+
+        public AbstractLamp[,] SortByIntensity(bool descending)
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+        }
     }
 }
