@@ -1,4 +1,5 @@
 ﻿using SmartHouse.Domain.Abstractions;
+using SmartHouse.Domain.Illumination;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -276,9 +277,45 @@ namespace SmartHouse.Domain.IlluminationDevice
             return lamp;
         }
 
-        public AbstractLamp[,] SortByIntensity(bool descending)
+        public List<AbstractLamp> SortByIntensity(bool descending)
         {
             List<AbstractLamp> lamps = new List<AbstractLamp>();
+
+            if (!descending)
+            {
+                foreach (AbstractLamp l in Lamps)
+                {
+                    int count = 0;
+                    while (lamps.Contains(l) == false)
+                    {
+                        if (count == lamps.Count)
+                            lamps.Add(l);
+                        else if (l.Brightness <= lamps[count].Brightness)
+                            lamps.Insert(count, l);
+
+                        count++;
+                    }
+
+                }
+            }
+            else
+            {
+                foreach (AbstractLamp l in Lamps)
+                {
+                    int count = 0;
+                    while (lamps.Contains(l) == false)
+                    {
+                        if (count == lamps.Count)
+                            lamps.Add(l);
+                        else if (l.Brightness >= lamps[count].Brightness)
+                            lamps.Insert(count, l);
+
+                        count++;
+                    }
+                }
+            }
+
+            return lamps;
         }
     }
 }
