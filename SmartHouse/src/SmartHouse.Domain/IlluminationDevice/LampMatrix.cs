@@ -36,9 +36,9 @@ namespace SmartHouse.Domain.IlluminationDevice
                 throw new ArgumentException("The matrix of lamps is alredy full");
 
             bool flag = false;
-            for(int r = 0; r<Lamps.GetLength(0) || !flag; r++)
+            for(int r = 0; r<Lamps.GetLength(0) && !flag; r++)
             {
-                for(int c = 0; c<Lamps.GetLength(1) || !flag; c++)
+                for(int c = 0; c<Lamps.GetLength(1) && !flag; c++)
                 {
                     if (Lamps[r,c] == null)
                     {

@@ -14,12 +14,28 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
         public void When_WantToAddANewLamp_CanDoIt()
         {
             AbstractLamp[,] lamps = new AbstractLamp[3, 3];
-            Lamp newLamp = new Lamp("Stefano");
+            AbstractLamp newLamp = new Lamp("Stefano");
             LampMatrix newLampMatrix = new LampMatrix("Sasha", lamps);
 
             newLampMatrix.AddLamp(newLamp);
 
-            
+            Assert.Equal(newLamp, newLampMatrix.Lamps[0,0]);
+        }
+
+        [Fact]
+
+        public void When_WantToAdd2NewLamps_CanDoIt()
+        {
+            AbstractLamp[,] lamps = new AbstractLamp[3, 3];
+            AbstractLamp newLamp = new Lamp("Stefano");
+            AbstractLamp newEcoLamp = new EcoLamp("Lepri");
+            LampMatrix newlampMatrix = new LampMatrix("Sasha", lamps);
+
+            newlampMatrix.AddLamp(newLamp);
+            newlampMatrix.AddLamp(newEcoLamp);
+
+            Assert.Equal(newLamp, newlampMatrix.Lamps[0, 0]);
+            Assert.Equal(newEcoLamp, newlampMatrix.Lamps[0, 1]);
         }
     }
 }
