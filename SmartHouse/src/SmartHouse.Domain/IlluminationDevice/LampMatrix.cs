@@ -75,9 +75,12 @@ namespace SmartHouse.Domain.IlluminationDevice
             {
                 for(int c = 0; c<Lamps.GetLength(1); c++)
                 {
-                    if (Lamps[r,c].Name == name)
+                    if (Lamps[r,c] != null)
                     {
-                        Lamps[r,c] = null;                     
+                        if (Lamps[r, c].Name == name)
+                        {
+                            Lamps[r, c] = null;
+                        }
                     }
                 }
             }
@@ -89,9 +92,12 @@ namespace SmartHouse.Domain.IlluminationDevice
             {
                 for (int c = 0; c < Lamps.GetLength(1); c++)
                 {
-                    if (Lamps[r, c].Id == id)
+                    if (Lamps[r,c] != null)
                     {
-                        Lamps[r, c] = null;
+                        if (Lamps[r, c].Id == id)
+                        {
+                            Lamps[r, c] = null;
+                        }
                     }
                 }
             }
@@ -106,8 +112,11 @@ namespace SmartHouse.Domain.IlluminationDevice
         {
             foreach(AbstractLamp i in Lamps)
             {
-                if (i.Name == name)
-                    i.SwitchOn();
+                if (i != null)
+                {
+                    if (i.Name == name)
+                        i.SwitchOn();
+                }
             }
         }
 
@@ -115,8 +124,11 @@ namespace SmartHouse.Domain.IlluminationDevice
         {
             foreach (AbstractLamp i in Lamps)
             {
-                if (i.Id == id)
-                    i.SwitchOn();
+                if (i != null)
+                {
+                    if (i.Id == id)
+                        i.SwitchOn();
+                }
             }
         }
 
@@ -124,8 +136,11 @@ namespace SmartHouse.Domain.IlluminationDevice
         {
             foreach (AbstractLamp i in Lamps)
             {
-                if (i.Name == name)
-                    i.SwitchOff();
+                if (i != null)
+                {
+                    if (i.Name == name)
+                        i.SwitchOff();
+                }
             }
         }
 
@@ -133,31 +148,49 @@ namespace SmartHouse.Domain.IlluminationDevice
         {
             foreach (AbstractLamp i in Lamps)
             {
-                if (i.Id == id)
-                    i.SwitchOff();
+                if (i != null)
+                {
+                    if (i.Id == id)
+                        i.SwitchOff();
+                }
             }
         }
 
         public void AllSwitchOn()
         {
-            foreach(AbstractLamp i in Lamps) { i.SwitchOn(); }
+            foreach(AbstractLamp i in Lamps) 
+            {
+                if (i != null)
+                    i.SwitchOn();
+            }
         }
         public void AllSwitchOff()
         {
-            foreach (AbstractLamp i in Lamps) { i.SwitchOff(); }
+            foreach (AbstractLamp i in Lamps)
+            {
+                if (i != null)
+                    i.SwitchOff();
+            }
         }
 
         public void AllLampsSwitchOnOff()
         {
-            foreach(AbstractLamp i in Lamps) { i.SwitchOnOff(); }
+            foreach (AbstractLamp i in Lamps)
+            {
+                if (i != null)
+                    i.SwitchOnOff();
+            }
         }
 
         public void SingleLampSwitchOnOff(string name)
         {
             foreach(AbstractLamp i in Lamps)
             {
-                if (i.Name == name)
-                    i.SwitchOnOff();
+                if (i != null)
+                {
+                    if (i.Name == name)
+                        i.SwitchOnOff();
+                }
             }
         }
 
@@ -165,7 +198,8 @@ namespace SmartHouse.Domain.IlluminationDevice
         {
             foreach(AbstractLamp lamp in Lamps)
             {
-                lamp.ChangeBrightness(newbrightness);
+                if (lamp != null)
+                    lamp.ChangeBrightness(newbrightness);
             }
         }
 
@@ -173,8 +207,11 @@ namespace SmartHouse.Domain.IlluminationDevice
         {
             foreach(AbstractLamp lamp in Lamps)
             {
-                if (lamp.Name == name)
-                    lamp.ChangeBrightness(newbrightness);
+                if (lamp != null)
+                {
+                    if (lamp.Name == name)
+                        lamp.ChangeBrightness(newbrightness);
+                }
             }
         }
 
@@ -182,8 +219,11 @@ namespace SmartHouse.Domain.IlluminationDevice
         {
             foreach (AbstractLamp lamp in Lamps)
             {
-                if (lamp.Id == id)
-                    lamp.ChangeBrightness(newbrightness);
+                if (lamp != null)
+                {
+                    if (lamp.Id == id)
+                        lamp.ChangeBrightness(newbrightness);
+                }
             }
         }
 
@@ -193,8 +233,11 @@ namespace SmartHouse.Domain.IlluminationDevice
 
             foreach(AbstractLamp l in Lamps)
             {
-                if (l.Brightness > lamp.Brightness)
-                    lamp = l;
+                if (l != null)
+                {
+                    if (l.Brightness > lamp.Brightness)
+                        lamp = l;
+                }
             }
 
             return lamp;
@@ -206,8 +249,11 @@ namespace SmartHouse.Domain.IlluminationDevice
 
             foreach (AbstractLamp l in Lamps)
             {
-                if (l.Brightness < lamp.Brightness)
-                    lamp = l;
+                if (l != null)
+                {
+                    if (l.Brightness < lamp.Brightness)
+                        lamp = l;
+                }
             }
 
             return lamp;
@@ -221,8 +267,9 @@ namespace SmartHouse.Domain.IlluminationDevice
             {
                 for(int c = 0; c<Lamps.GetLength(1); c++)
                 {
-                    if (Lamps[r, c].Brightness >= min && Lamps[r, c].Brightness <= max)
-                        lamps[r, c] = Lamps[r, c];
+                    if (Lamps[r,c] != null)
+                        if (Lamps[r, c].Brightness >= min && Lamps[r, c].Brightness <= max)
+                            lamps[r, c] = Lamps[r, c];
                 }
             }
 
@@ -237,8 +284,9 @@ namespace SmartHouse.Domain.IlluminationDevice
             {
                 for (int c = 0; c < Lamps.GetLength(1); c++)
                 {
-                    if (Lamps[r, c].Status == DeviceStatus.On)
-                        lamps[r, c] = Lamps[r, c];
+                    if (Lamps[r,c] != null)    
+                        if (Lamps[r, c].Status == DeviceStatus.On)
+                            lamps[r, c] = Lamps[r, c];
                 }
             }
 
@@ -253,8 +301,9 @@ namespace SmartHouse.Domain.IlluminationDevice
             {
                 for (int c = 0; c < Lamps.GetLength(1); c++)
                 {
-                    if (Lamps[r, c].Status == DeviceStatus.Off)
-                        lamps[r, c] = Lamps[r, c];
+                    if (Lamps[r,c] != null)
+                        if (Lamps[r, c].Status == DeviceStatus.Off)
+                            lamps[r, c] = Lamps[r, c];
                 }
             }
 
@@ -269,8 +318,9 @@ namespace SmartHouse.Domain.IlluminationDevice
             {
                 for (int c = 0; c < Lamps.GetLength(1); c++)
                 {
-                    if (Lamps[r, c].Id == id)
-                        lamp = Lamps[r, c];
+                    if (Lamps[r,c] != null)
+                        if (Lamps[r, c].Id == id)
+                            lamp = Lamps[r, c];
                 }
             }
 
@@ -286,16 +336,18 @@ namespace SmartHouse.Domain.IlluminationDevice
                 foreach (AbstractLamp l in Lamps)
                 {
                     int count = 0;
-                    while (lamps.Contains(l) == false)
+                    if (l != null)
                     {
-                        if (count == lamps.Count)
-                            lamps.Add(l);
-                        else if (l.Brightness <= lamps[count].Brightness)
-                            lamps.Insert(count, l);
+                        while (lamps.Contains(l) == false)
+                        {
+                            if (count == lamps.Count)
+                                lamps.Add(l);
+                            else if (l.Brightness <= lamps[count].Brightness)
+                                lamps.Insert(count, l);
 
-                        count++;
+                            count++;
+                        }
                     }
-
                 }
             }
             else
@@ -303,14 +355,17 @@ namespace SmartHouse.Domain.IlluminationDevice
                 foreach (AbstractLamp l in Lamps)
                 {
                     int count = 0;
-                    while (lamps.Contains(l) == false)
+                    if (l != null)
                     {
-                        if (count == lamps.Count)
-                            lamps.Add(l);
-                        else if (l.Brightness >= lamps[count].Brightness)
-                            lamps.Insert(count, l);
+                        while (lamps.Contains(l) == false)
+                        {
+                            if (count == lamps.Count)
+                                lamps.Add(l);
+                            else if (l.Brightness >= lamps[count].Brightness)
+                                lamps.Insert(count, l);
 
-                        count++;
+                            count++;
+                        }
                     }
                 }
             }
