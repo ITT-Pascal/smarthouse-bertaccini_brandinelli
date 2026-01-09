@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SmartHouse.Domain.Abstractions;
+using SmartHouse.Domain.IlluminationDevice;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.Domain.Illumination
 {
-    public class TwoLampDevice
+    public class TwoLampDevice : ILampGroup
     {
         public AbstractLamp Lamp1 { get; private set; }
         public AbstractLamp Lamp2 { get; private set; }
@@ -107,6 +109,24 @@ namespace SmartHouse.Domain.Illumination
             {
                 Lamp2.ChangeBrightness(newBrightness);
             }
+        }
+
+        public void AllSwitchOn()
+        {
+            Lamp1.SwitchOn();
+            Lamp2.SwitchOn();
+        }
+
+        public void AllSwitchOff()
+        {
+            Lamp1.SwitchOff();
+            Lamp2.SwitchOff();
+        }
+
+        public void AllLampsSwitchOnOff()
+        {
+            Lamp1.SwitchOnOff();
+            Lamp2.SwitchOnOff();
         }
     }
 }

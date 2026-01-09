@@ -1,4 +1,5 @@
 ﻿using SmartHouse.Domain.Abstractions;
+using SmartHouse.Domain.IlluminationDevice;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Xml.Linq;
 
 namespace SmartHouse.Domain.Illumination
 {
-    public class LampsRow
+    public class LampsRow : ILampGroup
     {
         public List<AbstractLamp> Lamps { get; private set; }
         public string Name { get; private set; }
@@ -19,21 +20,6 @@ namespace SmartHouse.Domain.Illumination
             Lamps = lamps;
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Il nome non è valido");
-
-
-            //Tests must be adapted for this to work
-            //if (lamps == null)
-            //    throw new ArgumentNullException(nameof(lamps));
-
-            //foreach (var lamp in lamps)
-            //{
-            //    if (lamp == null)
-            //        throw new ArgumentException("La lampada non è valida");
-
-            //    Lamps.Add(lamp);
-
-
-            //}
         }
 
         public void AddLamp(string name)

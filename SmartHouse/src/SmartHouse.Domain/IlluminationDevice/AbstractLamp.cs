@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SmartHouse.Domain.IlluminationDevice;
 
 namespace SmartHouse.Domain
 {
-    public abstract class AbstractLamp : AbstractDevice
+    public abstract class AbstractLamp : AbstractDevice, ILamp
     {      
         public int Brightness { get; protected set; }      
         public abstract int MinBrightness {get; }
