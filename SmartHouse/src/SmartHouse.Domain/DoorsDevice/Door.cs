@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.Domain.Doors
 {
-    public class Door: AbstractDevice, IDevice
+    public class Door: AbstractDevice
     {
         public int PIN { get; set; }
         public DoorStatus DoorStatus { get; set; }
@@ -22,6 +22,9 @@ namespace SmartHouse.Domain.Doors
             DoorStatus = DoorStatus.Closed;
             Status = DeviceStatus.Unknown;
         }
+
+        public override void SwitchOn() { }
+        public override void SwitchOff() { }
 
         public void OpenDoor()
         {

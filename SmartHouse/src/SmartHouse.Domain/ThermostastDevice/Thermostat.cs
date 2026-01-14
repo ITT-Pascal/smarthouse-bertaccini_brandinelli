@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.Domain.ThermostastDevice
 {
-    public class Thermostat: AbstractDevice, IDevice
+    public class Thermostat: AbstractDevice 
     {
         public double Temperature { get; private set; }
 
@@ -22,6 +22,9 @@ namespace SmartHouse.Domain.ThermostastDevice
             Status = DeviceStatus.On;
             Temperature = DefaultTemperature;
         }
+
+        public override void SwitchOn() { }
+        public override void SwitchOff() { }
 
         public void IncreaseTemperature()
         {

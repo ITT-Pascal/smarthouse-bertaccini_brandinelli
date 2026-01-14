@@ -470,6 +470,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
         {
             TwoLampDevice newTwoLampDevice = new TwoLampDevice(testLamp, testEcoLamp);
 
+            newTwoLampDevice.AllSwitchOn();
             newTwoLampDevice.AllSwitchOff();
 
             Assert.Equal(DeviceStatus.Off, newTwoLampDevice.Lamp1.Status);

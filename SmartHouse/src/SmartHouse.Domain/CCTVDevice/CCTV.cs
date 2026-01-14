@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace SmartHouse.Domain.CCTVDevice
 {
-    public class CCTV : AbstractDevice, IDevice
+    public class CCTV : AbstractDevice
     {
         public CCTVVisionType VisionType { get; set; }
         public double Zoom { get; set; }
