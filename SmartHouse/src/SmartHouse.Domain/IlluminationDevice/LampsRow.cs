@@ -285,16 +285,5 @@ namespace SmartHouse.Domain.Illumination
 
             return lamps;
         }
-
-
-
-        
-
-        
-
-
-
-
-
     }
 }

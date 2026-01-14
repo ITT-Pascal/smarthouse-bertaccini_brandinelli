@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.Domain.AirConditionerDevice
 {
-    public class AirConditioner: AbstractDevice 
+    public class AirConditioner: AbstractDevice, IDevice
     {
         public FanSpeed FanSpeed { get; set; }
 

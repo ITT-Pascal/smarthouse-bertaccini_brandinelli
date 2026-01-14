@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.Domain.Doors
 {
-    public class Door: AbstractDevice
+    public class Door: AbstractDevice, IDevice
     {
         public int PIN { get; set; }
         public DoorStatus DoorStatus { get; set; }
