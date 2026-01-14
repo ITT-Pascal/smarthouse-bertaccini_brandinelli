@@ -454,6 +454,51 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             Assert.Equal(newTwoLampDevice.Lamp2.MinBrightness, newTwoLampDevice.Lamp2.Brightness);
         }
 
+        [Fact]
+        public void When_WantToSwitchBothLampsOn_CanDoIt()
+        {
+            TwoLampDevice newTwoLampDevice = new TwoLampDevice(testLamp, testEcoLamp);
+
+            newTwoLampDevice.AllSwitchOn();
+
+            Assert.Equal(DeviceStatus.On, newTwoLampDevice.Lamp1.Status);
+            Assert.Equal(DeviceStatus.On, newTwoLampDevice.Lamp2.Status);
+        }
+
+        [Fact]
+        public void When_WantToSwitchBothLampsOff_CanDoIt()
+        {
+            TwoLampDevice newTwoLampDevice = new TwoLampDevice(testLamp, testEcoLamp);
+
+            newTwoLampDevice.AllSwitchOff();
+
+            Assert.Equal(DeviceStatus.Off, newTwoLampDevice.Lamp1.Status);
+            Assert.Equal(DeviceStatus.Off, newTwoLampDevice.Lamp2.Status);
+        }
+
+        [Fact]
+        public void When_WantToToggleBothLampsOn_CanDoIt()
+        {
+            TwoLampDevice newTwoLampDevice = new TwoLampDevice(testLamp, testEcoLamp);
+
+            newTwoLampDevice.AllLampsSwitchOnOff();
+
+            Assert.Equal(DeviceStatus.On, newTwoLampDevice.Lamp1.Status);
+            Assert.Equal(DeviceStatus.On, newTwoLampDevice.Lamp2.Status);
+        }
+
+        [Fact]
+        public void When_WantToToggleBothLampsOff_CanDoIt()
+        {
+            TwoLampDevice newTwoLampDevice = new TwoLampDevice(testLamp, testEcoLamp);
+
+            newTwoLampDevice.AllSwitchOn();
+            newTwoLampDevice.AllLampsSwitchOnOff();
+
+            Assert.Equal(DeviceStatus.Off, newTwoLampDevice.Lamp1.Status);
+            Assert.Equal(DeviceStatus.Off, newTwoLampDevice.Lamp2.Status);
+        }
+
 
 
 
