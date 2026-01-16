@@ -12,7 +12,6 @@ namespace SmartHouse.Domain.Doors
     public class Door: AbstractDevice, ILockable, IOpenable
     {
         public int PIN { get; set; }
-        public DoorStatus DoorStatus { get; set; }
         public bool IsLocked { get; private set; }
         public bool IsOpen { get; private set; }
 
@@ -22,15 +21,16 @@ namespace SmartHouse.Domain.Doors
                 throw new ArgumentException("PIN must have at least 4 digits");
             else
                 PIN = pin;
-            DoorStatus = DoorStatus.Closed;
+            IsOpen = false;
+            IsLocked = true;
             Status = DeviceStatus.Unknown;
         }       
 
         public void Open()
         {
-            if (DoorStatus == DoorStatus.Closed)
-                DoorStatus = DoorStatus.Open;
-            else if (DoorStatus == DoorStatus.Locked)
+            if (IsOpen == false && IsLocked == false)
+                IsOpen = true;
+            else if (IsLocked == true)
                 throw new ArgumentException("The door must be unlocked before being opened");
             else
                 throw new ArgumentException("The door must be closed before being opened");
@@ -38,16 +38,16 @@ namespace SmartHouse.Domain.Doors
 
         public void Close()
         {
-            if (DoorStatus == DoorStatus.Open)
-                DoorStatus = DoorStatus.Closed;
+            if (IsOpen == true)
+                IsOpen = false;
             else
                 throw new ArgumentException("The door must be open before being closed");
         }
 
         public void Lock()
         {
-            if (DoorStatus == DoorStatus.Closed)
-                DoorStatus = DoorStatus.Locked;
+            if (IsOpen == false && IsLocked == false)
+                IsLocked = true;
             else
                 throw new ArgumentException("The door must be closed before being locked");
 
@@ -55,15 +55,15 @@ namespace SmartHouse.Domain.Doors
 
         public void Unlock(int pin)
         {
-            if (PIN == pin)
+            if (IsLocked == true)
             {
-                if (DoorStatus == DoorStatus.Locked)
-                    DoorStatus = DoorStatus.Closed;
+                if (PIN == pin)
+                    IsLocked = false;
                 else
-                    throw new ArgumentException("The door must be locked before being unlocked");
+                    throw new ArgumentException("The wrong pin was entered");
             }
             else
-                throw new ArgumentException("The wrong PIN was entered. Please try again");
+                throw new ArgumentException("The door must be locked before being unlocked");
         }
 
     }
