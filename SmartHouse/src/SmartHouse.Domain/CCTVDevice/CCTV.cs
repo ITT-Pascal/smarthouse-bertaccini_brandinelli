@@ -79,28 +79,26 @@ namespace SmartHouse.Domain.CCTVDevice
             }
         }
 
-        public void SetDefaultVision()
+       public void SetVision(CCTVVisionType type)
         {
-            if (VisionType == CCTVVisionType.DefaultVision)
-                throw new ArgumentException("Vision type is already set as default");
+            switch (type)
+            {
+                case CCTVVisionType.DefaultVision:
+                    if(VisionType == type) { throw new ArgumentException("Vision type is alredy set at default"); }
+                    VisionType = type;
+                    break;
+                case CCTVVisionType.NightVision:
+                    if (VisionType == type) { throw new ArgumentException("Vision type is alredy set at night vision"); }
+                    VisionType = type;
+                    break;
+                case CCTVVisionType.ThermalVision:
+                    if (VisionType == type) { throw new ArgumentException("Vision type is alredy set at thermal vision"); }
+                    VisionType = type;
+                    break;
+                default:
+                    throw new ArgumentException("Entered vision type does not exist");
+            }
 
-            VisionType = CCTVVisionType.DefaultVision;
-        }
-
-        public void SetNightVision()
-        {
-            if (VisionType == CCTVVisionType.NightVision)
-                throw new ArgumentException("Vision type is already set as night vision");
-
-            VisionType = CCTVVisionType.NightVision;
-        }
-
-        public void SetThermalVision()
-        {
-            if (VisionType == CCTVVisionType.ThermalVision)
-                throw new ArgumentException("Vision type is already set as thermal vision");
-
-            VisionType = CCTVVisionType.ThermalVision;
         }
 
         public void SetMinZoom()
