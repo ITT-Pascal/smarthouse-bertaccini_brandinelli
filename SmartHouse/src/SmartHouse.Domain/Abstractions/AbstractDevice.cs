@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.Domain.Abstractions
 {
-    public abstract class AbstractDevice : IDevice
+    public abstract class AbstractDevice : ISwitchable
     {
         public Guid Id { get; protected set; }
         public string Name { get; protected set; }

@@ -5,13 +5,16 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using SmartHouse.Domain.DoorsDevice;
 
 namespace SmartHouse.Domain.Doors
 {
-    public class Door: AbstractDevice
+    public class Door: AbstractDevice, ILockable, IOpenable
     {
         public int PIN { get; set; }
         public DoorStatus DoorStatus { get; set; }
+        public bool IsLocked { get; private set; }
+        public bool IsOpen { get; private set; }
 
         public Door(string name, int pin): base(name)
         {
@@ -21,10 +24,7 @@ namespace SmartHouse.Domain.Doors
                 PIN = pin;
             DoorStatus = DoorStatus.Closed;
             Status = DeviceStatus.Unknown;
-        }
-
-        public override void SwitchOn() { }
-        public override void SwitchOff() { }
+        }       
 
         public void Open()
         {

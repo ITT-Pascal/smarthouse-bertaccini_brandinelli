@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.Domain.IlluminationDevice
 {
-    public interface ILamp : IDevice
+    public interface ILamp : ISwitchable
     {
         void Dimmer();
-        void Brighten();
-        void SwitchOnOff();
+        void Brighten();       
         void ChangeBrightness(int newBrightness);
     }
 }
