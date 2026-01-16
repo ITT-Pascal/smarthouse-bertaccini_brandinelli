@@ -45,5 +45,17 @@ namespace SmartHouse.Domain.Abstractions
                 LastUpdateTime = DateTime.UtcNow;
             }
         }
+
+        public virtual void SwitchOnOff()
+        {
+            if (Status == DeviceStatus.On)
+            {
+                SwitchOff();
+            }
+            else if (Status == DeviceStatus.Off)
+            {
+                SwitchOn();
+            }
+        }
     }
 }
