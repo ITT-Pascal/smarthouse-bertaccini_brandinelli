@@ -1,6 +1,6 @@
 ﻿namespace SmartHouse.Domain.Illumination
 {
-    public class Lamp : AbstractLamp
+    public sealed class Lamp : AbstractLamp
     {       
         const int ThisMinBrightness = 0;
         const int ThisDefaultBrightness = 50;

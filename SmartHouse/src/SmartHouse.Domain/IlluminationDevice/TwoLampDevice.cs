@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.Domain.Illumination
 {
-    public class TwoLampDevice : ILampGroup
+    public sealed class TwoLampDevice : ILampGroup
     {
         public AbstractLamp Lamp1 { get; private set; }
         public AbstractLamp Lamp2 { get; private set; }

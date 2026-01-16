@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace SmartHouse.Domain.CCTVDevice
 {
-    public class CCTV : AbstractDevice
+    public sealed class CCTV : AbstractDevice, ILockable
     {
         public CCTVVisionType VisionType { get; set; }
         public double Zoom { get; set; }
@@ -16,11 +16,67 @@ namespace SmartHouse.Domain.CCTVDevice
         public const double DefaultZoom = 1.0;
         public const double MaxZoom = 10.0;
         public const double DefaultJump = 0.1;
+        public int? PIN { get; private set; }
+        public bool IsLocked { get; private set; }
         
         public CCTV(string name) : base(name)
         {
             VisionType = CCTVVisionType.DefaultVision;
             Zoom = DefaultZoom;
+            IsLocked = false;
+        }
+
+        public CCTV(string name, int pin) : base (name)
+        {
+            VisionType = CCTVVisionType.DefaultVision;
+            Zoom = DefaultZoom;
+            IsLocked = true;
+            if (pin.ToString().Length < 4)
+                throw new ArgumentException("PIN must have at least 4 digits");
+            else
+                PIN = pin;
+        }
+
+        public void Unlock(int pin)
+        {
+            if(IsLocked == true)
+            {
+                if(PIN == pin)
+                {
+                    IsLocked = false;
+                }else
+                {
+                    throw new ArgumentException("The wrong pin was inserted");
+                }
+            }
+            else
+            {
+                throw new ArgumentException("The CCTV is alredy unlocked");
+            }
+        }
+
+        public void Lock()
+        {
+            if(IsLocked == false && PIN != null)
+            {
+                IsLocked = true;
+            }
+            else
+            {
+                throw new ArgumentException("The CCTV is alredy locked or isn't lockable");
+            }
+        }
+
+        public override void SwitchOn()
+        {
+            if (IsLocked == false)
+            {
+                base.SwitchOn();
+            }
+            else
+            {
+                throw new ArgumentException("The CCTV must be unlocked before being turned on");
+            }
         }
 
         public void SetDefaultVision()

@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace SmartHouse.Domain.Illumination
 {
-    public class LampsRow : ILampGroup
+    public sealed class LampsRow : ILampGroup
     {
         public List<AbstractLamp> Lamps { get; private set; }
         public string Name { get; private set; }

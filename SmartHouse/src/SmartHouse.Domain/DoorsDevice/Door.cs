@@ -9,7 +9,7 @@ using SmartHouse.Domain.DoorsDevice;
 
 namespace SmartHouse.Domain.Doors
 {
-    public class Door: AbstractDevice, ILockable, IOpenable
+    public sealed class Door: AbstractDevice, ILockable, IOpenable
     {
         public int PIN { get; set; }
         public bool IsLocked { get; private set; }

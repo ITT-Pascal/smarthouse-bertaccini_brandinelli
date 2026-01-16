@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.Domain.ThermostastDevice
 {
-    public class Thermostat: AbstractDevice 
+    public sealed class Thermostat: AbstractDevice 
     {
         public double Temperature { get; private set; }
 

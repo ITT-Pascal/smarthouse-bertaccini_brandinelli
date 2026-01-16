@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.Domain.Illumination
 {
-    public class EcoLamp : AbstractLamp
+    public sealed class EcoLamp : AbstractLamp
     {
         const int ThisMinBrightness = 0;
         const int ThisDefaultBrightness = 30;
