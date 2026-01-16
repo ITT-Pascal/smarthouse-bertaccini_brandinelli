@@ -1,6 +1,5 @@
 ﻿namespace SmartHouse.Domain.Illumination
 {
-    //Commit ba
     public class Lamp : AbstractLamp
     {       
         const int ThisMinBrightness = 0;

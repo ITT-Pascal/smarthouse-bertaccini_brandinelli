@@ -26,7 +26,7 @@ namespace SmartHouse.Domain.Doors
         public override void SwitchOn() { }
         public override void SwitchOff() { }
 
-        public void OpenDoor()
+        public void Open()
         {
             if (DoorStatus == DoorStatus.Closed)
                 DoorStatus = DoorStatus.Open;
@@ -36,7 +36,7 @@ namespace SmartHouse.Domain.Doors
                 throw new ArgumentException("The door must be closed before being opened");
         }
 
-        public void CloseDoor()
+        public void Close()
         {
             if (DoorStatus == DoorStatus.Open)
                 DoorStatus = DoorStatus.Closed;
@@ -44,7 +44,7 @@ namespace SmartHouse.Domain.Doors
                 throw new ArgumentException("The door must be open before being closed");
         }
 
-        public void LockDoor()
+        public void Lock()
         {
             if (DoorStatus == DoorStatus.Closed)
                 DoorStatus = DoorStatus.Locked;
@@ -53,7 +53,7 @@ namespace SmartHouse.Domain.Doors
 
         }
 
-        public void UnlockDoor(int pin)
+        public void Unlock(int pin)
         {
             if (PIN == pin)
             {

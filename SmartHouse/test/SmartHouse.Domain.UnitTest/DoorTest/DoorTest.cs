@@ -43,7 +43,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         {
             Door newDoor = new Door("Giovanni", 1234);
 
-            newDoor.OpenDoor();
+            newDoor.Open();
 
             Assert.Equal(DoorStatus.Open, newDoor.DoorStatus);
             Assert.Equal(DeviceStatus.Unknown, newDoor.Status);
@@ -54,9 +54,9 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         {
             Door newDoor = new Door("Giovanni", 1234);
 
-            newDoor.LockDoor();
+            newDoor.Lock();
 
-            Assert.Throws<ArgumentException>(() => newDoor.OpenDoor());
+            Assert.Throws<ArgumentException>(() => newDoor.Open());
             Assert.Equal(DoorStatus.Locked, newDoor.DoorStatus);
             Assert.Equal(DeviceStatus.Unknown, newDoor.Status);
         }
@@ -66,8 +66,8 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         {
             Door newDoor = new Door("Giovanni", 1234);
 
-            newDoor.OpenDoor();
-            newDoor.CloseDoor();
+            newDoor.Open();
+            newDoor.Close();
 
             Assert.Equal(DoorStatus.Closed, newDoor.DoorStatus);
             Assert.Equal(DeviceStatus.Unknown, newDoor.Status);
@@ -78,9 +78,9 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         {
             Door newDoor = new Door("Giovanni", 1234);
 
-            newDoor.OpenDoor();
+            newDoor.Open();
 
-            Assert.Throws<ArgumentException>(() => newDoor.LockDoor());
+            Assert.Throws<ArgumentException>(() => newDoor.Lock());
             Assert.Equal(DoorStatus.Open, newDoor.DoorStatus);
             Assert.Equal(DeviceStatus.Unknown, newDoor.Status);
         }
@@ -90,7 +90,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         {
             Door newDoor = new Door("Giovanni", 1234);
 
-            newDoor.LockDoor();
+            newDoor.Lock();
 
             Assert.Equal(DoorStatus.Locked, newDoor.DoorStatus);
             Assert.Equal(DeviceStatus.Unknown, newDoor.Status);
@@ -101,9 +101,9 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         {
             Door newDoor = new Door("Giovanni", 1234);
 
-            newDoor.OpenDoor();
+            newDoor.Open();
 
-            Assert.Throws<ArgumentException>(() => newDoor.UnlockDoor(1234));
+            Assert.Throws<ArgumentException>(() => newDoor.Unlock(1234));
             Assert.Equal(DoorStatus.Open, newDoor.DoorStatus);
             Assert.Equal(DeviceStatus.Unknown, newDoor.Status);
         }
@@ -113,9 +113,9 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         {
             Door newDoor = new Door("Giovanni", 1234);
 
-            newDoor.LockDoor();
+            newDoor.Lock();
 
-            Assert.Throws<ArgumentException>(() => newDoor.UnlockDoor(1230));
+            Assert.Throws<ArgumentException>(() => newDoor.Unlock(1230));
             Assert.Equal(DoorStatus.Locked, newDoor.DoorStatus);
             Assert.Equal(DeviceStatus.Unknown, newDoor.Status);
         }
@@ -125,8 +125,8 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         {
             Door newDoor = new Door("Giovanni", 1234);
 
-            newDoor.LockDoor();
-            newDoor.UnlockDoor(1234);
+            newDoor.Lock();
+            newDoor.Unlock(1234);
 
             Assert.Equal(DoorStatus.Closed, newDoor.DoorStatus);
             Assert.Equal(DeviceStatus.Unknown, newDoor.Status);
