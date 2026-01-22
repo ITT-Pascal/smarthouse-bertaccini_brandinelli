@@ -17,7 +17,7 @@ namespace SmartHouse.Domain.ThermostastDevice
         public const double MaxTemperature = 30;
         public const double DefaultJump = 0.1;
 
-        public Thermostat(string name): base(name)
+        public Thermostat(Name name): base(name)
         {
             Status = DeviceStatus.On;
             Temperature = DefaultTemperature;

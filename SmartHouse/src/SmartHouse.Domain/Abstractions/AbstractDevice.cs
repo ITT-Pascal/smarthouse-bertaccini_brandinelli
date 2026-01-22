@@ -9,20 +9,15 @@ namespace SmartHouse.Domain.Abstractions
     public abstract class AbstractDevice : ISwitchable
     {
         public Guid Id { get; protected set; }
-        public string Name { get; protected set; }
+        public Name Name { get; protected set; }
         public DeviceStatus Status { get; protected set; }
         public DateTime CreationTime { get; protected set; }
         public DateTime LastUpdateTime { get; protected set; }
 
-        public AbstractDevice(string name)
+        public AbstractDevice(Name name)
         {
             Id = Guid.NewGuid();
-
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Name is not valid");
-            else
-                Name = name;
-
+            Name = name;
             Status = DeviceStatus.Off;
             CreationTime = DateTime.UtcNow;
             LastUpdateTime = DateTime.UtcNow;
