@@ -11,16 +11,13 @@ namespace SmartHouse.Domain.Doors
 {
     public sealed class Door: AbstractDevice, ILockable, IOpenable
     {
-        public int PIN { get; set; }
+        public Pin PIN { get; set; }
         public bool IsLocked { get; private set; }
         public bool IsOpen { get; private set; }
 
-        public Door(string name, int pin): base(name)
+        public Door(string name, Pin pin): base(name)
         {
-            if (pin < 4)
-                throw new ArgumentException("PIN must have at least 4 digits");
-            else
-                PIN = pin;
+            PIN = pin;
             IsOpen = false;
             IsLocked = true;
             Status = DeviceStatus.Unknown;
@@ -53,7 +50,7 @@ namespace SmartHouse.Domain.Doors
 
         }
 
-        public void Unlock(int pin)
+        public void Unlock(Pin pin)
         {
             if (IsLocked == true)
             {

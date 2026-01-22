@@ -16,7 +16,7 @@ namespace SmartHouse.Domain.CCTVDevice
         public const double DefaultZoom = 1.0;
         public const double MaxZoom = 10.0;
         public const double DefaultJump = 0.1;
-        public int? PIN { get; private set; }
+        public Pin PIN { get; private set; }
         public bool IsLocked { get; private set; }
         
         public CCTV(string name) : base(name)
@@ -26,18 +26,15 @@ namespace SmartHouse.Domain.CCTVDevice
             IsLocked = false;
         }
 
-        public CCTV(string name, int pin) : base (name)
+        public CCTV(string name, Pin pin) : base (name)
         {
             VisionType = CCTVVisionType.DefaultVision;
             Zoom = DefaultZoom;
             IsLocked = true;
-            if (pin.ToString().Length < 4)
-                throw new ArgumentException("PIN must have at least 4 digits");
-            else
-                PIN = pin;
+            PIN = pin;
         }
 
-        public void Unlock(int pin)
+        public void Unlock(Pin pin)
         {
             if(IsLocked == true)
             {
