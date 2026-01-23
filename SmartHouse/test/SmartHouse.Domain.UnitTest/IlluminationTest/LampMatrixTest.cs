@@ -390,7 +390,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             newLampMatrix.AllSwitchOn();
             newLampMatrix.SingleLampChangeBrightness(50, newLamp.Id);
 
-            Assert.Equal(50, newLamp.Brightness);
+            Assert.Equal(Brightness.Create(50), newLamp.Brightness);
         }
 
         [Fact]
