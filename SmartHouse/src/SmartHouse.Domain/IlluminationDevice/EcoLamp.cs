@@ -23,7 +23,7 @@ namespace SmartHouse.Domain.Illumination
         public override Brightness MinBrightness => ThisMinBrightness;
         public override Brightness DefaultBrightness => ThisDefaultBrightness;
 
-        public EcoLamp(Name name): base(name) { } 
+        public EcoLamp(string name): base(name) { } 
 
         public override void SwitchOn()
         {

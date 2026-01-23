@@ -9,24 +9,34 @@ using SmartHouse.Domain.DoorsDevice;
 
 namespace SmartHouse.Domain.Doors
 {
-    public sealed class Door: AbstractDevice, ILockable, IOpenable
+    public sealed class Door: ILockable, IOpenable
     {
         public Pin PIN { get; set; }
         public bool IsLocked { get; private set; }
         public bool IsOpen { get; private set; }
+        public Guid Id { get; private set; }
+        public Name Name { get; private set; }
+        public DateTime CreationTime { get; private set; }
+        public DateTime LastUpdateTime { get; private set; }
 
-        public Door(Name name, Pin pin): base(name)
+        public Door(string name, int pin)
         {
-            PIN = pin;
+            Id = Guid.NewGuid();
+            PIN = Pin.Create(pin);
             IsOpen = false;
             IsLocked = true;
-            Status = DeviceStatus.Unknown;
+            Name = Name.Create(name);
+            CreationTime = DateTime.UtcNow;
+            LastUpdateTime = DateTime.UtcNow;
         }       
 
         public void Open()
         {
             if (IsOpen == false && IsLocked == false)
+            {
                 IsOpen = true;
+                LastUpdateTime = DateTime.UtcNow;
+            }
             else if (IsLocked == true)
                 throw new ArgumentException("The door must be unlocked before being opened");
             else
@@ -36,7 +46,10 @@ namespace SmartHouse.Domain.Doors
         public void Close()
         {
             if (IsOpen == true)
+            {
                 IsOpen = false;
+                LastUpdateTime = DateTime.UtcNow;
+            }
             else
                 throw new ArgumentException("The door must be open before being closed");
         }
@@ -44,7 +57,10 @@ namespace SmartHouse.Domain.Doors
         public void Lock()
         {
             if (IsOpen == false && IsLocked == false)
+            {
                 IsLocked = true;
+                LastUpdateTime = DateTime.UtcNow;
+            }
             else
                 throw new ArgumentException("The door must be closed before being locked");
 
@@ -55,7 +71,10 @@ namespace SmartHouse.Domain.Doors
             if (IsLocked == true)
             {
                 if (PIN == pin)
+                {
                     IsLocked = false;
+                    LastUpdateTime = DateTime.UtcNow;
+                }
                 else
                     throw new ArgumentException("The wrong pin was entered");
             }

@@ -15,7 +15,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
         public void When_WantToAddANewLamp_CanDoIt()
         {
             AbstractLamp[,] lamps = new AbstractLamp[3, 3];
-            AbstractLamp newLamp = new Lamp(Name.Create("Stefano"));
+            AbstractLamp newLamp = new Lamp("Stefano");
             LampMatrix newLampMatrix = new LampMatrix("Sasha", lamps);
 
             newLampMatrix.AddLamp(newLamp);

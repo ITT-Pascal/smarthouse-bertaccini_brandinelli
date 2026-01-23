@@ -18,7 +18,7 @@ namespace SmartHouse.Domain
 
         private const int DefaultStep = 10;
         
-        public AbstractLamp(Name name) : base(name)
+        public AbstractLamp(string name) : base(name)
         {          
             Brightness = Brightness.Create(0);          
         }

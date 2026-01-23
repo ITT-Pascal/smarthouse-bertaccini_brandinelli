@@ -13,6 +13,6 @@ namespace SmartHouse.Domain.Illumination
         public override Brightness MinBrightness => ThisMinBrightness;
         public override Brightness DefaultBrightness => ThisDefaultBrightness;
 
-        public Lamp(Name name) : base(name) { }
+        public Lamp(string name) : base(name) { }
     }
 }

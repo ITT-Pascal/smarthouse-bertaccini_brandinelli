@@ -11,14 +11,12 @@ namespace SmartHouse.Domain.IlluminationDevice
     public sealed class LampMatrix : ILampGroup
     {
         public AbstractLamp[,] Lamps { get; private set; }
-        public string Name { get; private set; }
+        public Name Name { get; private set; }
 
         public LampMatrix(string name, AbstractLamp[,] lamps)
         {           
-            Lamps = lamps;
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Name is not valid");
-            Name = name;
+            Lamps = lamps;         
+            Name = Name.Create(name);
         }
         
         public void AddLamp(AbstractLamp lamp)
