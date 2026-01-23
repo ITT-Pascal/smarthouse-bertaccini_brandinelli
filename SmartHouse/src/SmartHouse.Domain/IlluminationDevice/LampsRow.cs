@@ -22,12 +22,12 @@ namespace SmartHouse.Domain.Illumination
                 throw new ArgumentException("Il nome non è valido");
         }
 
-        public void AddLamp(string name)
+        public void AddLamp(Name name)
         {
             Lamps.Add(new Lamp(name));
         }
 
-        public void AddEcoLamp(string name)
+        public void AddEcoLamp(Name name)
         {
             Lamps.Add(new EcoLamp(name));
         }
@@ -37,7 +37,7 @@ namespace SmartHouse.Domain.Illumination
             Lamps.Insert(position, lamp);
         }
 
-        public void RemoveLamp(string name)
+        public void RemoveLamp(Name name)
         {
             for(int i = 0; i < Lamps.Count; i++)
             {
@@ -83,7 +83,7 @@ namespace SmartHouse.Domain.Illumination
 
         }
 
-        public void SwitchOn(string name)
+        public void SwitchOn(Name name)
         {
             for (int i = 0; i < Lamps.Count; i++)
             {
@@ -92,7 +92,7 @@ namespace SmartHouse.Domain.Illumination
             }
         }
 
-        public void SwitchOff(string name)
+        public void SwitchOff(Name name)
         {
             for (int i = 0; i < Lamps.Count; i++)
             {
@@ -116,7 +116,7 @@ namespace SmartHouse.Domain.Illumination
                 Lamps[i].SwitchOff();
             }
         }
-        public void SingleLampSwitchOnOff(string name)
+        public void SingleLampSwitchOnOff(Name name)
         {
             for(int i = 0; i<Lamps.Count;i++)
             {
@@ -127,7 +127,7 @@ namespace SmartHouse.Domain.Illumination
             }
         }
 
-        public void SingleLampChangeBrightness(int newbrightness, string name)
+        public void SingleLampChangeBrightness(int newbrightness, Name name)
         {
             for (int i = 0; i < Lamps.Count; i++)
             {

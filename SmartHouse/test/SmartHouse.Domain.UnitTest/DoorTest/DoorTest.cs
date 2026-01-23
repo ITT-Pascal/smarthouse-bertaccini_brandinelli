@@ -15,6 +15,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         private Pin PIN = new Pin(1234);
         private Pin PIN2 = new Pin(00);
         private Pin PIN3 = new Pin(1230);
+        
 
         [Fact]
 
@@ -26,7 +27,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         [Fact]
         public void When_TheNameOfTheDoorIsEmpty_TheNameIsNotValid()
         {
-            Assert.Throws<ArgumentException>(() => new Door(string.Empty, PIN));
+            Assert.Throws<ArgumentException>(() => new Door(new Name(string.Empty), PIN));
         }
 
         [Fact]

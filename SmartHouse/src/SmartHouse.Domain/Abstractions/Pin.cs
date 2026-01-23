@@ -22,4 +22,4 @@ namespace SmartHouse.Domain.Abstractions
        
     }
 }
-}
+

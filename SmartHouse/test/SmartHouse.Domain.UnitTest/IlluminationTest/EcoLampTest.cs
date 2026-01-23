@@ -4,9 +4,7 @@ using SmartHouse.Domain.Abstractions;
 namespace SmartHouse.Domain.UnitTest.IlluminationTest
 {
     public class EcoLampTest
-    {
-
-        
+    {        
 
         [Fact]
         public void When_BrightnessIsNegative_BrightnessRemainsZero()

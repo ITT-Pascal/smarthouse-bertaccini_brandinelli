@@ -69,7 +69,7 @@ namespace SmartHouse.Domain.IlluminationDevice
             Lamps[row, column] = lamp;
         }
 
-        public void RemoveLamp(string name)
+        public void RemoveLamp(Name name)
         {
             for(int r = 0; r<Lamps.GetLength(0); r++)
             {
@@ -108,7 +108,7 @@ namespace SmartHouse.Domain.IlluminationDevice
             Lamps[row, column] = null;
         }
 
-        public void SwitchOn(string name)
+        public void SwitchOn(Name name)
         {
             foreach(AbstractLamp i in Lamps)
             {
@@ -132,7 +132,7 @@ namespace SmartHouse.Domain.IlluminationDevice
             }
         }
 
-        public void SwitchOff(string name)
+        public void SwitchOff(Name name)
         {
             foreach (AbstractLamp i in Lamps)
             {
@@ -182,7 +182,7 @@ namespace SmartHouse.Domain.IlluminationDevice
             }
         }
 
-        public void SingleLampSwitchOnOff(string name)
+        public void SingleLampSwitchOnOff(Name name)
         {
             foreach(AbstractLamp i in Lamps)
             {
@@ -203,7 +203,7 @@ namespace SmartHouse.Domain.IlluminationDevice
             }
         }
 
-        public void SingleLampChangeBrightness(int newbrightness, string name)
+        public void SingleLampChangeBrightness(int newbrightness, Name name)
         {
             foreach(AbstractLamp lamp in Lamps)
             {

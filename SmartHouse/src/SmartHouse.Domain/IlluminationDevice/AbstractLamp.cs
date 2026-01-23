@@ -11,16 +11,16 @@ namespace SmartHouse.Domain
 {
     public abstract class AbstractLamp : AbstractDevice, ILamp
     {      
-        public int Brightness { get; protected set; }      
-        public abstract int MinBrightness {get; }
-        public abstract int DefaultBrightness{ get; }
-        public abstract int MaxBrightness { get; }
+        public Brightness Brightness { get; protected set; }      
+        public abstract Brightness MinBrightness {get; }
+        public abstract Brightness DefaultBrightness{ get; }
+        public abstract Brightness MaxBrightness { get; }
 
         private const int DefaultStep = 10;
         
-        public AbstractLamp(string name) : base(name)
+        public AbstractLamp(Name name) : base(name)
         {          
-            Brightness = 0;          
+            Brightness = new Brightness(0);          
         }
 
         public override void SwitchOn()
@@ -45,7 +45,7 @@ namespace SmartHouse.Domain
         {
             if(Status == DeviceStatus.On)
             {
-                Brightness = Math.Max(MinBrightness, Brightness - DefaultStep);
+                Brightness = Brightness - DefaultStep;
                 LastUpdateTime = DateTime.UtcNow;
             }  
         }
@@ -54,7 +54,7 @@ namespace SmartHouse.Domain
         {
             if (Status == DeviceStatus.On)
             {
-                Brightness = Math.Min(MaxBrightness, Brightness + DefaultStep);
+                Brightness = Brightness + DefaultStep;
                 LastUpdateTime = DateTime.UtcNow;
             }  
         }
@@ -77,11 +77,9 @@ namespace SmartHouse.Domain
 
         public virtual void ChangeBrightness(int newBrightness)
         {
-            if (newBrightness > MinBrightness && Status == DeviceStatus.On)
-            {
-                Brightness = Math.Min(newBrightness, MaxBrightness);
-                LastUpdateTime = DateTime.UtcNow;
-            }
+            Brightness = new Brightness(newBrightness);
+            LastUpdateTime = DateTime.UtcNow;
         }
+        
     }
 }
