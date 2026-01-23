@@ -17,5 +17,7 @@ namespace SmartHouse.Domain.Abstractions
             else
                 _name = name;
         }
+
+        public override string ToString() => _name;
     }
 }
