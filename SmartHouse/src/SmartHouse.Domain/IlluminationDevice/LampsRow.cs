@@ -12,14 +12,12 @@ namespace SmartHouse.Domain.Illumination
     public sealed class LampsRow : ILampGroup
     {
         public List<AbstractLamp> Lamps { get; private set; }
-        public string Name { get; private set; }
+        public Name Name { get; private set; }
 
         public LampsRow(string name, List<AbstractLamp> lamps)
         {
-            Name = name;
+            Name = Name.Create(name);
             Lamps = lamps;
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Il nome non è valido");
         }
 
         public void AddLamp(Name name)
