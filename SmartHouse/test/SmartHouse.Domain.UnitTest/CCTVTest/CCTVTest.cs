@@ -10,6 +10,8 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
 {
     public class CCTVTest
     {
+        public Pin PIN = Pin.Create(1234);
+
         [Fact]
         public void When_TheNameOfCCTVIsEmpty_TheNameIsNotValid()
         {
@@ -94,7 +96,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
             newCCTV.SetMaxZoom();
             newCCTV.SetDefaultZoom();
 
-            Assert.Equal(1.0, newCCTV.Zoom);
+            Assert.Equal(Zoom.Create(1.0), newCCTV.Zoom);
 
         }
 
@@ -115,7 +117,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
 
             newCCTV.SetMinZoom();
 
-            Assert.Equal(0.5, newCCTV.Zoom);
+            Assert.Equal(Zoom.Create(0.5), newCCTV.Zoom);
 
         }
 
@@ -136,7 +138,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
 
             newCCTV.SetMaxZoom();
 
-            Assert.Equal(10.0, newCCTV.Zoom);
+            Assert.Equal(Zoom.Create(10.0), newCCTV.Zoom);
         }
 
         [Fact]
@@ -146,7 +148,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
 
             newCCTV.IncreaseZoom();
 
-            Assert.Equal(1.1, newCCTV.Zoom);
+            Assert.Equal(Zoom.Create(1.1), newCCTV.Zoom);
         }
 
         [Fact]
@@ -166,7 +168,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
 
             newCCTV.DecreaseZoom();
 
-            Assert.Equal(0.9, newCCTV.Zoom);
+            Assert.Equal(Zoom.Create(0.9), newCCTV.Zoom);
         }
 
         [Fact]
@@ -179,28 +181,28 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
             Assert.Throws<ArgumentException>(() => newCCTV.DecreaseZoom());
         }
 
-
-
-
         [Fact]
-        public void When_TheNameOfCCTVIsEmpty_TheNameIsNotValid()
+        public void When_TheNameOfCCTVPINIsEmpty_TheNameIsNotValid()
         {
-            Assert.Throws<ArgumentException>(() => new CCTV(string.Empty));
+            Assert.Throws<ArgumentException>(() => new CCTV(string.Empty, 1234));
         }
 
         [Fact]
-        public void When_WantToSetDefaultVisionButItHasAlreadyBeenSet_CannotSetDefaultVision()
+        public void When_WantToSetDefaultVisionAndCCTVIsUnlockedButItHasAlreadyBeenSet_CannotSetDefaultVision()
         {
-            CCTV newCCTV = new CCTV("Salvatore");
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
+
+            newCCTV.Unlock(PIN);
 
             Assert.Throws<ArgumentException>(() => newCCTV.SetVision(CCTVVisionType.DefaultVision));
         }
 
         [Fact]
-        public void When_WantToSetDefaultVisionAndItIsAlreadySetToNightVision_CanSetDefaultVision()
+        public void When_WantToSetDefaultVisionAndCCTVIsUnlockedAndItIsAlreadySetToNightVision_CanSetDefaultVision()
         {
-            CCTV newCCTV = new CCTV("Salvatore");
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
 
+            newCCTV.Unlock(PIN);
             newCCTV.SetVision(CCTVVisionType.NightVision);
             newCCTV.SetVision(CCTVVisionType.DefaultVision);
 
@@ -209,20 +211,22 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
         }
 
         [Fact]
-        public void When_WantToSetNightVisionButItHasAlreadyBeenSet_CannotSetNightVision()
+        public void When_WantToSetNightVisionAndCCTVIsUnlockedButItHasAlreadyBeenSet_CannotSetNightVision()
         {
-            CCTV newCCTV = new CCTV("Salvatore");
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
 
+            newCCTV.Unlock(PIN);
             newCCTV.SetVision(CCTVVisionType.NightVision);
 
             Assert.Throws<ArgumentException>(() => newCCTV.SetVision(CCTVVisionType.NightVision));
         }
 
         [Fact]
-        public void When_WantToSetNightVisionAndItIsAlreadySetToDefaultVision_CanSetNightVision()
+        public void When_WantToSetNightVisionAndCCTVIsUnlockedAndItIsAlreadySetToDefaultVision_CanSetNightVision()
         {
-            CCTV newCCTV = new CCTV("Salvatore");
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
 
+            newCCTV.Unlock(PIN);
             newCCTV.SetVision(CCTVVisionType.NightVision);
 
             Assert.Equal(CCTVVisionType.NightVision, newCCTV.VisionType);
@@ -230,20 +234,22 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
         }
 
         [Fact]
-        public void When_WantToSetThermalVisionButItHasAlreadyBeenSet_CannotSetThermalVision()
+        public void When_WantToSetThermalVisionAndCCTVIsUnlockedButItHasAlreadyBeenSet_CannotSetThermalVision()
         {
-            CCTV newCCTV = new CCTV("Salvatore");
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
 
+            newCCTV.Unlock(PIN);
             newCCTV.SetVision(CCTVVisionType.ThermalVision);
 
             Assert.Throws<ArgumentException>(() => newCCTV.SetVision(CCTVVisionType.ThermalVision));
         }
 
         [Fact]
-        public void When_WantToSetThermalVisionAndItIsAlreadySetToDefaultVision_CanSetThermalVision()
+        public void When_WantToSetThermalVisionAndCCTVIsUnlockedAndItIsAlreadySetToDefaultVision_CanSetThermalVision()
         {
-            CCTV newCCTV = new CCTV("Salvatore");
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
 
+            newCCTV.Unlock(PIN);
             newCCTV.SetVision(CCTVVisionType.ThermalVision);
 
             Assert.Equal(CCTVVisionType.ThermalVision, newCCTV.VisionType);
@@ -251,101 +257,112 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
         }
 
         [Fact]
-        public void When_WantToSetDefaultZoomButItHasAlreadyBeenSet_CannotSetDefaultZoom()
+        public void When_WantToSetDefaultZoomAndCCTVIsUNlockedButItHasAlreadyBeenSet_CannotSetDefaultZoom()
         {
-            CCTV newCCTV = new CCTV("Salvatore");
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
+
+            newCCTV.Unlock(PIN);
 
             Assert.Throws<ArgumentException>(() => newCCTV.SetDefaultZoom());
         }
 
         [Fact]
-        public void When_WantToSetDefaultZoomAndItIsAlreadySetToMaxZoom_CanSetDefaultZoom()
+        public void When_WantToSetDefaultZoomAndCCTVIsUnlockedAndItIsAlreadySetToMaxZoom_CanSetDefaultZoom()
         {
-            CCTV newCCTV = new CCTV("Salvatore");
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
 
+            newCCTV.Unlock(PIN);
             newCCTV.SetMaxZoom();
             newCCTV.SetDefaultZoom();
 
-            Assert.Equal(1.0, newCCTV.Zoom);
+            Assert.Equal(Zoom.Create(1.0), newCCTV.Zoom);
 
         }
 
         [Fact]
-        public void When_WantToSetMinZoomButItHasAlreadyBeenSet_CannotSetMinZoom()
+        public void When_WantToSetMinZoomAndCCTVIsUnlockedButItHasAlreadyBeenSet_CannotSetMinZoom()
         {
-            CCTV newCCTV = new CCTV("Salvatore");
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
 
+            newCCTV.Unlock(PIN);
             newCCTV.SetMinZoom();
 
             Assert.Throws<ArgumentException>(() => newCCTV.SetMinZoom());
         }
 
         [Fact]
-        public void When_WantToSetMinZoomAndItIsAlreadySetToDefaultZoom_CanSetMinZoom()
+        public void When_WantToSetMinZoomAndCCTVIsUnlockedAndItIsAlreadySetToDefaultZoom_CanSetMinZoom()
         {
-            CCTV newCCTV = new CCTV("Salvatore");
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
 
+            newCCTV.Unlock(PIN);
             newCCTV.SetMinZoom();
 
-            Assert.Equal(0.5, newCCTV.Zoom);
+            Assert.Equal(Zoom.Create(0.5), newCCTV.Zoom);
 
         }
 
         [Fact]
-        public void When_WantToSetMaxZoomButItHasAlreadyBeenSet_CannotSetMaxZoom()
+        public void When_WantToSetMaxZoomAndCCTVIsUnlockedButItHasAlreadyBeenSet_CannotSetMaxZoom()
         {
-            CCTV newCCTV = new CCTV("Salvatore");
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
 
+            newCCTV.Unlock(PIN);
             newCCTV.SetMaxZoom();
 
             Assert.Throws<ArgumentException>(() => newCCTV.SetMaxZoom());
         }
 
         [Fact]
-        public void When_WantToSetMaxZoomAndItIsAlreadySetToDefaultZoom_CanSetMaxZoom()
+        public void When_WantToSetMaxZoomAndCCTVIsUnlockedAndItIsAlreadySetToDefaultZoom_CanSetMaxZoom()
         {
-            CCTV newCCTV = new CCTV("Salvatore");
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
 
+            newCCTV.Unlock(PIN);
             newCCTV.SetMaxZoom();
 
-            Assert.Equal(10.0, newCCTV.Zoom);
+            Assert.Equal(Zoom.Create(10.0), newCCTV.Zoom);
         }
 
         [Fact]
-        public void When_WantToIncreaseZoom_CanDoIt()
+        public void When_WantToIncreaseZoomAndCCTVIsUnlocked_CanDoIt()
         {
-            CCTV newCCTV = new CCTV("Salvatore");
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
 
+            newCCTV.Unlock(PIN);
             newCCTV.IncreaseZoom();
 
-            Assert.Equal(1.1, newCCTV.Zoom);
+            Assert.Equal(Zoom.Create(1.1), newCCTV.Zoom);
         }
 
         [Fact]
-        public void When_WantToIncreaseZoomButItIsAlreadySetAtMaximum_CannotDoIt()
+        public void When_WantToIncreaseZoomAndCCTVIsUnlockedButItIsAlreadySetAtMaximum_CannotDoIt()
         {
-            CCTV newCCTV = new CCTV("Salvatore");
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
 
+            newCCTV.Unlock(PIN);
             newCCTV.SetMaxZoom();
 
             Assert.Throws<ArgumentException>(() => newCCTV.IncreaseZoom());
         }
 
         [Fact]
-        public void When_WantToDecreaseZoom_CanDoIt()
+        public void When_WantToDecreaseZoomAndCCTVIsUnlocked_CanDoIt()
         {
-            CCTV newCCTV = new CCTV("Salvatore");
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
 
+            newCCTV.Unlock(PIN);
             newCCTV.DecreaseZoom();
 
-            Assert.Equal(0.9, newCCTV.Zoom);
+            Assert.Equal(Zoom.Create(0.9), newCCTV.Zoom);
         }
 
         [Fact]
-        public void When_WantToDecreaseZoomButItIsAlreadySetAtMinimum_CannotDoIt()
+        public void When_WantToDecreaseZoomAndCCTVIsUnlockedButItIsAlreadySetAtMinimum_CannotDoIt()
         {
-            CCTV newCCTV = new CCTV("Salvatore");
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
 
+            newCCTV.Unlock(PIN);
             newCCTV.SetMinZoom();
 
             Assert.Throws<ArgumentException>(() => newCCTV.DecreaseZoom());
