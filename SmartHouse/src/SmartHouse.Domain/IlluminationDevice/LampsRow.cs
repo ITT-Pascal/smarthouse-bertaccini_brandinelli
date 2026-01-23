@@ -20,12 +20,12 @@ namespace SmartHouse.Domain.Illumination
             Lamps = lamps;
         }
 
-        public void AddLamp(Name name)
+        public void AddLamp(string name)
         {
             Lamps.Add(new Lamp(name));
         }
 
-        public void AddEcoLamp(Name name)
+        public void AddEcoLamp(string name)
         {
             Lamps.Add(new EcoLamp(name));
         }
