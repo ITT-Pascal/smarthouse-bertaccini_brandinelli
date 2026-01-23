@@ -130,7 +130,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
 
             newDoor.Unlock(PIN);
 
-            Assert.False(newDoor.IsOpen);
+            Assert.False(newDoor.IsLocked);
         }
     }
 }
