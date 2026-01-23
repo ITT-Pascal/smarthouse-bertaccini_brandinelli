@@ -6,9 +6,9 @@ namespace SmartHouse.Domain.CCTVDevice
     {
         public CCTVVisionType VisionType { get; set; }
         public Zoom Zoom { get; private set; }
-        public const Zoom MinZoom = 0.5;
-        public const double DefaultZoom = 1.0;
-        public const double MaxZoom = 10.0;
+        public Zoom MinZoom { get; init; } = Zoom.Create(0.5);
+        public Zoom DefaultZoom { get; init; } = Zoom.Create(1.0);
+        public Zoom MaxZoom { get; init; } = Zoom.Create(10.0);
         public const double DefaultJump = 0.1;
         public Pin PIN { get; private set; }
         public bool IsLocked { get; private set; }
@@ -16,14 +16,14 @@ namespace SmartHouse.Domain.CCTVDevice
         public CCTV(string name) : base(name)
         {
             VisionType = CCTVVisionType.DefaultVision;
-            Zoom = Zoom.Create(DefaultZoom);
+            Zoom = DefaultZoom;
             IsLocked = false;
         }
 
         public CCTV(string name, int pin) : base(name)
         {
             VisionType = CCTVVisionType.DefaultVision;
-            Zoom = Zoom.Create(DefaultZoom);
+            Zoom = DefaultZoom;
             IsLocked = true;
             PIN = Pin.Create(pin);
         }
@@ -109,7 +109,7 @@ namespace SmartHouse.Domain.CCTVDevice
                 if (Zoom.Equals(MinZoom))
                     throw new ArgumentException("Zoom is already at minimum");
 
-                Zoom = Zoom.Create(MinZoom);
+                Zoom = MinZoom;
                 LastUpdateTime = DateTime.UtcNow;
             }
         }
@@ -120,7 +120,7 @@ namespace SmartHouse.Domain.CCTVDevice
             {
                 if (Zoom.Equals(DefaultZoom))
                     throw new ArgumentException("Zoom is already at default");
-                Zoom = Zoom.Create(DefaultZoom);
+                Zoom = DefaultZoom;
                 LastUpdateTime = DateTime.UtcNow;
             }
         }
@@ -132,7 +132,7 @@ namespace SmartHouse.Domain.CCTVDevice
                 if (Zoom.Equals(MaxZoom))
                     throw new ArgumentException("Zoom is already at maximum");
 
-                Zoom = Zoom.Create(MaxZoom);
+                Zoom = MaxZoom;
                 LastUpdateTime = DateTime.UtcNow;
             }
         }

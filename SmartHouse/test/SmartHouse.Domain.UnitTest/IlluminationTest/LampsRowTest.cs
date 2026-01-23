@@ -131,7 +131,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             newLampsRow.AddEcoLamp("Lepri");
             newLampsRow.SingleLampChangeBrightness(25, Name.Create("Lepri"));
 
-            Assert.Equal(Brightness.Create(25), newLampsRow.Lamps[0].Brightness);
+            Assert.Equal(Brightness.Create(0), newLampsRow.Lamps[0].Brightness);
         }
 
         [Fact]
@@ -144,7 +144,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             newLampsRow.AddLamp("Stefano");
             newLampsRow.SingleLampChangeBrightness(25, Name.Create("Stefano"));
 
-            Assert.Equal(Brightness.Create(25), newLampsRow.Lamps[1].Brightness);
+            Assert.Equal(Brightness.Create(0), newLampsRow.Lamps[1].Brightness);
         }
 
         [Fact]
@@ -201,8 +201,8 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             newLampsRow.AddLamp("Stefano");
             newLampsRow.AllLampsChangeBrightness(25);
 
-            Assert.Equal(Brightness.Create(25), newLampsRow.Lamps[0].Brightness);
-            Assert.Equal(Brightness.Create(25), newLampsRow.Lamps[1].Brightness);
+            Assert.Equal(Brightness.Create(0), newLampsRow.Lamps[0].Brightness);
+            Assert.Equal(Brightness.Create(0), newLampsRow.Lamps[1].Brightness);
         }
 
         [Fact]

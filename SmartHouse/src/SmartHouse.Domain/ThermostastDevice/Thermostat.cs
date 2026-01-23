@@ -10,7 +10,7 @@ namespace SmartHouse.Domain.ThermostastDevice
 {
     public sealed class Thermostat
     {
-        public double Temperature { get; private set; }
+        public Temperature Temperature { get; private set; }
 
         public const double MinTemperature = 15;
         public const double DefaultTemperature = 20;
@@ -28,33 +28,24 @@ namespace SmartHouse.Domain.ThermostastDevice
             Name = Name.Create(name);
             CreationTime = DateTime.UtcNow;
             LastUpdateTime = DateTime.UtcNow;
-            Temperature = DefaultTemperature;
+            Temperature = Temperature.Create(DefaultTemperature);
         }       
 
         public void IncreaseTemperature()
-        {
-            if (Temperature == MaxTemperature)
-                throw new ArgumentException("The temperature is alredy at the maximum limit");
-
+        {          
             Temperature += DefaultJump;
             LastUpdateTime = DateTime.UtcNow;
         }
 
         public void DecreaseTemperature()
         {
-            if (Temperature == MinTemperature)
-                throw new ArgumentException("The temperature is alredy at the minimum limit");
-
             Temperature -= DefaultJump;
             LastUpdateTime = DateTime.UtcNow;
         }
 
         public void SetTemperature(double newTemperature)
         {
-            if (newTemperature < MinTemperature || newTemperature > MaxTemperature)
-                throw new ArgumentException("New temperature isn't valid");
-
-            Temperature = newTemperature;
+            Temperature = Temperature.Create(newTemperature);
             LastUpdateTime = DateTime.UtcNow;
         }      
 

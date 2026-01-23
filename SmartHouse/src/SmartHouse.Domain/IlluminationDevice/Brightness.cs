@@ -19,10 +19,8 @@ namespace SmartHouse.Domain.IlluminationDevice
         }
 
         public static Brightness Create(int b)
-        {
-            if (b < Min || b > Max)
-                throw new ArgumentException("Brightness must be contained in the 0 to 100 range");
-            return new Brightness(b);
+        {          
+            return new Brightness(Math.Clamp(b,Min,Max));
         }
 
         public static Brightness operator -(Brightness b, int i)
