@@ -460,7 +460,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
             newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddEcoLamp(("Lepri");
+            newLampsRow.AddEcoLamp("Lepri");
             Guid id = newLampsRow.Lamps[1].Id;
             newLampsRow.SwitchOn(id);
             newLampsRow.SingleLampChangeBrightness(25, id);
