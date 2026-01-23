@@ -14,10 +14,10 @@ namespace SmartHouse.Domain.Abstractions
         public DateTime CreationTime { get; protected set; }
         public DateTime LastUpdateTime { get; protected set; }
 
-        public AbstractDevice(Name name)
+        public AbstractDevice(string name)
         {
             Id = Guid.NewGuid();
-            Name = name;
+            Name = Name.Create(name);
             Status = DeviceStatus.Off;
             CreationTime = DateTime.UtcNow;
             LastUpdateTime = DateTime.UtcNow;

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.Domain.ThermostastDevice
 {
-    public sealed class Thermostat: AbstractDevice 
+    public sealed class Thermostat
     {
         public double Temperature { get; private set; }
 
@@ -17,14 +17,19 @@ namespace SmartHouse.Domain.ThermostastDevice
         public const double MaxTemperature = 30;
         public const double DefaultJump = 0.1;
 
-        public Thermostat(Name name): base(name)
-        {
-            Status = DeviceStatus.On;
-            Temperature = DefaultTemperature;
-        }
+        public Guid Id { get; private set; }
+        public Name Name { get; private set; }        
+        public DateTime CreationTime { get; private set; }
+        public DateTime LastUpdateTime { get; private set; }
 
-        public override void SwitchOn() { }
-        public override void SwitchOff() { }
+        public Thermostat(string name)
+        {
+            Id = Guid.NewGuid();
+            Name = Name.Create(name);
+            CreationTime = DateTime.UtcNow;
+            LastUpdateTime = DateTime.UtcNow;
+            Temperature = DefaultTemperature;
+        }       
 
         public void IncreaseTemperature()
         {
@@ -32,6 +37,7 @@ namespace SmartHouse.Domain.ThermostastDevice
                 throw new ArgumentException("The temperature is alredy at the maximum limit");
 
             Temperature += DefaultJump;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void DecreaseTemperature()
@@ -40,6 +46,7 @@ namespace SmartHouse.Domain.ThermostastDevice
                 throw new ArgumentException("The temperature is alredy at the minimum limit");
 
             Temperature -= DefaultJump;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void SetTemperature(double newTemperature)
@@ -48,6 +55,7 @@ namespace SmartHouse.Domain.ThermostastDevice
                 throw new ArgumentException("New temperature isn't valid");
 
             Temperature = newTemperature;
+            LastUpdateTime = DateTime.UtcNow;
         }      
 
     }
