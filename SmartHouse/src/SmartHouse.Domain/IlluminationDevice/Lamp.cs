@@ -5,9 +5,9 @@ namespace SmartHouse.Domain.Illumination
 {
     public sealed class Lamp : AbstractLamp
     {       
-        Brightness ThisMinBrightness = new Brightness(0);
-        Brightness ThisDefaultBrightness = new Brightness(50);
-        Brightness ThisMaxBrightness = new Brightness(100);
+        Brightness ThisMinBrightness = Brightness.Create(0);
+        Brightness ThisDefaultBrightness = Brightness.Create(50);
+        Brightness ThisMaxBrightness = Brightness.Create(100);
 
         public override Brightness MaxBrightness => ThisMaxBrightness;
         public override Brightness MinBrightness => ThisMinBrightness;

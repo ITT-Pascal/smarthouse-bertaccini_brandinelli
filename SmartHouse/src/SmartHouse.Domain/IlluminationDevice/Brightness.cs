@@ -11,14 +11,18 @@ namespace SmartHouse.Domain.IlluminationDevice
     {
         public int _brightness { get; }
 
-        public Brightness(int brightness)
+        public const int Min = 0;
+        public const int Max = 100;
+        private Brightness(int brightness)
         {
-            if (brightness < 0 || brightness > 100)
-            {
-                throw new ArgumentException("brightness must be contained in the 0 to 100 range");
-            }
-            else
-                _brightness = brightness;
+            _brightness = brightness;
+        }
+
+        public static Brightness Create(int b)
+        {
+            if (b < Min || b > Max)
+                throw new ArgumentException("Brightness must be contained in the 0 to 100 range");
+            return new Brightness(b);
         }
 
         public static Brightness operator -(Brightness b, int i)

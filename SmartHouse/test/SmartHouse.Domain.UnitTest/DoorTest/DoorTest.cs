@@ -34,19 +34,19 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
 
         public void When_GivenANameThatIsOnlySpaces_ThrowArgumentException()
         {
-            Assert.Throws<ArgumentException>(() => new Door("    ", PIN));
+            Assert.Throws<ArgumentException>(() => new Door(new Name("    "), PIN));
         }
 
         [Fact]
         public void When_ThePINOfTheDoorIsUnder4Digits_ThePINIsNotValid()
         {
-            Assert.Throws<ArgumentException>(() => new Door("Giovanni", PIN2));
+            Assert.Throws<ArgumentException>(() => new Door(new Name("Giovanni"), PIN2));
         }
 
         [Fact]
         public void When_TheDoorIsClosed_CanOpenIt()
         {
-            Door newDoor = new Door("Giovanni", PIN);
+            Door newDoor = new Door(new Name("Giovanni"), PIN);
 
             newDoor.Unlock(PIN);
             newDoor.Open();
@@ -58,7 +58,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         [Fact]
         public void When_TheDoorIsLocked_CannotOpenIt()
         {
-            Door newDoor = new Door("Giovanni", PIN);
+            Door newDoor = new Door(new Name("Giovanni"), PIN);
 
             newDoor.Unlock(PIN);
             newDoor.Lock();
@@ -72,7 +72,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         [Fact]
         public void When_TheDoorIsOpen_CanCloseIt()
         {
-            Door newDoor = new Door("Giovanni", PIN);
+            Door newDoor = new Door(new Name("Giovanni"), PIN);
 
             newDoor.Unlock(PIN);
             newDoor.Open();
@@ -85,7 +85,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         [Fact]
         public void When_TheDoorIsOpen_CannotLockIt()
         {
-            Door newDoor = new Door("Giovanni", PIN);
+            Door newDoor = new Door(new Name("Giovanni"), PIN);
 
             newDoor.Unlock(PIN);
             newDoor.Open();
@@ -98,7 +98,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         [Fact]
         public void When_TheDoorIsClosed_CanLockIt()
         {
-            Door newDoor = new Door("Giovanni", PIN);
+            Door newDoor = new Door(new Name("Giovanni"), PIN);
 
             newDoor.Unlock(PIN);
             newDoor.Lock();
@@ -111,7 +111,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         [Fact]
         public void When_TheDoorIsOpen_CannotUnlockIt()
         {
-            Door newDoor = new Door("Giovanni", PIN);
+            Door newDoor = new Door(new Name("Giovanni"), PIN);
 
             newDoor.Unlock(PIN);
             newDoor.Open();
@@ -124,7 +124,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         [Fact]
         public void When_TheDoorIsLockedAndThePINIsWrong_CannotUnlockIt()
         {
-            Door newDoor = new Door("Giovanni", PIN);
+            Door newDoor = new Door(new Name("Giovanni"), PIN);
 
             Assert.Throws<ArgumentException>(() => newDoor.Unlock(PIN3));
             Assert.True(newDoor.IsLocked);
@@ -134,7 +134,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         [Fact]
         public void When_TheDoorIsLockedAndThePINIsCorrect_CanUnlockIt()
         {
-            Door newDoor = new Door("Giovanni", PIN);
+            Door newDoor = new Door(new Name("Giovanni"), PIN);
 
             newDoor.Unlock(PIN);
 

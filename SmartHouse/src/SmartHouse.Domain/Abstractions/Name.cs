@@ -11,11 +11,15 @@ namespace SmartHouse.Domain.Abstractions
     {
         public string _name { get; }
         public Name(string name)
+        {          
+                _name = name;
+        }
+        public static Name Create(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name is not valid");
-            else
-                _name = name;
+
+            return new Name(name);
         }
 
         public override string ToString() => _name;

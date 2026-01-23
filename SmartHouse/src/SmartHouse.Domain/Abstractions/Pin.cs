@@ -11,13 +11,18 @@ namespace SmartHouse.Domain.Abstractions
         public int PIN { get; }
 
         public Pin(int pin)
+        {                      
+                PIN = pin;
+        }
+
+        public static Pin Create(int pin)
         {
-            if (PIN.ToString().Length < 4)
+            if (pin.ToString().Length < 4)
             {
                 throw new ArgumentException("Pin can't be shorter than 4 digits");
             }
-            else
-                PIN = pin;
+
+            return new Pin(pin);
         }
        
     }
