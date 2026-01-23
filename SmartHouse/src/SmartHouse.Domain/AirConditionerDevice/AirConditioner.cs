@@ -14,7 +14,7 @@ namespace SmartHouse.Domain.AirConditionerDevice
     {
         public FanSpeed FanSpeed { get; set; }
 
-        public AirConditioner(string name) : base(name)
+        public AirConditioner(Name name) : base(name)
         {
             FanSpeed = FanSpeed.Medium;
         }

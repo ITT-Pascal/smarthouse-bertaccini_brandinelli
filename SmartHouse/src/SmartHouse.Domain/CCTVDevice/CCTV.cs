@@ -19,14 +19,14 @@ namespace SmartHouse.Domain.CCTVDevice
         public Pin PIN { get; private set; }
         public bool IsLocked { get; private set; }
         
-        public CCTV(string name) : base(name)
+        public CCTV(Name name) : base(name)
         {
             VisionType = CCTVVisionType.DefaultVision;
             Zoom = DefaultZoom;
             IsLocked = false;
         }
 
-        public CCTV(string name, Pin pin) : base (name)
+        public CCTV(Name name, Pin pin) : base (name)
         {
             VisionType = CCTVVisionType.DefaultVision;
             Zoom = DefaultZoom;

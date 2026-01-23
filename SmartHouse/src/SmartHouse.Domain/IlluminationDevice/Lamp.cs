@@ -1,15 +1,18 @@
-﻿namespace SmartHouse.Domain.Illumination
+﻿using SmartHouse.Domain.Abstractions;
+using SmartHouse.Domain.IlluminationDevice;
+
+namespace SmartHouse.Domain.Illumination
 {
     public sealed class Lamp : AbstractLamp
     {       
-        const int ThisMinBrightness = 0;
-        const int ThisDefaultBrightness = 50;
-        const int ThisMaxBrightness = 100;
+        Brightness ThisMinBrightness = new Brightness(0);
+        Brightness ThisDefaultBrightness = new Brightness(50);
+        Brightness ThisMaxBrightness = new Brightness(100);
 
-        public override int MaxBrightness => ThisMaxBrightness;
-        public override int MinBrightness => ThisMinBrightness;
-        public override int DefaultBrightness => ThisDefaultBrightness;
+        public override Brightness MaxBrightness => ThisMaxBrightness;
+        public override Brightness MinBrightness => ThisMinBrightness;
+        public override Brightness DefaultBrightness => ThisDefaultBrightness;
 
-        public Lamp(string name) : base(name) { }
+        public Lamp(Name name) : base(name) { }
     }
 }

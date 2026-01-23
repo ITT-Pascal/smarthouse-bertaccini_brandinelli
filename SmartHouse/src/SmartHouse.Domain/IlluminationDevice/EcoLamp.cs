@@ -1,4 +1,5 @@
 ﻿using SmartHouse.Domain.Abstractions;
+using SmartHouse.Domain.IlluminationDevice;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,20 +10,20 @@ namespace SmartHouse.Domain.Illumination
 {
     public sealed class EcoLamp : AbstractLamp
     {
-        const int ThisMinBrightness = 0;
-        const int ThisDefaultBrightness = 30;
-        const int ThisMaxBrightness = 70;
+        Brightness ThisMinBrightness = new Brightness(0);
+        Brightness ThisDefaultBrightness = new Brightness(30);
+        Brightness ThisMaxBrightness = new Brightness(70);
 
         private const int DefaultAutoOffMinutes = 10;
         private const int MinAutoOffMinutes = 1;
 
         private DateTime? autoOffAtUtc;
 
-        public override int MaxBrightness => ThisMaxBrightness;
-        public override int MinBrightness => ThisMinBrightness;
-        public override int DefaultBrightness => ThisDefaultBrightness;
+        public override Brightness MaxBrightness => ThisMaxBrightness;
+        public override Brightness MinBrightness => ThisMinBrightness;
+        public override Brightness DefaultBrightness => ThisDefaultBrightness;
 
-        public EcoLamp(string name): base(name) { } 
+        public EcoLamp(Name name): base(name) { } 
 
         public override void SwitchOn()
         {

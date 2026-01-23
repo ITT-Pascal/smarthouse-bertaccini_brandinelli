@@ -15,7 +15,7 @@ namespace SmartHouse.Domain.Doors
         public bool IsLocked { get; private set; }
         public bool IsOpen { get; private set; }
 
-        public Door(string name, Pin pin): base(name)
+        public Door(Name name, Pin pin): base(name)
         {
             PIN = pin;
             IsOpen = false;
