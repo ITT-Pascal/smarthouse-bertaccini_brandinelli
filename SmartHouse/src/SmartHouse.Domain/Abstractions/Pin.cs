@@ -10,7 +10,7 @@ namespace SmartHouse.Domain.Abstractions
     {
         public int PIN { get; }
 
-        public Pin(int pin)
+        private Pin(int pin)
         {                      
                 PIN = pin;
         }

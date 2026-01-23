@@ -10,7 +10,7 @@ namespace SmartHouse.Domain.Abstractions
     public sealed record Name
     {
         public string _name { get; }
-        public Name(string name)
+        private Name(string name)
         {          
                 _name = name;
         }
