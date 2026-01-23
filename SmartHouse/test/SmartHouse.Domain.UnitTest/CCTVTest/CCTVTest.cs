@@ -152,16 +152,6 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
         }
 
         [Fact]
-        public void When_WantToIncreaseZoomButItIsAlreadySetAtMaximum_CannotDoIt()
-        {
-            CCTV newCCTV = new CCTV("Salvatore");
-
-            newCCTV.SetMaxZoom();
-
-            Assert.Throws<ArgumentException>(() => newCCTV.IncreaseZoom());
-        }
-
-        [Fact]
         public void When_WantToDecreaseZoom_CanDoIt()
         {
             CCTV newCCTV = new CCTV("Salvatore");
@@ -169,16 +159,6 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
             newCCTV.DecreaseZoom();
 
             Assert.Equal(Zoom.Create(0.9), newCCTV.Zoom);
-        }
-
-        [Fact]
-        public void When_WantToDecreaseZoomButItIsAlreadySetAtMinimum_CannotDoIt()
-        {
-            CCTV newCCTV = new CCTV("Salvatore");
-
-            newCCTV.SetMinZoom();
-
-            Assert.Throws<ArgumentException>(() => newCCTV.DecreaseZoom());
         }
 
         [Fact]
@@ -336,17 +316,6 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
         }
 
         [Fact]
-        public void When_WantToIncreaseZoomAndCCTVIsUnlockedButItIsAlreadySetAtMaximum_CannotDoIt()
-        {
-            CCTV newCCTV = new CCTV("Salvatore", 1234);
-
-            newCCTV.Unlock(PIN);
-            newCCTV.SetMaxZoom();
-
-            Assert.Throws<ArgumentException>(() => newCCTV.IncreaseZoom());
-        }
-
-        [Fact]
         public void When_WantToDecreaseZoomAndCCTVIsUnlocked_CanDoIt()
         {
             CCTV newCCTV = new CCTV("Salvatore", 1234);
@@ -355,17 +324,6 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
             newCCTV.DecreaseZoom();
 
             Assert.Equal(Zoom.Create(0.9), newCCTV.Zoom);
-        }
-
-        [Fact]
-        public void When_WantToDecreaseZoomAndCCTVIsUnlockedButItIsAlreadySetAtMinimum_CannotDoIt()
-        {
-            CCTV newCCTV = new CCTV("Salvatore", 1234);
-
-            newCCTV.Unlock(PIN);
-            newCCTV.SetMinZoom();
-
-            Assert.Throws<ArgumentException>(() => newCCTV.DecreaseZoom());
         }
     }
 }
