@@ -29,7 +29,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
         {
             AbstractLamp[,] lamps = new AbstractLamp[3, 3];
             AbstractLamp newLamp = new Lamp(Name.Create("Stefano"));
-            AbstractLamp newEcoLamp = new EcoLamp("Lepri");
+            AbstractLamp newEcoLamp = new EcoLamp(Name.Create("Lepri"));
             LampMatrix newlampMatrix = new LampMatrix("Sasha", lamps);
 
             newlampMatrix.AddLamp(newLamp);
@@ -43,7 +43,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
         public void When_WantToAddANewEcoLamp_CanDoIt()
         {
             AbstractLamp[,] lamps = new AbstractLamp[3, 3];
-            EcoLamp newEcoLamp = new EcoLamp("Lepri");
+            EcoLamp newEcoLamp = new EcoLamp(Name.Create("Lepri"));
             LampMatrix newLampMatrix = new LampMatrix("Sasha", lamps);
 
             newLampMatrix.AddLamp(newEcoLamp);
@@ -67,7 +67,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
         public void When_WantToAddNewEcoLampButMatrixIsAlreadyFull_CannotDoIt()
         {
             AbstractLamp[,] lamps = new AbstractLamp[1, 1];
-            EcoLamp newEcoLamp = new EcoLamp("Lepri");
+            EcoLamp newEcoLamp = new EcoLamp(Name.Create("Lepri"));
             LampMatrix newLampMatrix = new LampMatrix("Sasha", lamps);
 
             newLampMatrix.AddLamp(newEcoLamp);
