@@ -15,7 +15,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
         public void When_WantToAddANewLamp_CanDoIt()
         {
             AbstractLamp[,] lamps = new AbstractLamp[3, 3];
-            AbstractLamp newLamp = new Lamp("Stefano");
+            AbstractLamp newLamp = new Lamp(Name.Create("Stefano"));
             LampMatrix newLampMatrix = new LampMatrix("Sasha", lamps);
 
             newLampMatrix.AddLamp(newLamp);
@@ -28,7 +28,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
         public void When_WantToAdd2NewLamps_CanDoIt()
         {
             AbstractLamp[,] lamps = new AbstractLamp[3, 3];
-            AbstractLamp newLamp = new Lamp("Stefano");
+            AbstractLamp newLamp = new Lamp(Name.Create("Stefano"));
             AbstractLamp newEcoLamp = new EcoLamp("Lepri");
             LampMatrix newlampMatrix = new LampMatrix("Sasha", lamps);
 
@@ -55,7 +55,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
         public void When_WantToAddNewLampButMatrixIsAlreadyFull_CannotDoIt()
         {
             AbstractLamp[,] lamps = new AbstractLamp[1, 1];
-            Lamp newLamp = new Lamp("Stefano");
+            Lamp newLamp = new Lamp(Name.Create("Stefano"));
             LampMatrix newLampMatrix = new LampMatrix("Sasha", lamps);
 
             newLampMatrix.AddLamp(newLamp);
@@ -79,7 +79,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
         public void When_WantToAddANewLampInADeterminedPosition_CanDoIt()
         {
             AbstractLamp[,] lamps = new AbstractLamp[3, 3];
-            Lamp newLamp = new Lamp("Stefano");
+            Lamp newLamp = new Lamp(Name.Create("Stefano"));
             LampMatrix newLampMatrix = new LampMatrix("Sasha", lamps);
 
             newLampMatrix.AddLampInPosition(newLamp, 2, 1);
@@ -103,7 +103,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
         public void When_WantToAddANewLampInADeterminedPositionButMatrixIsAlreadyFull_CannotDoIt()
         {
             AbstractLamp[,] lamps = new AbstractLamp[1, 1];
-            Lamp newLamp = new Lamp("Stefano");
+            Lamp newLamp = new Lamp(Name.Create("Stefano"));
             LampMatrix newLampMatrix = new LampMatrix("Sasha", lamps);
 
             newLampMatrix.AddLampInPosition(newLamp, 0, 0);
