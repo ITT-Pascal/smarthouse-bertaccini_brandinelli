@@ -1,5 +1,6 @@
 ﻿using SmartHouse.Domain.Illumination;
 using SmartHouse.Domain.Abstractions;
+using SmartHouse.Domain.IlluminationDevice;
 
 namespace SmartHouse.Domain.UnitTest.IlluminationTest
 {
@@ -87,9 +88,9 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
             newLampsRow.AddLamp(Name.Create("Stefano"));
-            newLampsRow.AddLamp("Stefano2");
-            newLampsRow.SingleLampSwitchOnOff("Stefano2");
-            newLampsRow.SingleLampSwitchOnOff("Stefano2");
+            newLampsRow.AddLamp(Name.Create("Stefano2"));
+            newLampsRow.SingleLampSwitchOnOff(Name.Create("Stefano2"));
+            newLampsRow.SingleLampSwitchOnOff(Name.Create("Stefano2"));
 
             Assert.Equal(DeviceStatus.Off, newLampsRow.Lamps[1].Status);
         }
@@ -100,11 +101,11 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.SingleLampSwitchOnOff("Stefano");
-            newLampsRow.SingleLampChangeBrightness(25, "Stefano");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.SingleLampSwitchOnOff(Name.Create("Stefano"));
+            newLampsRow.SingleLampChangeBrightness(25, Name.Create("Stefano"));
 
-            Assert.Equal(25, newLampsRow.Lamps[0].Brightness);
+            Assert.Equal(Brightness.Create(25), newLampsRow.Lamps[0].Brightness);
         }
 
         [Fact]
@@ -113,12 +114,12 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddEcoLamp("Lepri");
-            newLampsRow.SingleLampSwitchOnOff("Lepri");
-            newLampsRow.SingleLampChangeBrightness(25, "Lepri");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddEcoLamp(Name.Create("Lepri"));
+            newLampsRow.SingleLampSwitchOnOff(Name.Create("Lepri"));
+            newLampsRow.SingleLampChangeBrightness(25, Name.Create("Lepri"));
 
-            Assert.Equal(25, newLampsRow.Lamps[1].Brightness);
+            Assert.Equal(Brightness.Create(25), newLampsRow.Lamps[1].Brightness);
         }
 
         [Fact]
@@ -127,10 +128,10 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddEcoLamp("Lepri");
-            newLampsRow.SingleLampChangeBrightness(25, "Lepri");
+            newLampsRow.AddEcoLamp(Name.Create("Lepri"));
+            newLampsRow.SingleLampChangeBrightness(25, Name.Create("Lepri"));
 
-            Assert.Equal(0, newLampsRow.Lamps[0].Brightness);
+            Assert.Equal(Brightness.Create(0), newLampsRow.Lamps[0].Brightness);
         }
 
         [Fact]
@@ -139,11 +140,11 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddEcoLamp("Lepri");
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.SingleLampChangeBrightness(25, "Stefano");
+            newLampsRow.AddEcoLamp(Name.Create("Lepri"));
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.SingleLampChangeBrightness(25, Name.Create("Stefano"));
 
-            Assert.Equal(0, newLampsRow.Lamps[1].Brightness);
+            Assert.Equal(Brightness.Create(0), newLampsRow.Lamps[1].Brightness);
         }
 
         [Fact]
@@ -152,8 +153,8 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddLamp(Name.Create("Stefano"));
             newLampsRow.AllLampsSwitchOnOff();
 
             Assert.Equal(DeviceStatus.On, newLampsRow.Lamps[0].Status);
@@ -166,8 +167,8 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddLamp(Name.Create("Stefano"));
             newLampsRow.AllLampsSwitchOnOff();
             newLampsRow.AllLampsSwitchOnOff();
 
@@ -181,13 +182,13 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddLamp(Name.Create("Stefano"));
             newLampsRow.AllLampsSwitchOnOff();
             newLampsRow.AllLampsChangeBrightness(25);
 
-            Assert.Equal(25, newLampsRow.Lamps[0].Brightness);
-            Assert.Equal(25, newLampsRow.Lamps[1].Brightness);
+            Assert.Equal(Brightness.Create(25), newLampsRow.Lamps[0].Brightness);
+            Assert.Equal(Brightness.Create(25), newLampsRow.Lamps[1].Brightness);
         }
 
         [Fact]
@@ -196,12 +197,12 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddLamp("Stefano");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddLamp(Name.Create("Stefano"));
             newLampsRow.AllLampsChangeBrightness(25);
 
-            Assert.Equal(0, newLampsRow.Lamps[0].Brightness);
-            Assert.Equal(0, newLampsRow.Lamps[1].Brightness);
+            Assert.Equal(Brightness.Create(0), newLampsRow.Lamps[0].Brightness);
+            Assert.Equal(Brightness.Create(0), newLampsRow.Lamps[1].Brightness);
         }
 
         [Fact]
@@ -211,12 +212,12 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             LampsRow newLampsRow = new LampsRow("Giorgo", lamps);
             
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddLamp("Stefano2");
-            newLampsRow.RemoveLamp("Stefano");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddLamp(Name.Create("Stefano2"));
+            newLampsRow.RemoveLamp(Name.Create("Stefano"));
 
 
-            Assert.Equal("Stefano2", newLampsRow.Lamps[0].Name);
+            Assert.Equal(Name.Create("Stefano2"), newLampsRow.Lamps[0].Name);
 
         }
 
@@ -227,10 +228,10 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             LampsRow newLampsRow = new LampsRow("Giorgo", lamps);
 
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddLamp("Stefano2");
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.RemoveLamp("Stefano");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddLamp(Name.Create("Stefano2"));
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.RemoveLamp(Name.Create("Stefano"));
 
 
             Assert.Equal(1, newLampsRow.Lamps.Count);
@@ -244,13 +245,13 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             LampsRow newLampsRow = new LampsRow("Giorgo", lamps);
 
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddLamp("Stefano2");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddLamp(Name.Create("Stefano2"));
             Guid id = newLampsRow.Lamps[0].Id;
             newLampsRow.RemoveLamp(id);
 
 
-            Assert.Equal("Stefano2", newLampsRow.Lamps[0].Name);
+            Assert.Equal(Name.Create("Stefano2"), newLampsRow.Lamps[0].Name);
 
         }
 
@@ -261,12 +262,12 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             LampsRow newLampsRow = new LampsRow("Giorgo", lamps);
 
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddLamp("Stefano2");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddLamp(Name.Create("Stefano2"));
             newLampsRow.RemoveLampInPosition("Stefano", 0);
 
 
-            Assert.Equal("Stefano2", newLampsRow.Lamps[0].Name);
+            Assert.Equal(Name.Create("Stefano2"), newLampsRow.Lamps[0].Name);
 
         }
 
@@ -277,8 +278,8 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             LampsRow newLampsRow = new LampsRow("Giorgo", lamps);
 
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddLamp("Stefano2");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddLamp(Name.Create("Stefano2"));
             Guid id = newLampsRow.Lamps[0].Id;
             newLampsRow.SwitchOn(id);
 
@@ -294,8 +295,8 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             LampsRow newLampsRow = new LampsRow("Giorgo", lamps);
 
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddLamp("Stefano2");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddLamp(Name.Create("Stefano2"));
             Guid id = newLampsRow.Lamps[0].Id;
             newLampsRow.AllLampsSwitchOnOff();
             newLampsRow.SwitchOff(id);
@@ -312,9 +313,9 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             LampsRow newLampsRow = new LampsRow("Giorgo", lamps);
 
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddLamp("Stefano2");           
-            newLampsRow.SwitchOn("Stefano");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddLamp(Name.Create("Stefano2"));           
+            newLampsRow.SwitchOn(Name.Create("Stefano"));
 
 
             Assert.Equal(DeviceStatus.On, newLampsRow.Lamps[0].Status);
@@ -328,9 +329,9 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             LampsRow newLampsRow = new LampsRow("Giorgo", lamps);
 
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddLamp("Stefano2");
-            newLampsRow.SwitchOff("Stefano");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddLamp(Name.Create("Stefano2"));
+            newLampsRow.SwitchOff(Name.Create("Stefano"));
 
 
             Assert.Equal(DeviceStatus.Off, newLampsRow.Lamps[0].Status);
@@ -344,8 +345,8 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             LampsRow newLampsRow = new LampsRow("Giorgo", lamps);
 
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddLamp("Stefano2");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddLamp(Name.Create("Stefano2"));
             newLampsRow.AllSwitchOn();
 
 
@@ -362,8 +363,8 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             LampsRow newLampsRow = new LampsRow("Giorgo", lamps);
 
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddLamp("Stefano2");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddLamp(Name.Create("Stefano2"));
             newLampsRow.AllSwitchOn();
             newLampsRow.AllSwitchOff();
 
@@ -379,10 +380,10 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
         {
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
-            AbstractLamp lamp = new Lamp("Lepri");
+            AbstractLamp lamp = new Lamp(Name.Create("Lepri"));
 
-            newLampsRow.AddEcoLamp("Stefano");
-            newLampsRow.AddEcoLamp("Stefan2");
+            newLampsRow.AddEcoLamp(Name.Create("Stefano"));
+            newLampsRow.AddEcoLamp(Name.Create("Stefan2"));
 
             newLampsRow.AddLampInPosition(lamp, 1);
 
@@ -395,10 +396,10 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
         {
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
-            AbstractLamp ecoLamp = new EcoLamp("Lepri");
+            AbstractLamp ecoLamp = new EcoLamp(Name.Create("Lepri"));
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddLamp("Stefan2");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddLamp(Name.Create("Stefan2"));
 
             newLampsRow.AddLampInPosition(ecoLamp, 1);
 
@@ -412,8 +413,8 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddEcoLamp("Lepri");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddEcoLamp(Name.Create("Lepri"));
             Guid id = newLampsRow.Lamps[0].Id;
             newLampsRow.SingleLampChangeBrightness(25, id);
 
@@ -427,14 +428,14 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddEcoLamp("Lepri");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddEcoLamp(Name.Create("Lepri"));
             Guid id = newLampsRow.Lamps[0].Id;
             newLampsRow.SwitchOn(id);
             newLampsRow.SingleLampChangeBrightness(25, id);
 
             Assert.Equal(DeviceStatus.On, newLampsRow.Lamps[0].Status);
-            Assert.Equal(25, newLampsRow.Lamps[0].Brightness);
+            Assert.Equal(Brightness.Create(25), newLampsRow.Lamps[0].Brightness);
         }
 
         [Fact]
@@ -443,8 +444,8 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddEcoLamp("Lepri");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddEcoLamp(Name.Create("Lepri"));
             Guid id = newLampsRow.Lamps[1].Id;
             newLampsRow.SingleLampChangeBrightness(25, id);
 
@@ -458,14 +459,14 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddEcoLamp("Lepri");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddEcoLamp(Name.Create("Lepri"));
             Guid id = newLampsRow.Lamps[1].Id;
             newLampsRow.SwitchOn(id);
             newLampsRow.SingleLampChangeBrightness(25, id);
 
             Assert.Equal(DeviceStatus.On, newLampsRow.Lamps[1].Status);
-            Assert.Equal(25, newLampsRow.Lamps[1].Brightness);
+            Assert.Equal(Brightness.Create(25), newLampsRow.Lamps[1].Brightness);
         }
 
         [Fact]
@@ -475,13 +476,13 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddEcoLamp("Lepri");
-            newLampsRow.AddLamp("Stefanetto");
-            newLampsRow.SwitchOn("Lepri");
-            newLampsRow.SwitchOn("Stefano");
-            newLampsRow.SwitchOn("Stefanetto");
-            newLampsRow.SingleLampChangeBrightness(65, "Lepri");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddEcoLamp(Name.Create("Lepri"));
+            newLampsRow.AddLamp(Name.Create("Stefanetto"));
+            newLampsRow.SwitchOn(Name.Create("Lepri"));
+            newLampsRow.SwitchOn(Name.Create("Stefano"));
+            newLampsRow.SwitchOn(Name.Create("Stefanetto"));
+            newLampsRow.SingleLampChangeBrightness(65, Name.Create("Lepri"));
 
             Assert.Equal(newLampsRow.Lamps[1], newLampsRow.FindLampWithMaxBrightness());
 
@@ -494,13 +495,13 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddEcoLamp("Lepri");
-            newLampsRow.AddLamp("Stefanetto");
-            newLampsRow.SwitchOn("Stefanetto");
-            newLampsRow.SwitchOn("Stefano");
-            newLampsRow.SwitchOn("Lepri");
-            newLampsRow.SingleLampChangeBrightness(65, "Stefanetto");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddEcoLamp(Name.Create("Lepri"));
+            newLampsRow.AddLamp(Name.Create("Stefanetto"));
+            newLampsRow.SwitchOn(Name.Create("Stefanetto"));
+            newLampsRow.SwitchOn(Name.Create("Stefano"));
+            newLampsRow.SwitchOn(Name.Create("Lepri"));
+            newLampsRow.SingleLampChangeBrightness(65, Name.Create("Stefanetto"));
 
             Assert.Equal(newLampsRow.Lamps[2], newLampsRow.FindLampWithMaxBrightness());
 
@@ -513,12 +514,12 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddEcoLamp("Lepri");
-            newLampsRow.AddLamp("Stefanetto");
-            newLampsRow.SwitchOn("Lepri");
-            newLampsRow.SwitchOn("Stefano");
-            newLampsRow.SwitchOn("Stefanetto");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddEcoLamp(Name.Create("Lepri"));
+            newLampsRow.AddLamp(Name.Create("Stefanetto"));
+            newLampsRow.SwitchOn(Name.Create("Lepri"));
+            newLampsRow.SwitchOn(Name.Create("Stefano"));
+            newLampsRow.SwitchOn(Name.Create("Stefanetto"));
 
             Assert.Equal(newLampsRow.Lamps[1], newLampsRow.FindLampWithMinBrightness());
 
@@ -531,13 +532,13 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddEcoLamp("Lepri");
-            newLampsRow.AddLamp("Stefanetto");
-            newLampsRow.SwitchOn("Stefanetto");
-            newLampsRow.SwitchOn("Stefano");
-            newLampsRow.SwitchOn("Lepri");
-            newLampsRow.SingleLampChangeBrightness(25, "Stefanetto");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddEcoLamp(Name.Create("Lepri"));
+            newLampsRow.AddLamp(Name.Create("Stefanetto"));
+            newLampsRow.SwitchOn(Name.Create("Stefanetto"));
+            newLampsRow.SwitchOn(Name.Create("Stefano"));
+            newLampsRow.SwitchOn(Name.Create("Lepri"));
+            newLampsRow.SingleLampChangeBrightness(25, Name.Create("Stefanetto"));
 
             Assert.Equal(newLampsRow.Lamps[2], newLampsRow.FindLampWithMinBrightness());
 
@@ -550,13 +551,13 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddEcoLamp("Lepri");
-            newLampsRow.AddLamp("Stefanetto");
-            newLampsRow.SwitchOn("Stefanetto");
-            newLampsRow.SwitchOn("Stefano");
-            newLampsRow.SwitchOn("Lepri");
-            newLampsRow.SingleLampChangeBrightness(25, "Stefanetto");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddEcoLamp(Name.Create("Lepri"));
+            newLampsRow.AddLamp(Name.Create("Stefanetto"));
+            newLampsRow.SwitchOn(Name.Create("Stefanetto"));
+            newLampsRow.SwitchOn(Name.Create("Stefano"));
+            newLampsRow.SwitchOn(Name.Create("Lepri"));
+            newLampsRow.SingleLampChangeBrightness(25, Name.Create("Stefanetto"));
 
             List<AbstractLamp> lamp = new List<AbstractLamp>() { newLampsRow.Lamps[0], newLampsRow.Lamps[1] };
 
@@ -573,13 +574,13 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddEcoLamp("Lepri");
-            newLampsRow.AddLamp("Stefanetto");
-            newLampsRow.SwitchOn("Stefanetto");
-            newLampsRow.SwitchOn("Stefano");
-            newLampsRow.SwitchOn("Lepri");
-            newLampsRow.SingleLampChangeBrightness(25, "Stefanetto");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddEcoLamp(Name.Create("Lepri"));
+            newLampsRow.AddLamp(Name.Create("Stefanetto"));
+            newLampsRow.SwitchOn(Name.Create("Stefanetto"));
+            newLampsRow.SwitchOn(Name.Create("Stefano"));
+            newLampsRow.SwitchOn(Name.Create("Lepri"));
+            newLampsRow.SingleLampChangeBrightness(25, Name.Create("Stefanetto"));
 
             List<AbstractLamp> lamp = new List<AbstractLamp>() { newLampsRow.Lamps[1], newLampsRow.Lamps[2] };
 
@@ -595,11 +596,11 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddEcoLamp("Lepri");
-            newLampsRow.AddLamp("Stefanetto");
-            newLampsRow.SwitchOn("Lepri");
-            newLampsRow.SwitchOn("Stefano");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddEcoLamp(Name.Create("Lepri"));
+            newLampsRow.AddLamp(Name.Create("Stefanetto"));
+            newLampsRow.SwitchOn(Name.Create("Lepri"));
+            newLampsRow.SwitchOn(Name.Create("Stefano"));
 
             List<AbstractLamp> lamp = new List<AbstractLamp>() { newLampsRow.Lamps[0], newLampsRow.Lamps[1] };
 
@@ -613,11 +614,11 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddEcoLamp("Lepri");
-            newLampsRow.AddLamp("Stefanetto");
-            newLampsRow.SwitchOn("Lepri");
-            newLampsRow.SwitchOn("Stefano");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddEcoLamp(Name.Create("Lepri"));
+            newLampsRow.AddLamp(Name.Create("Stefanetto"));
+            newLampsRow.SwitchOn(Name.Create("Lepri"));
+            newLampsRow.SwitchOn(Name.Create("Stefano"));
 
             List<AbstractLamp> lamp = new List<AbstractLamp>() { newLampsRow.Lamps[2]};
 
@@ -631,9 +632,9 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddEcoLamp("Lepri");
-            newLampsRow.AddLamp("Stefanetto");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddEcoLamp(Name.Create("Lepri"));
+            newLampsRow.AddLamp(Name.Create("Stefanetto"));
             Guid id = newLampsRow.Lamps[1].Id;
 
             Assert.Equal(newLampsRow.Lamps[1], newLampsRow.FindLampById(id));
@@ -646,13 +647,13 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddEcoLamp("Lepri");
-            newLampsRow.AddLamp("Stefanetto");
-            newLampsRow.SwitchOn("Stefanetto");
-            newLampsRow.SwitchOn("Stefano");
-            newLampsRow.SwitchOn("Lepri");
-            newLampsRow.SingleLampChangeBrightness(85, "Stefanetto");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddEcoLamp(Name.Create("Lepri"));
+            newLampsRow.AddLamp(Name.Create("Stefanetto"));
+            newLampsRow.SwitchOn(Name.Create("Stefanetto"));
+            newLampsRow.SwitchOn(Name.Create("Stefano"));
+            newLampsRow.SwitchOn(Name.Create("Lepri"));
+            newLampsRow.SingleLampChangeBrightness(85, Name.Create("Stefanetto"));
 
             List<AbstractLamp> lamp = new List<AbstractLamp>() { newLampsRow.Lamps[1], newLampsRow.Lamps[0], newLampsRow.Lamps[2] };
 
@@ -666,13 +667,13 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             List<AbstractLamp> lamps = new List<AbstractLamp>();
             LampsRow newLampsRow = new LampsRow("Giorgio", lamps);
 
-            newLampsRow.AddLamp("Stefano");
-            newLampsRow.AddEcoLamp("Lepri");
-            newLampsRow.AddLamp("Stefanetto");
-            newLampsRow.SwitchOn("Stefanetto");
-            newLampsRow.SwitchOn("Stefano");
-            newLampsRow.SwitchOn("Lepri");
-            newLampsRow.SingleLampChangeBrightness(85, "Stefanetto");
+            newLampsRow.AddLamp(Name.Create("Stefano"));
+            newLampsRow.AddEcoLamp(Name.Create("Lepri"));
+            newLampsRow.AddLamp(Name.Create("Stefanetto"));
+            newLampsRow.SwitchOn(Name.Create("Stefanetto"));
+            newLampsRow.SwitchOn(Name.Create("Stefano"));
+            newLampsRow.SwitchOn(Name.Create("Lepri"));
+            newLampsRow.SingleLampChangeBrightness(85, Name.Create("Stefanetto"));
 
             List<AbstractLamp> lamp = new List<AbstractLamp>() { newLampsRow.Lamps[2], newLampsRow.Lamps[0], newLampsRow.Lamps[1] };
 
