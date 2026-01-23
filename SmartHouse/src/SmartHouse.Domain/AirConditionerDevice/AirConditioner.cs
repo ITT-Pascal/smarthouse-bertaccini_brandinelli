@@ -22,7 +22,10 @@ namespace SmartHouse.Domain.AirConditionerDevice
         public void SetFanSpeedLow()
         {
             if (Status == DeviceStatus.On)
+            {
                 FanSpeed = FanSpeed.Low;
+                LastUpdateTime = DateTime.UtcNow;
+            }
             else
                 throw new ArgumentException("Before setting the fan speed to low you must turn on the air conditioner");
         }
@@ -30,7 +33,10 @@ namespace SmartHouse.Domain.AirConditionerDevice
         public void SetFanSpeedMedium()
         {
             if (Status == DeviceStatus.On)
+            {
                 FanSpeed = FanSpeed.Medium;
+                LastUpdateTime = DateTime.UtcNow;
+            }
             else
                 throw new ArgumentException("Before setting the fan speed to medium you must turn on the air conditioner");
         }
@@ -38,7 +44,10 @@ namespace SmartHouse.Domain.AirConditionerDevice
         public void SetFanSpeedHigh()
         {
             if (Status == DeviceStatus.On)
+            {
                 FanSpeed = FanSpeed.High;
+                LastUpdateTime = DateTime.UtcNow;
+            }
             else
                 throw new ArgumentException("Before setting the fan speed to high you must turn on the air conditioner");
         }
@@ -47,9 +56,15 @@ namespace SmartHouse.Domain.AirConditionerDevice
         {
             if (Status == DeviceStatus.On)
                 if (FanSpeed == FanSpeed.Low)
+                {
                     FanSpeed = FanSpeed.Medium;
+                    LastUpdateTime = DateTime.UtcNow;
+                }
                 else if (FanSpeed == FanSpeed.Medium)
+                {
                     FanSpeed = FanSpeed.High;
+                    LastUpdateTime = DateTime.UtcNow;
+                }
                 else
                     throw new ArgumentException("The fan speed is already at maximum");
             else
@@ -60,9 +75,14 @@ namespace SmartHouse.Domain.AirConditionerDevice
         {
             if (Status == DeviceStatus.On)
                 if (FanSpeed == FanSpeed.High)
+                {
                     FanSpeed = FanSpeed.Medium;
+                    LastUpdateTime = DateTime.UtcNow;
+                }
                 else if (FanSpeed == FanSpeed.Medium)
+                {
                     FanSpeed = FanSpeed.Low;
+                }
                 else
                     throw new ArgumentException("The fan speed is already at minimum");
             else
