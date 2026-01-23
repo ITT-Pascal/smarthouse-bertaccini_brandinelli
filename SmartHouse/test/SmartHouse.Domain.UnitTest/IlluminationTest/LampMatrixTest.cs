@@ -28,8 +28,8 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
         public void When_WantToAdd2NewLamps_CanDoIt()
         {
             AbstractLamp[,] lamps = new AbstractLamp[3, 3];
-            AbstractLamp newLamp = new Lamp(Name.Create("Stefano"));
-            AbstractLamp newEcoLamp = new EcoLamp(Name.Create("Lepri"));
+            AbstractLamp newLamp = new Lamp("Stefano");
+            AbstractLamp newEcoLamp = new EcoLamp("Lepri");
             LampMatrix newlampMatrix = new LampMatrix("Sasha", lamps);
 
             newlampMatrix.AddLamp(newLamp);
@@ -43,7 +43,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
         public void When_WantToAddANewEcoLamp_CanDoIt()
         {
             AbstractLamp[,] lamps = new AbstractLamp[3, 3];
-            EcoLamp newEcoLamp = new EcoLamp(Name.Create("Lepri"));
+            EcoLamp newEcoLamp = new EcoLamp("Lepri");
             LampMatrix newLampMatrix = new LampMatrix("Sasha", lamps);
 
             newLampMatrix.AddLamp(newEcoLamp);
@@ -55,7 +55,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
         public void When_WantToAddNewLampButMatrixIsAlreadyFull_CannotDoIt()
         {
             AbstractLamp[,] lamps = new AbstractLamp[1, 1];
-            Lamp newLamp = new Lamp(Name.Create("Stefano"));
+            Lamp newLamp = new Lamp("Stefano");
             LampMatrix newLampMatrix = new LampMatrix("Sasha", lamps);
 
             newLampMatrix.AddLamp(newLamp);
@@ -67,7 +67,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
         public void When_WantToAddNewEcoLampButMatrixIsAlreadyFull_CannotDoIt()
         {
             AbstractLamp[,] lamps = new AbstractLamp[1, 1];
-            EcoLamp newEcoLamp = new EcoLamp(Name.Create("Lepri"));
+            EcoLamp newEcoLamp = new EcoLamp("Lepri");
             LampMatrix newLampMatrix = new LampMatrix("Sasha", lamps);
 
             newLampMatrix.AddLamp(newEcoLamp);
@@ -79,7 +79,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
         public void When_WantToAddANewLampInADeterminedPosition_CanDoIt()
         {
             AbstractLamp[,] lamps = new AbstractLamp[3, 3];
-            Lamp newLamp = new Lamp(Name.Create("Stefano"));
+            Lamp newLamp = new Lamp("Stefano");
             LampMatrix newLampMatrix = new LampMatrix("Sasha", lamps);
 
             newLampMatrix.AddLampInPosition(newLamp, 2, 1);
@@ -103,7 +103,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
         public void When_WantToAddANewLampInADeterminedPositionButMatrixIsAlreadyFull_CannotDoIt()
         {
             AbstractLamp[,] lamps = new AbstractLamp[1, 1];
-            Lamp newLamp = new Lamp(Name.Create("Stefano"));
+            Lamp newLamp = new Lamp("Stefano");
             LampMatrix newLampMatrix = new LampMatrix("Sasha", lamps);
 
             newLampMatrix.AddLampInPosition(newLamp, 0, 0);
@@ -131,7 +131,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             LampMatrix newLampMatrix = new LampMatrix("Sasha", lamps);
 
             newLampMatrix.AddLamp(newLamp);
-            newLampMatrix.RemoveLamp("Stefano");
+            newLampMatrix.RemoveLamp(Name.Create("Stefano"));
 
             Assert.Equal(null, newLampMatrix.Lamps[0, 0]);
         }
@@ -144,7 +144,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             LampMatrix newLampMatrix = new LampMatrix("Sasha", lamps);
 
             newLampMatrix.AddLamp(newEcoLamp);
-            newLampMatrix.RemoveLamp("Lepri");
+            newLampMatrix.RemoveLamp(Name.Create("Lepri"));
 
             Assert.Equal(null, newLampMatrix.Lamps[0, 0]);
         }
@@ -209,7 +209,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             LampMatrix newLampMatrix = new LampMatrix("Sasha", lamps);
 
             newLampMatrix.AddLamp(newLamp);
-            newLampMatrix.SwitchOn("Stefano");
+            newLampMatrix.SwitchOn(Name.Create("Stefano"));
 
             Assert.Equal(DeviceStatus.On, newLamp.Status);
         }
@@ -235,8 +235,8 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             LampMatrix newLampMatrix = new LampMatrix("Sasha", lamps);
 
             newLampMatrix.AddLamp(newLamp);
-            newLampMatrix.SwitchOn("Stefano");
-            newLampMatrix.SwitchOff("Stefano");
+            newLampMatrix.SwitchOn(Name.Create("Stefano"));
+            newLampMatrix.SwitchOff(Name.Create("Stefano"));
 
             Assert.Equal(DeviceStatus.Off, newLamp.Status);
         }
@@ -296,7 +296,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             LampMatrix newLampMatrix = new LampMatrix("Sasha", lamps);
 
             newLampMatrix.AddLamp(newLamp);
-            newLampMatrix.SingleLampSwitchOnOff("Stefano");
+            newLampMatrix.SingleLampSwitchOnOff(Name.Create("Stefano"));
 
             Assert.Equal(DeviceStatus.On, newLamp.Status);
         }
@@ -309,8 +309,8 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             LampMatrix newLampMatrix = new LampMatrix("Sasha", lamps);
 
             newLampMatrix.AddLamp(newLamp);
-            newLampMatrix.SingleLampSwitchOnOff("Stefano");
-            newLampMatrix.SingleLampSwitchOnOff("Stefano");
+            newLampMatrix.SingleLampSwitchOnOff(Name.Create("Stefano"));
+            newLampMatrix.SingleLampSwitchOnOff(Name.Create("Stefano"));
 
             Assert.Equal(DeviceStatus.Off, newLamp.Status);
         }
@@ -361,8 +361,8 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             newLampMatrix.AllSwitchOn();
             newLampMatrix.AllLampsChangeBrightness(50);
 
-            Assert.Equal(50, newLamp1.Brightness);
-            Assert.Equal(50, newLamp2.Brightness);
+            Assert.Equal(Brightness.Create(50), newLamp1.Brightness);
+            Assert.Equal(Brightness.Create(50), newLamp2.Brightness);
         }
 
         [Fact]
@@ -374,9 +374,9 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
 
             newLampMatrix.AddLamp(newLamp);
             newLampMatrix.AllSwitchOn();
-            newLampMatrix.SingleLampChangeBrightness(50, "Stefano");
+            newLampMatrix.SingleLampChangeBrightness(50, Name.Create("Stefano"));
 
-            Assert.Equal(50, newLampMatrix.Lamps[0,0].Brightness);
+            Assert.Equal(Brightness.Create(50), newLampMatrix.Lamps[0,0].Brightness);
         }
 
         [Fact]

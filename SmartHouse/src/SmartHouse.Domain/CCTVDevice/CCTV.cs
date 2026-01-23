@@ -41,7 +41,9 @@ namespace SmartHouse.Domain.CCTVDevice
                 if(PIN == pin)
                 {
                     IsLocked = false;
-                }else
+                    LastUpdateTime = DateTime.UtcNow;
+                }
+                else
                 {
                     throw new ArgumentException("The wrong pin was inserted");
                 }
@@ -57,6 +59,7 @@ namespace SmartHouse.Domain.CCTVDevice
             if(IsLocked == false && PIN != null)
             {
                 IsLocked = true;
+                LastUpdateTime = DateTime.UtcNow;
             }
             else
             {
@@ -69,6 +72,7 @@ namespace SmartHouse.Domain.CCTVDevice
             if (IsLocked == false)
             {
                 base.SwitchOn();
+                LastUpdateTime = DateTime.UtcNow;
             }
             else
             {
@@ -83,14 +87,17 @@ namespace SmartHouse.Domain.CCTVDevice
                 case CCTVVisionType.DefaultVision:
                     if(VisionType == type) { throw new ArgumentException("Vision type is alredy set at default"); }
                     VisionType = type;
+                    LastUpdateTime = DateTime.UtcNow;
                     break;
                 case CCTVVisionType.NightVision:
                     if (VisionType == type) { throw new ArgumentException("Vision type is alredy set at night vision"); }
                     VisionType = type;
+                    LastUpdateTime = DateTime.UtcNow;
                     break;
                 case CCTVVisionType.ThermalVision:
                     if (VisionType == type) { throw new ArgumentException("Vision type is alredy set at thermal vision"); }
                     VisionType = type;
+                    LastUpdateTime = DateTime.UtcNow;
                     break;
                 default:
                     throw new ArgumentException("Entered vision type does not exist");
@@ -104,6 +111,7 @@ namespace SmartHouse.Domain.CCTVDevice
                 throw new ArgumentException("Zoom is already at minimum");
 
             Zoom = MinZoom;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void SetDefaultZoom()
@@ -112,6 +120,7 @@ namespace SmartHouse.Domain.CCTVDevice
                 throw new ArgumentException("Zoom is already at default");
 
             Zoom = DefaultZoom;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void SetMaxZoom()
@@ -120,6 +129,7 @@ namespace SmartHouse.Domain.CCTVDevice
                 throw new ArgumentException("Zoom is already at maximum");
 
             Zoom = MaxZoom;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void IncreaseZoom()
@@ -128,6 +138,7 @@ namespace SmartHouse.Domain.CCTVDevice
                 throw new ArgumentException("Zoom is already al maximum");
 
             Zoom += DefaultJump;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void DecreaseZoom()
@@ -136,6 +147,7 @@ namespace SmartHouse.Domain.CCTVDevice
                 throw new ArgumentException("Zoom is already al minimum");
 
             Zoom -= DefaultJump;
+            LastUpdateTime = DateTime.UtcNow;
         }
     }
 }
