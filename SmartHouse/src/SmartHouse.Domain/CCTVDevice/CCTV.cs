@@ -6,7 +6,7 @@ namespace SmartHouse.Domain.CCTVDevice
     {
         public CCTVVisionType VisionType { get; set; }
         public Zoom Zoom { get; private set; }
-        public const double MinZoom = 0.5;
+        public const Zoom MinZoom = 0.5;
         public const double DefaultZoom = 1.0;
         public const double MaxZoom = 10.0;
         public const double DefaultJump = 0.1;

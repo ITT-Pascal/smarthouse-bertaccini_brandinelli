@@ -77,8 +77,11 @@ namespace SmartHouse.Domain
 
         public virtual void ChangeBrightness(int newBrightness)
         {
-            Brightness = Brightness.Create(newBrightness);
-            LastUpdateTime = DateTime.UtcNow;
+            if (Status == DeviceStatus.On)
+            {
+                Brightness = Brightness.Create(newBrightness);
+                LastUpdateTime = DateTime.UtcNow;
+            }
         }
         
     }
