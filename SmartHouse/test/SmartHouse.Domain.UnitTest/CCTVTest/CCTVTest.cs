@@ -325,5 +325,136 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
 
             Assert.Equal(Zoom.Create(0.9), newCCTV.Zoom);
         }
+
+        [Fact]
+        public void When_WantToSetDefaultVisionAndCCTVIsLockedButItHasAlreadyBeenSet_CannotSetDefaultVision()
+        {
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
+
+            Assert.True(newCCTV.IsLocked);
+            Assert.Equal(CCTVVisionType.DefaultVision, newCCTV.VisionType);
+        }
+
+        [Fact]
+        public void When_WantToSetNightVisionAndCCTVIsLockedButItHasAlreadyBeenSet_CannotSetNightVision()
+        {
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
+
+            newCCTV.SetVision(CCTVVisionType.NightVision);
+
+            Assert.True(newCCTV.IsLocked);
+            Assert.Equal(CCTVVisionType.DefaultVision, newCCTV.VisionType);
+        }
+
+        [Fact]
+        public void When_WantToSetNightVisionAndCCTVIsLockedAndItIsAlreadySetToDefaultVision_CannotSetNightVision()
+        {
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
+
+            newCCTV.SetVision(CCTVVisionType.NightVision);
+
+            Assert.True(newCCTV.IsLocked);
+            Assert.Equal(CCTVVisionType.DefaultVision, newCCTV.VisionType);
+
+        }
+
+        [Fact]
+        public void When_WantToSetThermalVisionAndCCTVIsLockedButItHasAlreadyBeenSet_CannotSetThermalVision()
+        {
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
+
+            newCCTV.SetVision(CCTVVisionType.ThermalVision);
+
+            Assert.True(newCCTV.IsLocked);
+            Assert.Equal(CCTVVisionType.DefaultVision, newCCTV.VisionType);
+        }
+
+        [Fact]
+        public void When_WantToSetThermalVisionAndCCTVIsLockedAndItIsAlreadySetToDefaultVision_CannotSetThermalVision()
+        {
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
+
+            newCCTV.SetVision(CCTVVisionType.ThermalVision);
+
+            Assert.True(newCCTV.IsLocked);
+            Assert.Equal(CCTVVisionType.DefaultVision, newCCTV.VisionType);
+
+        }
+
+        [Fact]
+        public void When_WantToSetDefaultZoomAndCCTVIsLockedButItHasAlreadyBeenSet_CannotSetDefaultZoom()
+        {
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
+
+            Assert.True(newCCTV.IsLocked);
+            Assert.Equal(newCCTV.DefaultZoom, newCCTV.Zoom);
+        }
+
+        [Fact]
+        public void When_WantToSetMinZoomAndCCTVIsLockedButItHasAlreadyBeenSet_CannotSetMinZoom()
+        {
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
+
+            newCCTV.SetMinZoom();
+
+            Assert.True(newCCTV.IsLocked);
+            Assert.Equal(newCCTV.DefaultZoom, newCCTV.Zoom);
+        }
+
+        [Fact]
+        public void When_WantToSetMinZoomAndCCTVIsLockedAndItIsAlreadySetToDefaultZoom_CannotSetMinZoom()
+        {
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
+
+            newCCTV.SetMinZoom();
+
+            Assert.True(newCCTV.IsLocked);
+            Assert.Equal(newCCTV.DefaultZoom, newCCTV.Zoom);
+
+        }
+
+        [Fact]
+        public void When_WantToSetMaxZoomAndCCTVIsLockedButItHasAlreadyBeenSet_CannotSetMaxZoom()
+        {
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
+
+            newCCTV.SetMaxZoom();
+
+            Assert.True(newCCTV.IsLocked);
+            Assert.Equal(newCCTV.DefaultZoom, newCCTV.Zoom);
+        }
+
+        [Fact]
+        public void When_WantToSetMaxZoomAndCCTVIsLockedAndItIsAlreadySetToDefaultZoom_CannotSetMaxZoom()
+        {
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
+
+            newCCTV.SetMaxZoom();
+
+            Assert.True(newCCTV.IsLocked);
+            Assert.Equal(newCCTV.DefaultZoom, newCCTV.Zoom);
+        }
+
+        [Fact]
+        public void When_WantToIncreaseZoomAndCCTVIsLocked_CannotDoIt()
+        {
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
+
+            newCCTV.IncreaseZoom();
+
+            Assert.True(newCCTV.IsLocked);
+            Assert.Equal(newCCTV.DefaultZoom, newCCTV.Zoom);
+        }
+
+        [Fact]
+        public void When_WantToDecreaseZoomAndCCTVIsLocked_CannotDoIt()
+        {
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
+
+            newCCTV.DecreaseZoom();
+
+            Assert.True(newCCTV.IsLocked);
+            Assert.Equal(newCCTV.DefaultZoom, newCCTV.Zoom);
+        }
     }
 }
