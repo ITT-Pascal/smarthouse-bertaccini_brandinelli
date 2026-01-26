@@ -456,5 +456,46 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
             Assert.True(newCCTV.IsLocked);
             Assert.Equal(newCCTV.DefaultZoom, newCCTV.Zoom);
         }
+
+        [Fact]
+        public void When_WantToChangePINButCCTVDoesNotHaveIt_CannotDoIt()
+        {
+            CCTV newCCTV = new CCTV("Salvatore");
+
+            newCCTV.ChangePIN(4321);
+
+            Assert.Equal(null, newCCTV.PIN);
+        }
+
+        [Fact]
+        public void When_WantToChangePINButCCTVIsLocked_CannotDoIt()
+        {
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
+
+            newCCTV.ChangePIN(4321);
+
+            Assert.Equal(PIN, newCCTV.PIN);
+        }
+
+        [Fact]
+        public void When_WantToChangePINButTheNewPINIsTheSame_CannotDoIt()
+        {
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
+
+            newCCTV.Unlock(PIN);
+
+            Assert.Throws<ArgumentException>(() => newCCTV.ChangePIN(1234));
+        }
+
+        [Fact]
+        public void When_WantToChangePINAndCCTVIsUnlocked_CanDoIt()
+        {
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
+
+            newCCTV.Unlock(PIN);
+            newCCTV.ChangePIN(4321);
+
+            Assert.Equal(Pin.Create(4321), newCCTV.PIN);
+        }
     }
 }

@@ -24,6 +24,16 @@ namespace SmartHouse.Domain.Abstractions
 
             return new Pin(pin);
         }
+
+        public static bool operator ==(Pin p1, int p2)
+        {
+            return p1.PIN == p2;
+        }
+
+        public static bool operator !=(Pin p1, int p2)
+        {
+            return p1.PIN != p2;
+        }
        
     }
 }

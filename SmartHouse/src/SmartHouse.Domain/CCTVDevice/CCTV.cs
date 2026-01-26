@@ -61,6 +61,17 @@ namespace SmartHouse.Domain.CCTVDevice
             }
         }
 
+        public void ChangePIN(int newPin)
+        {
+            if (!IsLocked && PIN != null)
+            {
+                if (PIN.PIN == newPin)
+                    throw new ArgumentException("The PIN cannot be the same");
+
+                PIN = Pin.Create(newPin);
+            }
+        }
+
         public override void SwitchOn()
         {
             if (IsLocked == false)

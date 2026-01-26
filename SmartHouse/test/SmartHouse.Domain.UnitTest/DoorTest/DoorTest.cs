@@ -1,5 +1,6 @@
-﻿using SmartHouse.Domain.Doors;
-using SmartHouse.Domain.Abstractions;
+﻿using SmartHouse.Domain.Abstractions;
+using SmartHouse.Domain.CCTVDevice;
+using SmartHouse.Domain.Doors;
 using SmartHouse.Domain.Illumination;
 using SmartHouse.Domain.ThermostastDevice;
 using System;
@@ -131,6 +132,37 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
             newDoor.Unlock(PIN);
 
             Assert.False(newDoor.IsLocked);
+        }
+
+        [Fact]
+        public void When_WantToChangePINButDoorIsLocked_CannotDoIt()
+        {
+            Door newDoor = new Door("Giovanni", 1234);
+
+            newDoor.ChangePIN(4321);
+
+            Assert.Equal(PIN, newDoor.PIN);
+        }
+
+        [Fact]
+        public void When_WantToChangePINButTheNewPINIsTheSame_CannotDoIt()
+        {
+            Door newDoor = new Door("Giovanni", 1234);
+
+            newDoor.Unlock(PIN);
+
+            Assert.Throws<ArgumentException>(() => newDoor.ChangePIN(1234));
+        }
+
+        [Fact]
+        public void When_WantToChangePINAndDoorIsUnlocked_CanDoIt()
+        {
+            Door newDoor = new Door("Salvatore", 1234);
+
+            newDoor.Unlock(PIN);
+            newDoor.ChangePIN(4321);
+
+            Assert.Equal(Pin.Create(4321), newDoor.PIN);
         }
     }
 }

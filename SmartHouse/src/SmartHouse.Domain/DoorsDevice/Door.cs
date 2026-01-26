@@ -82,5 +82,14 @@ namespace SmartHouse.Domain.Doors
                 throw new ArgumentException("The door must be locked before being unlocked");
         }
 
+        public void ChangePIN(int newPin)
+        {
+            if (!IsLocked)
+            {
+                if (PIN == newPin)
+                    throw new ArgumentException("The PIN cannot be the same");
+                PIN = Pin.Create(newPin);
+            }
+        }
     }
 }

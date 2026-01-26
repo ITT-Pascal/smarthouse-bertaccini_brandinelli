@@ -9,5 +9,7 @@ namespace SmartHouse.Domain.Abstractions
     public interface ILockable
     {
         bool IsLocked { get; }
+
+        void ChangePIN(int newPin); 
     }
 }
