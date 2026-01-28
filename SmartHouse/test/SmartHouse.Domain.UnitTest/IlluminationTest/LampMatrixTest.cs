@@ -361,8 +361,8 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             newLampMatrix.AllSwitchOn();
             newLampMatrix.AllLampsChangeBrightness(50);
 
-            Assert.Equal(Brightness.Create(50), newLamp1.Brightness);
-            Assert.Equal(Brightness.Create(50), newLamp2.Brightness);
+            Assert.Equal(Brightness.Create(50, newLamp1.MinBrightness._brightness, newLamp1.MaxBrightness._brightness), newLamp1.Brightness);
+            Assert.Equal(Brightness.Create(50, newLamp2.MinBrightness._brightness, newLamp2.MaxBrightness._brightness), newLamp2.Brightness);
         }
 
         [Fact]
@@ -376,7 +376,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             newLampMatrix.AllSwitchOn();
             newLampMatrix.SingleLampChangeBrightness(50, Name.Create("Stefano"));
 
-            Assert.Equal(Brightness.Create(50), newLampMatrix.Lamps[0,0].Brightness);
+            Assert.Equal(Brightness.Create(50, newLampMatrix.Lamps[0, 0].MinBrightness._brightness, newLampMatrix.Lamps[0, 0].MaxBrightness._brightness), newLampMatrix.Lamps[0,0].Brightness);
         }
 
         [Fact]
@@ -390,7 +390,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             newLampMatrix.AllSwitchOn();
             newLampMatrix.SingleLampChangeBrightness(50, newLamp.Id);
 
-            Assert.Equal(Brightness.Create(50), newLamp.Brightness);
+            Assert.Equal(Brightness.Create(50, newLamp.MinBrightness._brightness, newLamp.MaxBrightness._brightness), newLamp.Brightness);
         }
 
         [Fact]

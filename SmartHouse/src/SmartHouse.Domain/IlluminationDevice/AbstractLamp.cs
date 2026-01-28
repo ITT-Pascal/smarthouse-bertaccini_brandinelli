@@ -20,7 +20,7 @@ namespace SmartHouse.Domain
         
         public AbstractLamp(string name) : base(name)
         {          
-            Brightness = Brightness.Create(0);          
+            Brightness = Brightness.Create(0, MinBrightness._brightness, MaxBrightness._brightness);          
         }
 
         public override void SwitchOn()
@@ -79,7 +79,7 @@ namespace SmartHouse.Domain
         {
             if (Status == DeviceStatus.On)
             {
-                Brightness = Brightness.Create(newBrightness);
+                Brightness = Brightness.Create(newBrightness, MinBrightness._brightness, MaxBrightness._brightness);
                 LastUpdateTime = DateTime.UtcNow;
             }
         }

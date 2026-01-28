@@ -105,7 +105,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             newLampsRow.SingleLampSwitchOnOff(Name.Create("Stefano"));
             newLampsRow.SingleLampChangeBrightness(25, Name.Create("Stefano"));
 
-            Assert.Equal(Brightness.Create(25), newLampsRow.Lamps[0].Brightness);
+            Assert.Equal(Brightness.Create(25, newLampsRow.Lamps[0].MinBrightness._brightness, newLampsRow.Lamps[0].MaxBrightness._brightness), newLampsRow.Lamps[0].Brightness);
         }
 
         [Fact]
@@ -119,7 +119,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             newLampsRow.SingleLampSwitchOnOff(Name.Create("Lepri"));
             newLampsRow.SingleLampChangeBrightness(25, Name.Create("Lepri"));
 
-            Assert.Equal(Brightness.Create(25), newLampsRow.Lamps[1].Brightness);
+            Assert.Equal(Brightness.Create(25, newLampsRow.Lamps[1].MinBrightness._brightness, newLampsRow.Lamps[1].MaxBrightness._brightness), newLampsRow.Lamps[1].Brightness);
         }
 
         [Fact]
@@ -131,7 +131,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             newLampsRow.AddEcoLamp("Lepri");
             newLampsRow.SingleLampChangeBrightness(25, Name.Create("Lepri"));
 
-            Assert.Equal(Brightness.Create(0), newLampsRow.Lamps[0].Brightness);
+            Assert.Equal(Brightness.Create(0, newLampsRow.Lamps[0].MinBrightness._brightness, newLampsRow.Lamps[0].MaxBrightness._brightness), newLampsRow.Lamps[0].Brightness);
         }
 
         [Fact]
@@ -144,7 +144,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             newLampsRow.AddLamp("Stefano");
             newLampsRow.SingleLampChangeBrightness(25, Name.Create("Stefano"));
 
-            Assert.Equal(Brightness.Create(0), newLampsRow.Lamps[1].Brightness);
+            Assert.Equal(Brightness.Create(0, newLampsRow.Lamps[1].MinBrightness._brightness, newLampsRow.Lamps[1].MaxBrightness._brightness), newLampsRow.Lamps[1].Brightness);
         }
 
         [Fact]
@@ -187,8 +187,8 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             newLampsRow.AllLampsSwitchOnOff();
             newLampsRow.AllLampsChangeBrightness(25);
 
-            Assert.Equal(Brightness.Create(25), newLampsRow.Lamps[0].Brightness);
-            Assert.Equal(Brightness.Create(25), newLampsRow.Lamps[1].Brightness);
+            Assert.Equal(Brightness.Create(25, newLampsRow.Lamps[0].MinBrightness._brightness, newLampsRow.Lamps[0].MaxBrightness._brightness), newLampsRow.Lamps[0].Brightness);
+            Assert.Equal(Brightness.Create(25, newLampsRow.Lamps[1].MinBrightness._brightness, newLampsRow.Lamps[1].MaxBrightness._brightness), newLampsRow.Lamps[1].Brightness);
         }
 
         [Fact]
@@ -201,8 +201,8 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             newLampsRow.AddLamp("Stefano");
             newLampsRow.AllLampsChangeBrightness(25);
 
-            Assert.Equal(Brightness.Create(0), newLampsRow.Lamps[0].Brightness);
-            Assert.Equal(Brightness.Create(0), newLampsRow.Lamps[1].Brightness);
+            Assert.Equal(Brightness.Create(0, newLampsRow.Lamps[0].MinBrightness._brightness, newLampsRow.Lamps[0].MaxBrightness._brightness), newLampsRow.Lamps[0].Brightness);
+            Assert.Equal(Brightness.Create(0, newLampsRow.Lamps[1].MinBrightness._brightness, newLampsRow.Lamps[1].MaxBrightness._brightness), newLampsRow.Lamps[1].Brightness);
         }
 
         [Fact]
@@ -435,7 +435,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             newLampsRow.SingleLampChangeBrightness(25, id);
 
             Assert.Equal(DeviceStatus.On, newLampsRow.Lamps[0].Status);
-            Assert.Equal(Brightness.Create(25), newLampsRow.Lamps[0].Brightness);
+            Assert.Equal(Brightness.Create(25, newLampsRow.Lamps[0].MinBrightness._brightness, newLampsRow.Lamps[0].MaxBrightness._brightness), newLampsRow.Lamps[0].Brightness);
         }
 
         [Fact]
@@ -466,7 +466,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             newLampsRow.SingleLampChangeBrightness(25, id);
 
             Assert.Equal(DeviceStatus.On, newLampsRow.Lamps[1].Status);
-            Assert.Equal(Brightness.Create(25), newLampsRow.Lamps[1].Brightness);
+            Assert.Equal(Brightness.Create(25, newLampsRow.Lamps[1].MinBrightness._brightness, newLampsRow.Lamps[1].MaxBrightness._brightness), newLampsRow.Lamps[1].Brightness);
         }
 
         [Fact]

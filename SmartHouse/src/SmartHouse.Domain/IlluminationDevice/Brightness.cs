@@ -10,17 +10,15 @@ namespace SmartHouse.Domain.IlluminationDevice
     public sealed record Brightness
     {
         public int _brightness { get; }
-
-        public const int Min = 0;
-        public const int Max = 100;
+        
         private Brightness(int brightness)
         {
             _brightness = brightness;
         }
 
-        public static Brightness Create(int b)
+        public static Brightness Create(int b, int min, int max)
         {          
-            return new Brightness(Math.Clamp(b,Min,Max));
+            return new Brightness(Math.Clamp(b,min,max));
         }
 
         public static Brightness operator -(Brightness b, int i)

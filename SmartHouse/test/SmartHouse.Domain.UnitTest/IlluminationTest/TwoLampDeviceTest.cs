@@ -208,7 +208,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             newTwoLampDevice.SwitchOnOff(1);
             newTwoLampDevice.ChangeBrightness(25, 1);
 
-            Assert.Equal(Brightness.Create(25), newTwoLampDevice.Lamp1.Brightness);
+            Assert.Equal(Brightness.Create(25, newTwoLampDevice.Lamp1.MinBrightness._brightness, newTwoLampDevice.Lamp1.MaxBrightness._brightness), newTwoLampDevice.Lamp1.Brightness);
         }
 
         [Fact]
@@ -219,7 +219,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             newTwoLampDevice.SwitchOnOff(2);
             newTwoLampDevice.ChangeBrightness(25, 2);
 
-            Assert.Equal(Brightness.Create(25), newTwoLampDevice.Lamp2.Brightness);
+            Assert.Equal(Brightness.Create(25, newTwoLampDevice.Lamp2.MinBrightness._brightness, newTwoLampDevice.Lamp2.MaxBrightness._brightness), newTwoLampDevice.Lamp2.Brightness);
         }
 
         [Fact]
@@ -229,7 +229,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
 
             newTwoLampDevice.ChangeBrightness(25, 1);
 
-            Assert.Equal(Brightness.Create(0), newTwoLampDevice.Lamp1.Brightness);
+            Assert.Equal(Brightness.Create(0, newTwoLampDevice.Lamp1.MinBrightness._brightness, newTwoLampDevice.Lamp1.MaxBrightness._brightness), newTwoLampDevice.Lamp1.Brightness);
             Assert.Equal(DeviceStatus.Off, newTwoLampDevice.Lamp1.Status);
         }
         
@@ -240,7 +240,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
 
             newTwoLampDevice.ChangeBrightness(25, 2);
 
-            Assert.Equal(Brightness.Create(0), newTwoLampDevice.Lamp2.Brightness);
+            Assert.Equal(Brightness.Create(0, newTwoLampDevice.Lamp2.MinBrightness._brightness, newTwoLampDevice.Lamp2.MaxBrightness._brightness), newTwoLampDevice.Lamp2.Brightness);
             Assert.Equal(DeviceStatus.Off, newTwoLampDevice.Lamp2.Status);
         }
 
@@ -364,7 +364,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             newTwoLampDevice.Brighten(1);
 
             Assert.Equal(DeviceStatus.On, newTwoLampDevice.Lamp1.Status);
-            Assert.Equal(Brightness.Create(60), newTwoLampDevice.Lamp1.Brightness);
+            Assert.Equal(Brightness.Create(60, newTwoLampDevice.Lamp1.MinBrightness._brightness, newTwoLampDevice.Lamp1.MaxBrightness._brightness), newTwoLampDevice.Lamp1.Brightness);
         }
 
         [Fact]
@@ -389,7 +389,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             newTwoLampDevice.Brighten(2);
 
             Assert.Equal(DeviceStatus.On, newTwoLampDevice.Lamp2.Status);
-            Assert.Equal(Brightness.Create(40), newTwoLampDevice.Lamp2.Brightness);
+            Assert.Equal(Brightness.Create(40, newTwoLampDevice.Lamp2.MinBrightness._brightness, newTwoLampDevice.Lamp2.MaxBrightness._brightness), newTwoLampDevice.Lamp2.Brightness);
         }
 
         [Fact]
@@ -415,7 +415,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             newTwoLampDevice.Dimmer(1);
 
             Assert.Equal(DeviceStatus.On, newTwoLampDevice.Lamp1.Status);
-            Assert.Equal(Brightness.Create(40), newTwoLampDevice.Lamp1.Brightness);
+            Assert.Equal(Brightness.Create(40, newTwoLampDevice.Lamp1.MinBrightness._brightness, newTwoLampDevice.Lamp1.MaxBrightness._brightness), newTwoLampDevice.Lamp1.Brightness);
         }
 
         [Fact]
@@ -440,7 +440,7 @@ namespace SmartHouse.Domain.UnitTest.IlluminationTest
             newTwoLampDevice.Dimmer(2);
 
             Assert.Equal(DeviceStatus.On, newTwoLampDevice.Lamp2.Status);
-            Assert.Equal(Brightness.Create(20), newTwoLampDevice.Lamp2.Brightness);
+            Assert.Equal(Brightness.Create(20, newTwoLampDevice.Lamp2.MinBrightness._brightness, newTwoLampDevice.Lamp2.MaxBrightness._brightness), newTwoLampDevice.Lamp2.Brightness);
         }
 
         [Fact]

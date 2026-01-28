@@ -10,9 +10,9 @@ namespace SmartHouse.Domain.Illumination
 {
     public sealed class EcoLamp : AbstractLamp
     {
-        Brightness ThisMinBrightness { get; init; } = Brightness.Create(0);
-        Brightness ThisDefaultBrightness { get; init; } = Brightness.Create(30);
-        Brightness ThisMaxBrightness { get; init; } = Brightness.Create(70);
+        Brightness ThisMinBrightness { get; init; } = Brightness.Create(0, 0, 70);
+        Brightness ThisDefaultBrightness { get; init; } = Brightness.Create(30, 0, 70);
+        Brightness ThisMaxBrightness { get; init; } = Brightness.Create(70, 0, 70);
 
         private const int DefaultAutoOffMinutes = 10;
         private const int MinAutoOffMinutes = 1;
