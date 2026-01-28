@@ -164,5 +164,15 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
 
             Assert.Equal(Pin.Create(4321), newDoor.PIN);
         }
+
+        [Fact]
+        public void When_WantToChangePINButInsertTheWrongCurrentPin_CannotDoIt()
+        {
+            Door newDoor = new Door("Salvatore", 1234);
+
+            newDoor.Unlock(PIN);
+
+            Assert.Throws<ArgumentException>(() => newDoor.ChangePIN(1230, 4321));
+        }
     }
 }
