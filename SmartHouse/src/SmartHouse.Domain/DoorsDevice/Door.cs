@@ -87,9 +87,14 @@ namespace SmartHouse.Domain.Doors
             if (!IsLocked)
             {
                 if (Pin.Create(currentPin) == PIN)
+                {
                     if (PIN == newPin)
                         throw new ArgumentException("The PIN cannot be the same");
-                PIN = Pin.Create(newPin);
+
+                    PIN = Pin.Create(newPin);
+                }
+                else
+                    throw new ArgumentException("Current PIN is wrong");
             }
         }
     }
