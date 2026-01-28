@@ -462,7 +462,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
         {
             CCTV newCCTV = new CCTV("Salvatore");
 
-            newCCTV.ChangePIN(4321);
+            newCCTV.ChangePIN(1234,4321);
 
             Assert.Equal(null, newCCTV.PIN);
         }
@@ -472,7 +472,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
         {
             CCTV newCCTV = new CCTV("Salvatore", 1234);
 
-            newCCTV.ChangePIN(4321);
+            newCCTV.ChangePIN(1234,4321);
 
             Assert.Equal(PIN, newCCTV.PIN);
         }
@@ -484,7 +484,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
 
             newCCTV.Unlock(PIN);
 
-            Assert.Throws<ArgumentException>(() => newCCTV.ChangePIN(1234));
+            Assert.Throws<ArgumentException>(() => newCCTV.ChangePIN(1234,1234));
         }
 
         [Fact]
@@ -493,9 +493,20 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
             CCTV newCCTV = new CCTV("Salvatore", 1234);
 
             newCCTV.Unlock(PIN);
-            newCCTV.ChangePIN(4321);
+            newCCTV.ChangePIN(1234, 4321);
 
             Assert.Equal(Pin.Create(4321), newCCTV.PIN);
+        }
+
+        [Fact]
+
+        public void When_ChangePinButInsertedCurrentPinIsWrong_CannotChange()
+        {
+            CCTV newCCTV = new CCTV("Salvatore", 1234);
+
+            newCCTV.Unlock(PIN);
+
+            Assert.Throws<ArgumentException>( () => newCCTV.ChangePIN(1233, 4321));
         }
     }
 }
