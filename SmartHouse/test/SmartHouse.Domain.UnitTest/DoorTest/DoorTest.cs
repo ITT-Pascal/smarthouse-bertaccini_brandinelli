@@ -139,7 +139,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         {
             Door newDoor = new Door("Giovanni", 1234);
 
-            newDoor.ChangePIN(4321);
+            newDoor.ChangePIN(1234, 4321);
 
             Assert.Equal(PIN, newDoor.PIN);
         }
@@ -151,7 +151,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
 
             newDoor.Unlock(PIN);
 
-            Assert.Throws<ArgumentException>(() => newDoor.ChangePIN(1234));
+            Assert.Throws<ArgumentException>(() => newDoor.ChangePIN(1234, 1234));
         }
 
         [Fact]
@@ -160,7 +160,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
             Door newDoor = new Door("Salvatore", 1234);
 
             newDoor.Unlock(PIN);
-            newDoor.ChangePIN(4321);
+            newDoor.ChangePIN(1234, 4321);
 
             Assert.Equal(Pin.Create(4321), newDoor.PIN);
         }

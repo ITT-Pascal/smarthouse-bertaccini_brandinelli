@@ -10,6 +10,6 @@ namespace SmartHouse.Domain.Abstractions
     {
         bool IsLocked { get; }
 
-        void ChangePIN(int newPin); 
+        void ChangePIN(int currentPin, int newPin); 
     }
 }
