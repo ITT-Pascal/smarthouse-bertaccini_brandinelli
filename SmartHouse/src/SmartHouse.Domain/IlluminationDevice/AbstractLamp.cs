@@ -45,7 +45,7 @@ namespace SmartHouse.Domain
         {
             if(Status == DeviceStatus.On)
             {
-                Brightness = Brightness - DefaultStep;
+                Brightness = Brightness.Create(Brightness._brightness - DefaultStep, MinBrightness._brightness, MaxBrightness._brightness);
                 LastUpdateTime = DateTime.UtcNow;
             }  
         }
@@ -54,7 +54,7 @@ namespace SmartHouse.Domain
         {
             if (Status == DeviceStatus.On)
             {
-                Brightness = Brightness + DefaultStep;
+                Brightness = Brightness.Create(Brightness._brightness + DefaultStep, MinBrightness._brightness, MaxBrightness._brightness);
                 LastUpdateTime = DateTime.UtcNow;
             }  
         }
