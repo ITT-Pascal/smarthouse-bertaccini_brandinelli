@@ -13,23 +13,81 @@ namespace SmartHouse.Domain.Environment
 {
     public class Room
     {
-        public List<Thermostat> Thermostats { get; set; }
-        public List<Door> Doors { get; set; }
-        public List<AbstractLamp> Illuminations { get; set; }
-        public List<CCTV> CCTVs { get; set; }
-        public List<AirConditioner> AirConditioners { get; set; }
+        public List<AbstractDevice> Devices { get; set; }
         public Name Name { get; set; }
 
-        public Room(Name name)
+        public Room(string name)
         {
-            Name = name;
-            Thermostats = new List<Thermostat>();
-            Doors = new List<Door>();
-            Illuminations = new List<AbstractLamp>();
-            CCTVs = new List<CCTV>();
-            AirConditioners = new List<AirConditioner>();
+            Name = Name.Create(name);
+            Devices = new List<AbstractDevice>();
         }
 
+        public void AddDevice(AbstractDevice device)
+        {
+            if (device == null)
+                throw new ArgumentException("Device cannot be null");
 
+            Devices.Add(device);
+        }
+
+        public void AddDeviceInPosition(AbstractDevice device, int position)
+        {
+            Devices.Insert(position, device);
+        }
+
+        public void RemoveDevice(AbstractDevice device)
+        {
+            Devices.Remove(device);
+        }
+        
+        public void RemoveDevice(Guid id)
+        {
+            for (int i = 0; i < Devices.Count; i++)
+            {
+                if (Devices[i].Id == id)
+                {
+                    Devices.RemoveAt(i);
+                }
+            }
+        }
+
+        public void RemoveDeviceInPosition(int position)
+        {
+            Devices.RemoveAt(position);
+        }
+
+        public void SwitchOn(AbstractDevice device)
+        {
+            if (device == null)
+                throw new ArgumentException("Device cannot be null");
+
+            device.SwitchOn();
+        }
+
+        public void SwitchOn(Guid id)
+        {
+            for (int i = 0; i < Devices.Count; i++)
+            {
+                if (Devices[i].Id == id)
+                    Devices[i].SwitchOn();
+            }
+        }
+
+        public void SwitchOff(AbstractDevice device)
+        {
+            if (device == null)
+                throw new ArgumentException("Device cannot be null");
+
+            device.SwitchOff();
+        }
+
+        public void SwitchOff(Guid id)
+        {
+            for (int i = 0; i < Devices.Count; i++)
+            {
+                if (Devices[i].Id == id)
+                    Devices[i].SwitchOff();
+            }
+        }
     }
 }
