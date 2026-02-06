@@ -29,7 +29,7 @@ namespace SmartHouse.Domain
             {
                 base.SwitchOn();
                 Brightness = DefaultBrightness;
-            }             
+            }
         }
 
         public override void SwitchOff()
