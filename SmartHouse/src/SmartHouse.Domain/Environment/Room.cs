@@ -32,16 +32,27 @@ namespace SmartHouse.Domain.Environment
 
         public void AddDeviceInPosition(AbstractDevice device, int position)
         {
+            if (device == null)
+                throw new ArgumentException("Device cannot be null");
+            if (position < 0)
+                throw new ArgumentException("Position cannot be negative");
+
             Devices.Insert(position, device);
         }
 
         public void RemoveDevice(AbstractDevice device)
         {
+            if (device == null)
+                throw new ArgumentException("Device cannot be null");
+
             Devices.Remove(device);
         }
         
         public void RemoveDevice(Guid id)
         {
+            if (id == null)
+                throw new ArgumentException("Id cannot be null");
+
             for (int i = 0; i < Devices.Count; i++)
             {
                 if (Devices[i].Id == id)
@@ -53,6 +64,9 @@ namespace SmartHouse.Domain.Environment
 
         public void RemoveDeviceInPosition(int position)
         {
+            if (position < 0)
+                throw new ArgumentException("Position cannot be negative");
+
             Devices.RemoveAt(position);
         }
 
@@ -66,6 +80,9 @@ namespace SmartHouse.Domain.Environment
 
         public void SwitchOn(Guid id)
         {
+            if (id == null)
+                throw new ArgumentException("Id cannot be null");
+
             for (int i = 0; i < Devices.Count; i++)
             {
                 if (Devices[i].Id == id)
@@ -83,13 +100,32 @@ namespace SmartHouse.Domain.Environment
 
         public void SwitchOff(Guid id)
         {
+            if (id == null)
+                throw new ArgumentException("Id cannot be null");
+
             for (int i = 0; i < Devices.Count; i++)
             {
                 if (Devices[i].Id == id)
                     Devices[i].SwitchOff();
             }
         }
-        
+
+        public void AllSwitchOn()
+        {
+            for (int i = 0; i < Devices.Count; i++)
+            {
+                Devices[i].SwitchOn();
+            }
+        }
+
+        public void AllSwitchOff()
+        {
+            for (int i = 0; i < Devices.Count; i++)
+            {
+                Devices[i].SwitchOff();
+            }
+        }
+
         public void AllIncreaseFanSpeed()
         {
             for(int i=0;i<Devices.Count;i++)

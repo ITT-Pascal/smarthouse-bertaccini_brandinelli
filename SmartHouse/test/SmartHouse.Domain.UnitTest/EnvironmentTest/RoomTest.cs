@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartHouse.Domain.UnitTest
+namespace SmartHouse.Domain.UnitTest.EnvironmentTest
 {
     public class RoomTest
     {
