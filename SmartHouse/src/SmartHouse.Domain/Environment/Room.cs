@@ -89,5 +89,17 @@ namespace SmartHouse.Domain.Environment
                     Devices[i].SwitchOff();
             }
         }
+        
+        public void AllIncreaseFanSpeed()
+        {
+            for(int i=0;i<Devices.Count;i++)
+            {
+                if (Devices[i] is AirConditioner)
+                {
+                    AirConditioner Device = (AirConditioner)Devices[i];
+                    Device.IncreaseFanSpeed();
+                }
+            }
+        }
     }
 }
