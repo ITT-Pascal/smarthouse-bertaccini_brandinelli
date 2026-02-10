@@ -47,7 +47,21 @@ namespace SmartHouse.Domain.Environment
 
             Devices.Remove(device);
         }
-        
+
+        public void RemoveDevice(Name name)
+        {
+            if (name == null)
+                throw new ArgumentException("Name cannot be null");
+
+            for (int i = 0; i < Devices.Count; i++)
+            {
+                if (Devices[i].Name == name)
+                {
+                    Devices.RemoveAt(i);
+                }
+            }
+        }
+
         public void RemoveDevice(Guid id)
         {
             if (id == null)
@@ -78,6 +92,18 @@ namespace SmartHouse.Domain.Environment
             device.SwitchOn();
         }
 
+        public void SwitchOn(Name name)
+        {
+            if (name == null)
+                throw new ArgumentException("Name cannot be null");
+
+            for (int i = 0; i < Devices.Count; i++)
+            {
+                if (Devices[i].Name == name)
+                    Devices[i].SwitchOn();
+            }
+        }
+
         public void SwitchOn(Guid id)
         {
             if (id == null)
@@ -96,6 +122,18 @@ namespace SmartHouse.Domain.Environment
                 throw new ArgumentException("Device cannot be null");
 
             device.SwitchOff();
+        }
+
+        public void SwitchOff(Name name)
+        {
+            if (name == null)
+                throw new ArgumentException("Name cannot be null");
+
+            for (int i = 0; i < Devices.Count; i++)
+            {
+                if (Devices[i].Name == name)
+                    Devices[i].SwitchOff();
+            }
         }
 
         public void SwitchOff(Guid id)

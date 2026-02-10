@@ -21,7 +21,7 @@ namespace SmartHouse.Domain.UnitTest.EnvironmentTest
 
             newRoom.AddDevice(CCTV);
 
-            Assert.Equal(CCTV, newRoom.Devices.ToArray()[0]);
+            Assert.Equal(CCTV, newRoom.Devices[0]);
             Assert.Equal(1, newRoom.Devices.Count);
         }
 
@@ -31,6 +31,27 @@ namespace SmartHouse.Domain.UnitTest.EnvironmentTest
             Room newRoom = new Room("Totti");
 
             Assert.Throws<ArgumentException>(() => newRoom.AddDevice(null));
+            Assert.Equal(0, newRoom.Devices.Count);
+        }
+
+        [Fact]
+        public void When_WantToRemoveADeviceIntoTheRoom_CanDoIt()
+        {
+            Room newRoom = new Room("Totti");
+            CCTV CCTV = new CCTV("Salvatore");
+
+            newRoom.AddDevice(CCTV);
+            newRoom.RemoveDevice(CCTV);
+
+            Assert.Equal(0, newRoom.Devices.Count);
+        }
+
+        [Fact]
+        public void When_WantToRemoveADeviceIntoTheRoomButItIsNull_CannotDoIt()
+        {
+            Room newRoom = new Room("Totti");
+            
+            Assert.Throws<ArgumentException>(() => newRoom.RemoveDevice((AbstractDevice)null));
             Assert.Equal(0, newRoom.Devices.Count);
         }
 
