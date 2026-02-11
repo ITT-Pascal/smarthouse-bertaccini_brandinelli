@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.Domain.ThermostastDevice
 {
-    public sealed class Thermostat
+    public sealed class Thermostat: AbstractDevice
     {
         public Temperature Temperature { get; private set; }
 
@@ -17,36 +17,38 @@ namespace SmartHouse.Domain.ThermostastDevice
         public const double MaxTemperature = 30;
         public const double DefaultJump = 0.1;
 
-        public Guid Id { get; private set; }
-        public Name Name { get; private set; }        
-        public DateTime CreationTime { get; private set; }
-        public DateTime LastUpdateTime { get; private set; }
+       
 
-        public Thermostat(string name)
-        {
-            Id = Guid.NewGuid();
-            Name = Name.Create(name);
-            CreationTime = DateTime.UtcNow;
-            LastUpdateTime = DateTime.UtcNow;
+        public Thermostat(string name) : base(name)
+        {           
             Temperature = Temperature.Create(DefaultTemperature);
         }       
 
         public void IncreaseTemperature()
-        {          
-            Temperature += DefaultJump;
-            LastUpdateTime = DateTime.UtcNow;
+        {
+            if (Status == DeviceStatus.On)
+            {
+                Temperature += DefaultJump;
+                LastUpdateTime = DateTime.UtcNow;
+            }
         }
 
         public void DecreaseTemperature()
         {
-            Temperature -= DefaultJump;
-            LastUpdateTime = DateTime.UtcNow;
+            if (Status == DeviceStatus.On)
+            {
+                Temperature -= DefaultJump;
+                LastUpdateTime = DateTime.UtcNow;
+            }
         }
 
         public void SetTemperature(double newTemperature)
         {
-            Temperature = Temperature.Create(newTemperature);
-            LastUpdateTime = DateTime.UtcNow;
+            if (Status == DeviceStatus.On)
+            {
+                Temperature = Temperature.Create(newTemperature);
+                LastUpdateTime = DateTime.UtcNow;
+            }
         }      
 
     }

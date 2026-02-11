@@ -48,6 +48,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         {
             Door newDoor = new Door("Giovanni", 1234);
 
+            newDoor.SwitchOn();
             newDoor.Unlock(PIN);
             newDoor.Open();
 
@@ -59,6 +60,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         {
             Door newDoor = new Door("Giovanni", 1234);
 
+            newDoor.SwitchOn();
             newDoor.Unlock(PIN);
             newDoor.Lock();
 
@@ -72,6 +74,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         {
             Door newDoor = new Door("Giovanni", 1234);
 
+            newDoor.SwitchOn();
             newDoor.Unlock(PIN);
             newDoor.Open();
             newDoor.Close();
@@ -84,6 +87,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         {
             Door newDoor = new Door("Giovanni", 1234);
 
+            newDoor.SwitchOn();
             newDoor.Unlock(PIN);
             newDoor.Open();
 
@@ -96,6 +100,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         {
             Door newDoor = new Door("Giovanni", 1234);
 
+            newDoor.SwitchOn();
             newDoor.Unlock(PIN);
             newDoor.Lock();
 
@@ -108,6 +113,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         {
             Door newDoor = new Door("Giovanni", 1234);
 
+            newDoor.SwitchOn();
             newDoor.Unlock(PIN);
             newDoor.Open();
 
@@ -120,6 +126,8 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         {
             Door newDoor = new Door("Giovanni", 1234);
 
+            newDoor.SwitchOn();
+
             Assert.Throws<ArgumentException>(() => newDoor.Unlock(PIN2));
             Assert.True(newDoor.IsLocked);
         }
@@ -129,6 +137,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         {
             Door newDoor = new Door("Giovanni", 1234);
 
+            newDoor.SwitchOn();
             newDoor.Unlock(PIN);
 
             Assert.False(newDoor.IsLocked);
@@ -139,6 +148,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         {
             Door newDoor = new Door("Giovanni", 1234);
 
+            newDoor.SwitchOn();
             newDoor.ChangePIN(1234, 4321);
 
             Assert.Equal(PIN, newDoor.PIN);
@@ -149,6 +159,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         {
             Door newDoor = new Door("Giovanni", 1234);
 
+            newDoor.SwitchOn();
             newDoor.Unlock(PIN);
 
             Assert.Throws<ArgumentException>(() => newDoor.ChangePIN(1234, 1234));
@@ -159,6 +170,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         {
             Door newDoor = new Door("Salvatore", 1234);
 
+            newDoor.SwitchOn();
             newDoor.Unlock(PIN);
             newDoor.ChangePIN(1234, 4321);
 
@@ -170,6 +182,7 @@ namespace SmartHouse.Domain.UnitTest.DoorTest
         {
             Door newDoor = new Door("Salvatore", 1234);
 
+            newDoor.SwitchOn();
             newDoor.Unlock(PIN);
 
             Assert.Throws<ArgumentException>(() => newDoor.ChangePIN(1230, 4321));

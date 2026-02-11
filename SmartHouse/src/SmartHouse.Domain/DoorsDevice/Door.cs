@@ -9,92 +9,99 @@ using SmartHouse.Domain.DoorsDevice;
 
 namespace SmartHouse.Domain.Doors
 {
-    public sealed class Door: ILockable, IOpenable
+    public sealed class Door: AbstractDevice, ILockable, IOpenable
     {
         public Pin PIN { get; set; }
         public bool IsLocked { get; private set; }
-        public bool IsOpen { get; private set; }
-        public Guid Id { get; private set; }
-        public Name Name { get; private set; }
-        public DateTime CreationTime { get; private set; }
-        public DateTime LastUpdateTime { get; private set; }
+        public bool IsOpen { get; private set; }      
 
-        public Door(string name, int pin)
-        {
-            Id = Guid.NewGuid();
+        public Door(string name, int pin): base(name)
+        {          
             PIN = Pin.Create(pin);
             IsOpen = false;
-            IsLocked = true;
-            Name = Name.Create(name);
-            CreationTime = DateTime.UtcNow;
-            LastUpdateTime = DateTime.UtcNow;
+            IsLocked = true;           
         }       
 
         public void Open()
         {
-            if (IsOpen == false && IsLocked == false)
+            if (Status == DeviceStatus.On)
             {
-                IsOpen = true;
-                LastUpdateTime = DateTime.UtcNow;
+                if (IsOpen == false && IsLocked == false)
+                {
+                    IsOpen = true;
+                    LastUpdateTime = DateTime.UtcNow;
+                }
+                else if (IsLocked == true)
+                    throw new ArgumentException("The door must be unlocked before being opened");
+                else
+                    throw new ArgumentException("The door must be closed before being opened");
             }
-            else if (IsLocked == true)
-                throw new ArgumentException("The door must be unlocked before being opened");
-            else
-                throw new ArgumentException("The door must be closed before being opened");
         }
 
         public void Close()
         {
-            if (IsOpen == true)
+            if (Status == DeviceStatus.On)
             {
-                IsOpen = false;
-                LastUpdateTime = DateTime.UtcNow;
+                if (IsOpen == true)
+                {
+                    IsOpen = false;
+                    LastUpdateTime = DateTime.UtcNow;
+                }
+                else
+                    throw new ArgumentException("The door must be open before being closed");
             }
-            else
-                throw new ArgumentException("The door must be open before being closed");
         }
 
         public void Lock()
         {
-            if (IsOpen == false && IsLocked == false)
+            if (Status == DeviceStatus.On)
             {
-                IsLocked = true;
-                LastUpdateTime = DateTime.UtcNow;
+                if (IsOpen == false && IsLocked == false)
+                {
+                    IsLocked = true;
+                    LastUpdateTime = DateTime.UtcNow;
+                }
+                else
+                    throw new ArgumentException("The door must be closed before being locked");
             }
-            else
-                throw new ArgumentException("The door must be closed before being locked");
 
         }
 
         public void Unlock(Pin pin)
         {
-            if (IsLocked == true)
+            if (Status == DeviceStatus.On)
             {
-                if (PIN == pin)
+                if (IsLocked == true)
                 {
-                    IsLocked = false;
-                    LastUpdateTime = DateTime.UtcNow;
+                    if (PIN == pin)
+                    {
+                        IsLocked = false;
+                        LastUpdateTime = DateTime.UtcNow;
+                    }
+                    else
+                        throw new ArgumentException("The wrong pin was entered");
                 }
                 else
-                    throw new ArgumentException("The wrong pin was entered");
+                    throw new ArgumentException("The door must be locked before being unlocked");
             }
-            else
-                throw new ArgumentException("The door must be locked before being unlocked");
         }
 
         public void ChangePIN(int currentPin, int newPin)
         {
-            if (!IsLocked)
+            if (Status == DeviceStatus.On)
             {
-                if (Pin.Create(currentPin) == PIN)
+                if (!IsLocked)
                 {
-                    if (PIN == newPin)
-                        throw new ArgumentException("The PIN cannot be the same");
+                    if (Pin.Create(currentPin) == PIN)
+                    {
+                        if (PIN == newPin)
+                            throw new ArgumentException("The PIN cannot be the same");
 
-                    PIN = Pin.Create(newPin);
+                        PIN = Pin.Create(newPin);
+                    }
+                    else
+                        throw new ArgumentException("Current PIN is wrong");
                 }
-                else
-                    throw new ArgumentException("Current PIN is wrong");
             }
         }
     }

@@ -36,6 +36,7 @@ namespace SmartHouse.Domain.UnitTest.ThermostatTest
         {
             Thermostat newThemostat = new Thermostat("Franco");
 
+            newThemostat.SwitchOn();
             newThemostat.SetTemperature(28);
 
             Assert.Equal(Temperature.Create(28), newThemostat.Temperature);
@@ -47,6 +48,7 @@ namespace SmartHouse.Domain.UnitTest.ThermostatTest
         {
             Thermostat newThemostat = new Thermostat("Franco");
 
+            newThemostat.SwitchOn();
             newThemostat.SetTemperature(29.9);
             newThemostat.IncreaseTemperature();
 
@@ -59,6 +61,7 @@ namespace SmartHouse.Domain.UnitTest.ThermostatTest
         {
             Thermostat newThemostat = new Thermostat("Franco");
 
+            newThemostat.SwitchOn();
             newThemostat.SetTemperature(15.1);
             newThemostat.DecreaseTemperature();
 
