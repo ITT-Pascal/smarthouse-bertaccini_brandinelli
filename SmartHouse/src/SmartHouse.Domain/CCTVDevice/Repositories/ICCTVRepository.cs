@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartHouse.Domain.CCTVDevice
+namespace SmartHouse.Domain.CCTVDevice.Repositories
 {
     public interface ICCTVRepository
     {

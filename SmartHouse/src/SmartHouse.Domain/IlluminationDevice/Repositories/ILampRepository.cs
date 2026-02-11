@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartHouse.Domain.IlluminationDevice
+namespace SmartHouse.Domain.IlluminationDevice.Repositories
 {
     public interface ILampRepository
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartHouse.Domain.AirConditionerDevice
+namespace SmartHouse.Domain.AirConditionerDevice.Repositories
 {
     public interface IAirConditionerRepository
     {

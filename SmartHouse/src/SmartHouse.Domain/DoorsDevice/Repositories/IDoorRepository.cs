@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartHouse.Domain.DoorsDevice
+namespace SmartHouse.Domain.DoorsDevice.Repositories
 {
     public interface IDoorRepository
     {

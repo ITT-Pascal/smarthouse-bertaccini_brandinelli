@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartHouse.Domain.ThermostastDevice
+namespace SmartHouse.Domain.ThermostastDevice.Repositories
 {
     public interface IThermostatRepository
     {
