@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHouse.Domain", "src\Sm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHouse.Domain.UnitTest", "test\SmartHouse.Domain.UnitTest\SmartHouse.Domain.UnitTest.csproj", "{FE61605F-EBE1-41D6-AFDB-5EC9113EB080}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHouse.Application", "src\SmartHouse.Application\SmartHouse.Application.csproj", "{330A7DB3-90C1-4E2E-96E3-D899ABFE1EC6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{FE61605F-EBE1-41D6-AFDB-5EC9113EB080}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE61605F-EBE1-41D6-AFDB-5EC9113EB080}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE61605F-EBE1-41D6-AFDB-5EC9113EB080}.Release|Any CPU.Build.0 = Release|Any CPU
+		{330A7DB3-90C1-4E2E-96E3-D899ABFE1EC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{330A7DB3-90C1-4E2E-96E3-D899ABFE1EC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{330A7DB3-90C1-4E2E-96E3-D899ABFE1EC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{330A7DB3-90C1-4E2E-96E3-D899ABFE1EC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -34,6 +40,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{45268B90-7ABB-4692-9509-796C32D2242B} = {3DA8A02D-513A-410D-AF4F-0603EC11B8B5}
 		{FE61605F-EBE1-41D6-AFDB-5EC9113EB080} = {48CFB2CB-36E4-4A80-85CB-C91ED0D7AB9E}
+		{330A7DB3-90C1-4E2E-96E3-D899ABFE1EC6} = {3DA8A02D-513A-410D-AF4F-0603EC11B8B5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5BAF6622-D7D6-4EA7-AB71-9B1D2ACEA50A}

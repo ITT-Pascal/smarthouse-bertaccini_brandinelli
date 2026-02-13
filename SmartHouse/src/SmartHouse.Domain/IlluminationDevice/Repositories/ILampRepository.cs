@@ -9,7 +9,7 @@ namespace SmartHouse.Domain.IlluminationDevice.Repositories
 {
     public interface ILampRepository
     {
-        void Create(Lamp newLamp);
+        void Add(Lamp newLamp);
         void Update(Lamp newLamp);
         void Delete(Guid id);
         Lamp GetById(Guid id);
