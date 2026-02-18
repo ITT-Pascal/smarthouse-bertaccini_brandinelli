@@ -21,8 +21,7 @@ namespace SmartHouse.Application.Devices.Illumination.Lamps.Queries
 
         public Lamp Execute(Guid id)
         {
-            Lamp lamp = _lampRepository.GetById(id);
-            return lamp;
+            return _lampRepository.GetById(id);
         }
     }
 }
