@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace SmartHouse.Domain.Environment
 {
@@ -106,9 +107,6 @@ namespace SmartHouse.Domain.Environment
 
         public void SwitchOn(Name name)
         {
-            if (name == null)
-                throw new ArgumentException("Name cannot be null");
-
             for (int i = 0; i < Devices.Count; i++)
             {
                 if (Devices[i].Name == name)
@@ -141,9 +139,6 @@ namespace SmartHouse.Domain.Environment
 
         public void SwitchOff(Name name)
         {
-            if (name == null)
-                throw new ArgumentException("Name cannot be null");
-
             for (int i = 0; i < Devices.Count; i++)
             {
                 if (Devices[i].Name == name)
@@ -179,6 +174,44 @@ namespace SmartHouse.Domain.Environment
             for (int i = 0; i < Devices.Count; i++)
             {
                 Devices[i].SwitchOff();
+            }
+            LastUpdatedAt = DateTime.UtcNow;
+        }
+
+        public void SwitchOnOff(AbstractDevice device)
+        {
+            if (device == null)
+                throw new ArgumentException("Device does not exist");
+
+            device.SwitchOnOff();
+            LastUpdatedAt = DateTime.UtcNow;
+        }
+
+        public void SwitchOnOff(Name name)
+        {
+            for (int i = 0; i < Devices.Count; i++)
+            {
+                if (Devices[i].Name == name)
+                    Devices[i].SwitchOnOff();
+            }
+            LastUpdatedAt = DateTime.UtcNow;
+        }
+
+        public void SwitchOnOff(Guid id)
+        {
+            for (int i = 0; i < Devices.Count; i++)
+            {
+                if (Devices[i].Id == id)
+                    Devices[i].SwitchOnOff();
+            }
+            LastUpdatedAt = DateTime.UtcNow;
+        }
+
+        public void AllSwitchOnOff()
+        {
+            for (int i = 0; i < Devices.Count; i++)
+            {
+                Devices[i].SwitchOnOff();
             }
             LastUpdatedAt = DateTime.UtcNow;
         }
