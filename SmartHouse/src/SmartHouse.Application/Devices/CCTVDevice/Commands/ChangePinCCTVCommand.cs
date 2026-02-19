@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.Application.Devices.CCTVDevice.Commands
 {
-    public class LockCCTVCommand
+    public class ChangePinCCTVCommand
     {
         private readonly ICCTVRepository _CCTVRepository;
 
-        public LockCCTVCommand(ICCTVRepository CCTVRepository)
+        public ChangePinCCTVCommand(ICCTVRepository CCTVRepository)
         {
             _CCTVRepository = CCTVRepository;
         }
 
-        public void Execute(Guid id)
+        public void Execute(Guid id, int currentPin, int newPin)
         {
             CCTV cctv = _CCTVRepository.GetById(id);
             if (cctv != null)
             {
-                cctv.Lock();
+                cctv.ChangePIN(currentPin, newPin);
                 _CCTVRepository.Update(cctv);
             }
         }

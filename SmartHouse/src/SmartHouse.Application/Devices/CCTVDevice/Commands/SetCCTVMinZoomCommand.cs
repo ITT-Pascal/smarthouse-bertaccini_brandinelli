@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.Application.Devices.CCTVDevice.Commands
 {
-    public class LockCCTVCommand
+    public class SetCCTVMinZoomCommand
     {
         private readonly ICCTVRepository _CCTVRepository;
 
-        public LockCCTVCommand(ICCTVRepository CCTVRepository)
+        public SetCCTVMinZoomCommand(ICCTVRepository CCTVRepository)
         {
             _CCTVRepository = CCTVRepository;
         }
@@ -23,7 +23,7 @@ namespace SmartHouse.Application.Devices.CCTVDevice.Commands
             CCTV cctv = _CCTVRepository.GetById(id);
             if (cctv != null)
             {
-                cctv.Lock();
+                cctv.SetMinZoom();
                 _CCTVRepository.Update(cctv);
             }
         }

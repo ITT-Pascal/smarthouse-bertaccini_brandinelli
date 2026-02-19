@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.Application.Devices.CCTVDevice.Commands
 {
-    public class LockCCTVCommand
+    public class SetCCTVVisionCommand
     {
         private readonly ICCTVRepository _CCTVRepository;
 
-        public LockCCTVCommand(ICCTVRepository CCTVRepository)
+        public SetCCTVVisionCommand(ICCTVRepository CCTVRepository)
         {
             _CCTVRepository = CCTVRepository;
         }
 
-        public void Execute(Guid id)
+        public void Execute(Guid id, CCTVVisionType visionType)
         {
             CCTV cctv = _CCTVRepository.GetById(id);
             if (cctv != null)
             {
-                cctv.Lock();
+                cctv.SetVision(visionType);
                 _CCTVRepository.Update(cctv);
             }
         }
