@@ -1,4 +1,4 @@
-﻿using SmartHouse.Domain.ThermostastDevice;
+﻿using SmartHouse.Domain.TemperatureDevice;
 using System;
 using System.Collections.Generic;
 using System.Linq;

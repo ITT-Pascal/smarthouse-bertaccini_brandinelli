@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartHouse.Domain.ThermostastDevice
+namespace SmartHouse.Domain.TemperatureDevice
 {
     public sealed record Temperature
     {

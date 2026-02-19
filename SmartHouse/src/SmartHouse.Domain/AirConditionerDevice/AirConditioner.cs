@@ -1,6 +1,6 @@
 ﻿using SmartHouse.Domain.Abstractions;
 using SmartHouse.Domain.Doors;
-using SmartHouse.Domain.ThermostastDevice;
+using SmartHouse.Domain.TemperatureDevice;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;

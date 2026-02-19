@@ -2,7 +2,6 @@
 using SmartHouse.Domain.AirConditionerDevice;
 using SmartHouse.Domain.CCTVDevice;
 using SmartHouse.Domain.Doors;
-using SmartHouse.Domain.ThermostastDevice;
 using System;
 using System.Collections.Generic;
 using System.Linq;

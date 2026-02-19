@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.Application.Devices.Illumination.Lamps.Commands
 {
-    internal class AddLampCommand
+    public class AddLampCommand
     {
         private readonly ILampRepository _lampRepository;
 
