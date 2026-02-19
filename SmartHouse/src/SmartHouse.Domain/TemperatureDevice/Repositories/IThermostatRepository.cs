@@ -14,6 +14,5 @@ namespace SmartHouse.Domain.TemperatureDevice.Repositories
         void Delete(Guid id);
         Thermostat GetById(Guid id);
         List<Thermostat> GetAll();
-        void Add(SmartHouse.Application.Devices.Thermostat thermostat);
     }
 }

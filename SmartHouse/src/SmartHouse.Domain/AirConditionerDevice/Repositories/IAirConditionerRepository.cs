@@ -8,7 +8,7 @@ namespace SmartHouse.Domain.AirConditionerDevice.Repositories
 {
     public interface IAirConditionerRepository
     {
-        void Create(AirConditioner newAc);
+        void Add(AirConditioner newAc);
         void Update(AirConditioner newAc);
         void Delete(Guid id);
         AirConditioner GetById(Guid id);
