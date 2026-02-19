@@ -8,7 +8,7 @@ namespace SmartHouse.Domain.CCTVDevice.Repositories
 {
     public interface ICCTVRepository
     {
-        void Create(CCTV newCCTV);
+        void Add(CCTV newCCTV);
         void Update(CCTV newCCTV);
         void Delete(Guid id);
         CCTV GetById(Guid id);

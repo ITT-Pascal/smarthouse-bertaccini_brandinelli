@@ -9,7 +9,7 @@ namespace SmartHouse.Domain.DoorsDevice.Repositories
 {
     public interface IDoorRepository
     {
-        void Create(Door newDoor);
+        void Add(Door newDoor);
         void Update(Door newDoor);
         void Delete(Guid id);
         Door GetById(Guid id);

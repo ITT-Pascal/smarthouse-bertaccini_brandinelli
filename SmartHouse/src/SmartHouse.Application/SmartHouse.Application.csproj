@@ -16,4 +16,8 @@
     <ProjectReference Include="..\SmartHouse.Domain\SmartHouse.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Devices\CCTVDevice\Queries\" />
+  </ItemGroup>
+
 </Project>
