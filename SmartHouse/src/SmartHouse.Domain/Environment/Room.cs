@@ -117,9 +117,6 @@ namespace SmartHouse.Domain.Environment
 
         public void SwitchOn(Guid id)
         {
-            if (id == null)
-                throw new ArgumentException("Id cannot be null");
-
             for (int i = 0; i < Devices.Count; i++)
             {
                 if (Devices[i].Id == id)
@@ -149,9 +146,6 @@ namespace SmartHouse.Domain.Environment
 
         public void SwitchOff(Guid id)
         {
-            if (id == null)
-                throw new ArgumentException("Id cannot be null");
-
             for (int i = 0; i < Devices.Count; i++)
             {
                 if (Devices[i].Id == id)
