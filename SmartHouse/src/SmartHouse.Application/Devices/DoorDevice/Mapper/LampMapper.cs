@@ -1,6 +1,7 @@
 ﻿using SmartHouse.Application.Devices.Abstraction.Mapper;
 using SmartHouse.Application.Devices.Illumination.Lamps.Dto;
 using SmartHouse.Domain;
+using SmartHouse.Domain.Doors;
 using SmartHouse.Domain.Illumination;
 using SmartHouse.Domain.IlluminationDevice;
 using System;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.Application.Devices.Illumination.Lamps.Mapper
 {
-    public class LampMapper
+    public class DoorMapper
     {
         
 
@@ -22,7 +23,6 @@ namespace SmartHouse.Application.Devices.Illumination.Lamps.Mapper
                 Id = lamp.Id,
                 Name = lamp.Name._name,
                 Status = DeviceStatusMapper.ToDto(lamp.Status),
-                Brightness = lamp.Brightness._brightness,
                 CreationTime = lamp.CreationTime,
                 LastUpdateTime = lamp.LastUpdateTime,
             };
@@ -30,11 +30,10 @@ namespace SmartHouse.Application.Devices.Illumination.Lamps.Mapper
 
         public static Lamp ToDomain(DoorDto dto)
         {
-            return new Lamp(
+            return new Door(
                 dto.Id,
                 dto.Name,
                 DeviceStatusMapper.ToDomain(dto.Status),
-                Brightness.Create(dto.Brightness,0,100),
                 dto.CreationTime,
                 dto.LastUpdateTime
                 );                             
