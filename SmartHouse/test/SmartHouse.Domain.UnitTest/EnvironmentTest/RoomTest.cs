@@ -141,7 +141,7 @@ namespace SmartHouse.Domain.UnitTest.EnvironmentTest
             CCTV CCTV = new CCTV("Salvatore");
 
             newRoom.AddDevice(CCTV);
-            newRoom.SwitchOn(CCTV.Name);
+            newRoom.SwitchOn(Name.Create("Salvatore"));
 
             Assert.Equal(DeviceStatus.On, newRoom.Devices[0].Status);
         }
@@ -156,7 +156,7 @@ namespace SmartHouse.Domain.UnitTest.EnvironmentTest
             newRoom.AddDevice(CCTV);
             newRoom.AddDevice(Lamp);
             newRoom.AddDevice(CCTV);
-            newRoom.SwitchOn(CCTV.Name);
+            newRoom.SwitchOn(Name.Create("Salvatore"));
 
             Assert.Equal(DeviceStatus.On, newRoom.Devices[0].Status);
             Assert.Equal(DeviceStatus.Off, newRoom.Devices[1].Status);
@@ -168,9 +168,10 @@ namespace SmartHouse.Domain.UnitTest.EnvironmentTest
         {
             Room newRoom = new Room("Totti");
             CCTV CCTV = new CCTV("Salvatore");
+            Guid id = CCTV.Id;
 
             newRoom.AddDevice(CCTV);
-            newRoom.SwitchOn(CCTV.Id);
+            newRoom.SwitchOn(id);
 
             Assert.Equal(DeviceStatus.On, newRoom.Devices[0].Status);
         }
@@ -181,11 +182,12 @@ namespace SmartHouse.Domain.UnitTest.EnvironmentTest
             Room newRoom = new Room("Totti");
             CCTV CCTV = new CCTV("Salvatore");
             Lamp Lamp = new Lamp("Stefano");
+            Guid id = CCTV.Id;
 
             newRoom.AddDevice(CCTV);
             newRoom.AddDevice(Lamp);
             newRoom.AddDevice(CCTV);
-            newRoom.SwitchOn(CCTV.Id);
+            newRoom.SwitchOn(id);
 
             Assert.Equal(DeviceStatus.On, newRoom.Devices[0].Status);
             Assert.Equal(DeviceStatus.Off, newRoom.Devices[1].Status);
@@ -230,8 +232,8 @@ namespace SmartHouse.Domain.UnitTest.EnvironmentTest
             CCTV CCTV = new CCTV("Salvatore");
 
             newRoom.AddDevice(CCTV);
-            newRoom.SwitchOn(CCTV.Name);
-            newRoom.SwitchOff(CCTV.Name);
+            newRoom.SwitchOn(Name.Create("Salvatore"));
+            newRoom.SwitchOff(Name.Create("Salvatore"));
 
             Assert.Equal(DeviceStatus.Off, newRoom.Devices[0].Status);
         }
@@ -246,8 +248,8 @@ namespace SmartHouse.Domain.UnitTest.EnvironmentTest
             newRoom.AddDevice(CCTV);
             newRoom.AddDevice(Lamp);
             newRoom.AddDevice(CCTV);
-            newRoom.SwitchOn(CCTV.Name);
-            newRoom.SwitchOff(CCTV.Name);
+            newRoom.SwitchOn(Name.Create("Salvatore"));
+            newRoom.SwitchOff(Name.Create("Salvatore"));
 
             Assert.Equal(DeviceStatus.Off, newRoom.Devices[0].Status);
             Assert.Equal(DeviceStatus.Off, newRoom.Devices[1].Status);
@@ -259,10 +261,11 @@ namespace SmartHouse.Domain.UnitTest.EnvironmentTest
         {
             Room newRoom = new Room("Totti");
             CCTV CCTV = new CCTV("Salvatore");
+            Guid id = CCTV.Id;
 
             newRoom.AddDevice(CCTV);
-            newRoom.SwitchOn(CCTV.Id);
-            newRoom.SwitchOff(CCTV.Id);
+            newRoom.SwitchOn(id);
+            newRoom.SwitchOff(id);
 
             Assert.Equal(DeviceStatus.Off, newRoom.Devices[0].Status);
         }
@@ -273,12 +276,13 @@ namespace SmartHouse.Domain.UnitTest.EnvironmentTest
             Room newRoom = new Room("Totti");
             CCTV CCTV = new CCTV("Salvatore");
             Lamp Lamp = new Lamp("Stefano");
+            Guid id = CCTV.Id;
 
             newRoom.AddDevice(CCTV);
             newRoom.AddDevice(Lamp);
             newRoom.AddDevice(CCTV);
-            newRoom.SwitchOn(CCTV.Id);
-            newRoom.SwitchOff(CCTV.Id);
+            newRoom.SwitchOn(id);
+            newRoom.SwitchOff(id);
 
             Assert.Equal(DeviceStatus.Off, newRoom.Devices[0].Status);
             Assert.Equal(DeviceStatus.Off, newRoom.Devices[1].Status);
@@ -286,7 +290,7 @@ namespace SmartHouse.Domain.UnitTest.EnvironmentTest
         }
 
         [Fact]
-        public void When_WantToTurnAllDevicesOff_CanDoIt()
+        public void When_WantToTurnAllDevicesOn_CanDoIt()
         {
             Room newRoom = new Room("Totti");
             CCTV CCTV = new CCTV("Salvatore");
@@ -303,7 +307,7 @@ namespace SmartHouse.Domain.UnitTest.EnvironmentTest
         }
 
         [Fact]
-        public void When_WantToTurnAllDevicesOn_CanDoIt()
+        public void When_WantToTurnAllDevicesOff_CanDoIt()
         {
             Room newRoom = new Room("Totti");
             CCTV CCTV = new CCTV("Salvatore");
@@ -318,6 +322,133 @@ namespace SmartHouse.Domain.UnitTest.EnvironmentTest
             Assert.Equal(DeviceStatus.Off, newRoom.Devices[0].Status);
             Assert.Equal(DeviceStatus.Off, newRoom.Devices[1].Status);
             Assert.Equal(DeviceStatus.Off, newRoom.Devices[2].Status);
+        }
+
+        [Fact]
+        public void When_WantToToggleDeviceOn_CanDoIt()
+        {
+            Room newRoom = new Room("Totti");
+            CCTV CCTV = new CCTV("Salvatore");
+            Lamp Lamp = new Lamp("Stefano");
+
+            newRoom.AddDevice(CCTV);
+            newRoom.AddDevice(Lamp);
+            newRoom.SwitchOnOff(CCTV);
+
+            Assert.Equal(DeviceStatus.On, newRoom.Devices[0].Status);
+            Assert.Equal(DeviceStatus.Off, newRoom.Devices[1].Status);
+        }
+
+        [Fact]
+        public void When_WantToToggleDeviceOnWithName_CanDoIt()
+        {
+            Room newRoom = new Room("Totti");
+            CCTV CCTV = new CCTV("Salvatore");
+            Lamp Lamp = new Lamp("Stefano");
+
+            newRoom.AddDevice(CCTV);
+            newRoom.AddDevice(Lamp);
+            newRoom.SwitchOnOff(Name.Create("Salvatore"));
+
+            Assert.Equal(DeviceStatus.On, newRoom.Devices[0].Status);
+            Assert.Equal(DeviceStatus.Off, newRoom.Devices[1].Status);
+        }
+
+        [Fact]
+        public void When_WantToToggleDeviceOnWithId_CanDoIt()
+        {
+            Room newRoom = new Room("Totti");
+            CCTV CCTV = new CCTV("Salvatore");
+            Lamp Lamp = new Lamp("Stefano");
+            Guid id = CCTV.Id;
+
+            newRoom.AddDevice(CCTV);
+            newRoom.AddDevice(Lamp);
+            newRoom.SwitchOnOff(id);
+
+            Assert.Equal(DeviceStatus.On, newRoom.Devices[0].Status);
+            Assert.Equal(DeviceStatus.Off, newRoom.Devices[1].Status);
+        }
+
+        [Fact]
+        public void When_WantToToggleDeviceOff_CanDoIt()
+        {
+            Room newRoom = new Room("Totti");
+            CCTV CCTV = new CCTV("Salvatore");
+            Lamp Lamp = new Lamp("Stefano");
+
+            newRoom.AddDevice(CCTV);
+            newRoom.AddDevice(Lamp);
+            newRoom.AllSwitchOn();
+            newRoom.SwitchOnOff(CCTV);
+            
+
+            Assert.Equal(DeviceStatus.Off, newRoom.Devices[0].Status);
+            Assert.Equal(DeviceStatus.On, newRoom.Devices[1].Status);
+        }
+
+        [Fact]
+        public void When_WantToToggleDeviceOffWithName_CanDoIt()
+        {
+            Room newRoom = new Room("Totti");
+            CCTV CCTV = new CCTV("Salvatore");
+            Lamp Lamp = new Lamp("Stefano");
+
+            newRoom.AddDevice(CCTV);
+            newRoom.AddDevice(Lamp);
+            newRoom.AllSwitchOn();
+            newRoom.SwitchOnOff(Name.Create("Salvatore"));
+
+            Assert.Equal(DeviceStatus.Off, newRoom.Devices[0].Status);
+            Assert.Equal(DeviceStatus.On, newRoom.Devices[1].Status);
+        }
+
+        [Fact]
+        public void When_WantToToggleDeviceOffWithId_CanDoIt()
+        {
+            Room newRoom = new Room("Totti");
+            CCTV CCTV = new CCTV("Salvatore");
+            Lamp Lamp = new Lamp("Stefano");
+            Guid id = CCTV.Id;
+
+            newRoom.AddDevice(CCTV);
+            newRoom.AddDevice(Lamp);
+            newRoom.AllSwitchOn();
+            newRoom.SwitchOnOff(id);
+
+            Assert.Equal(DeviceStatus.Off, newRoom.Devices[0].Status);
+            Assert.Equal(DeviceStatus.On, newRoom.Devices[1].Status);
+        }
+
+        [Fact]
+        public void When_WantToToggleAllDevicesOn_CanDoIt()
+        {
+            Room newRoom = new Room("Totti");
+            CCTV CCTV = new CCTV("Salvatore");
+            Lamp Lamp = new Lamp("Stefano");
+
+            newRoom.AddDevice(CCTV);
+            newRoom.AddDevice(Lamp);
+            newRoom.AllSwitchOnOff();
+
+            Assert.Equal(DeviceStatus.On, newRoom.Devices[0].Status);
+            Assert.Equal(DeviceStatus.On, newRoom.Devices[1].Status);
+        }
+
+        [Fact]
+        public void When_WantToToggleAllDevicesOff_CanDoIt()
+        {
+            Room newRoom = new Room("Totti");
+            CCTV CCTV = new CCTV("Salvatore");
+            Lamp Lamp = new Lamp("Stefano");
+
+            newRoom.AddDevice(CCTV);
+            newRoom.AddDevice(Lamp);
+            newRoom.AllSwitchOn();
+            newRoom.AllSwitchOnOff();
+
+            Assert.Equal(DeviceStatus.Off, newRoom.Devices[0].Status);
+            Assert.Equal(DeviceStatus.Off, newRoom.Devices[1].Status);
         }
     }
 }
