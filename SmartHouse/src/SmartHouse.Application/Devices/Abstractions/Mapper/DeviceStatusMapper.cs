@@ -17,8 +17,8 @@ namespace SmartHouse.Application.Devices.Abstraction.Mapper
                 DeviceStatus.On => "ON",
                 DeviceStatus.Off => "OFF",
                 DeviceStatus.Standby => "STANDBY",
-                DeviceStatus.Unknown => "UNKNOWN",
-                _ => "ERROR",
+                DeviceStatus.Error => "ERROR",
+                _ => "UNKNOWN",
             };
         }
 
@@ -29,8 +29,8 @@ namespace SmartHouse.Application.Devices.Abstraction.Mapper
                 "ON" => DeviceStatus.On,
                 "OFF" => DeviceStatus.Off,
                 "STANDBY" => DeviceStatus.Standby,
-                "UNKNOWN" => DeviceStatus.Unknown,
-                _ => DeviceStatus.Error,
+                "ERROR" => DeviceStatus.Error,
+                _ => DeviceStatus.Unknown,
             };
         }
     }
