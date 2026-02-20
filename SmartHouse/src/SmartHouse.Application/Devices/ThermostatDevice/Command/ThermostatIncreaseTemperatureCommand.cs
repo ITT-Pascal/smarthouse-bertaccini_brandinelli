@@ -10,7 +10,7 @@ namespace SmartHouse.Application.Devices.ThermostatDevice.Command
 {
     public class ThermostatIncreaseTemperatureCommand
     {
-        private IThermostatRepository _thermostarepository;
+        private readonly IThermostatRepository _thermostarepository;
 
         public ThermostatIncreaseTemperatureCommand(IThermostatRepository thermostatRepository)
         {

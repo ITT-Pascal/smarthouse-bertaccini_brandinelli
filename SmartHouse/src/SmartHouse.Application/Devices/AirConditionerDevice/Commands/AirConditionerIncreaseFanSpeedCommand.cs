@@ -10,7 +10,7 @@ namespace SmartHouse.Application.Devices.AirConditionerDevice.Commands
 {
     public class AirConditionerIncreaseFanSpeedCommand
     {
-        private IAirConditionerRepository _airconditionerrepository;
+        private readonly IAirConditionerRepository _airconditionerrepository;
 
         public AirConditionerIncreaseFanSpeedCommand(IAirConditionerRepository airconditionerRepository)
         {

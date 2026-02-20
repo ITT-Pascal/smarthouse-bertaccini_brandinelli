@@ -11,7 +11,7 @@ namespace SmartHouse.Application.Devices.Illumination.Lamps.Commands
 {
     public class ChangeBrightnessLampCommand
     {
-        private ILampRepository _lampRepository;
+        private readonly ILampRepository _lampRepository;
 
         public ChangeBrightnessLampCommand(ILampRepository lampRepository)
         {

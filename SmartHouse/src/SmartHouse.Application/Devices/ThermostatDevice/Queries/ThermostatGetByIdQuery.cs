@@ -10,7 +10,7 @@ namespace SmartHouse.Application.Devices.ThermostatDevice.Queries
 {
     public class ThermostatGetByIdQuery
     {
-        private IThermostatRepository _thermostatRepository;
+        private readonly IThermostatRepository _thermostatRepository;
 
         public ThermostatGetByIdQuery(IThermostatRepository thermostatRepository)
         {

@@ -10,7 +10,7 @@ namespace SmartHouse.Application.Devices.AirConditionerDevice.Queries
 {
     public class AirConditionerGetByIdQuery
     {
-        private IAirConditionerRepository _airconditionerrepository;
+        private readonly IAirConditionerRepository _airconditionerrepository;
 
         public AirConditionerGetByIdQuery(IAirConditionerRepository airconditionerRepository)
         {

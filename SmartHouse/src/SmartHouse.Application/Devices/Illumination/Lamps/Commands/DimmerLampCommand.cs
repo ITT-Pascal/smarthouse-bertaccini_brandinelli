@@ -10,7 +10,7 @@ namespace SmartHouse.Application.Devices.Illumination.Lamps.Commands
 {
     public class DimmerLampCommand
     {
-        private ILampRepository _lampRepository;
+        private readonly ILampRepository _lampRepository;
 
         public DimmerLampCommand(ILampRepository lampRepository)
         {
