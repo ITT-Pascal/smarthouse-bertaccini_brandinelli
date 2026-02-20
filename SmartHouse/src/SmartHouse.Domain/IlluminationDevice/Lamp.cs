@@ -14,5 +14,13 @@ namespace SmartHouse.Domain.Illumination
         public override Brightness DefaultBrightness => ThisDefaultBrightness;
 
         public Lamp(string name) : base(name) { }
+        public Lamp(Guid id, string name, DeviceStatus status, Brightness brightness, DateTime creationtime, DateTime lastupdatetime) : base(name)
+        {
+            Id = id;
+            Status = status;
+            Brightness = brightness;
+            CreationTime = creationtime;
+            LastUpdateTime = lastupdatetime;
+        }
     }
 }
