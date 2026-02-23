@@ -1,6 +1,7 @@
 ﻿using SmartHouse.Application.Devices.Abstraction.Mapper;
 using SmartHouse.Application.Devices.Illumination.Lamps.Dto;
 using SmartHouse.Domain;
+using SmartHouse.Domain.Abstractions;
 using SmartHouse.Domain.Doors;
 using SmartHouse.Domain.Illumination;
 using SmartHouse.Domain.IlluminationDevice;
@@ -16,23 +17,29 @@ namespace SmartHouse.Application.Devices.Illumination.Lamps.Mapper
     {
         
 
-        public static DoorDto ToDto(Lamp lamp)
+        public static DoorDto ToDto(Door door)
         {
             return new DoorDto
             {
-                Id = lamp.Id,
-                Name = lamp.Name._name,
-                Status = DeviceStatusMapper.ToDto(lamp.Status),
-                CreationTime = lamp.CreationTime,
-                LastUpdateTime = lamp.LastUpdateTime,
+                Id = door.Id,
+                Name = door.Name._name,
+                Status = DeviceStatusMapper.ToDto(door.Status),
+                CreationTime = door.CreationTime,
+                LastUpdateTime = door.LastUpdateTime,
+                Pin = door.PIN.PIN,
+                IsLocked = door.IsLocked,
+                IsOpen = door.IsOpen
             };
         }
 
-        public static Lamp ToDomain(DoorDto dto)
+        public static Door ToDomain(DoorDto dto)
         {
             return new Door(
+                Name.Create(dto.Name),
+                Pin.Create(dto.Pin),
+                dto.IsLocked,
+                dto.IsOpen,
                 dto.Id,
-                dto.Name,
                 DeviceStatusMapper.ToDomain(dto.Status),
                 dto.CreationTime,
                 dto.LastUpdateTime

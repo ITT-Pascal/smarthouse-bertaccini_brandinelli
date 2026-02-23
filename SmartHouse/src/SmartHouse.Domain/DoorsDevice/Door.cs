@@ -20,7 +20,19 @@ namespace SmartHouse.Domain.Doors
             PIN = Pin.Create(pin);
             IsOpen = false;
             IsLocked = true;           
-        }       
+        }
+        
+        public Door(Name name, Pin pin, bool islocked, bool isopen, Guid id, DeviceStatus status, DateTime creationtime, DateTime lastupdatetime) :base(name)
+        {
+            PIN = pin;
+            Name = name;
+            IsLocked = islocked;
+            IsOpen = isopen;
+            Id = id;
+            Status = status;
+            CreationTime = creationtime;
+            LastUpdateTime = lastupdatetime;
+        }
 
         public void Open()
         {
