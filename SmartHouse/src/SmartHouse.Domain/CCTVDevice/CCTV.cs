@@ -28,6 +28,18 @@ namespace SmartHouse.Domain.CCTVDevice
             PIN = Pin.Create(pin);
         }
 
+        public CCTV(Guid id, string name, DeviceStatus status, int pin, CCTVVisionType visionType, double zoom, bool isLocked, DateTime creationTime, DateTime lastUpdateTime) : base(name)
+        {
+            Id = id;
+            Status = status;
+            PIN = Pin.Create(pin);
+            VisionType = visionType;
+            Zoom = Zoom.Create(zoom);
+            IsLocked = isLocked;
+            CreationTime = creationTime;
+            LastUpdateTime = lastUpdateTime;
+        }
+
         public void Unlock(Pin pin)
         {
             if (IsLocked == true)

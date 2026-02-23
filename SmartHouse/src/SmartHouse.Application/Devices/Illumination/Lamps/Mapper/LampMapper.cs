@@ -15,9 +15,9 @@ namespace SmartHouse.Application.Devices.Illumination.Lamps.Mapper
     {
         
 
-        public static DoorDto ToDto(Lamp lamp)
+        public static CCTVDto ToDto(Lamp lamp)
         {
-            return new DoorDto
+            return new CCTVDto
             {
                 Id = lamp.Id,
                 Name = lamp.Name._name,
@@ -28,7 +28,7 @@ namespace SmartHouse.Application.Devices.Illumination.Lamps.Mapper
             };
         }
 
-        public static Lamp ToDomain(DoorDto dto)
+        public static Lamp ToDomain(CCTVDto dto)
         {
             return new Lamp(
                 dto.Id,

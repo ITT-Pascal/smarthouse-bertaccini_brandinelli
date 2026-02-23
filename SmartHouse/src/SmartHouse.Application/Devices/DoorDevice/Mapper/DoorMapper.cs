@@ -1,6 +1,7 @@
 ﻿using SmartHouse.Application.Devices.Abstraction.Mapper;
 using SmartHouse.Application.Devices.Illumination.Lamps.Dto;
 using SmartHouse.Domain;
+using SmartHouse.Application.Devices.DoorDevice.Commands;
 using SmartHouse.Domain.Abstractions;
 using SmartHouse.Domain.Doors;
 using SmartHouse.Domain.Illumination;
@@ -10,8 +11,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SmartHouse.Application.Devices.DoorDevice.Dto;
 
-namespace SmartHouse.Application.Devices.Illumination.Lamps.Mapper
+namespace SmartHouse.Application.Devices.DoorDevice.Mapper
 {
     public class DoorMapper
     {
