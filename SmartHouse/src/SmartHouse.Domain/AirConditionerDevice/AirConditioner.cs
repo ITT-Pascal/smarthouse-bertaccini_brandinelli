@@ -19,6 +19,15 @@ namespace SmartHouse.Domain.AirConditionerDevice
             FanSpeed = FanSpeed.Medium;
         }
 
+        public AirConditioner(Guid id, string name, DeviceStatus status, FanSpeed fanSpeed, DateTime creationTime, DateTime lastUpdateTime) : base(name)
+        {
+            Id = id;
+            Status = status;
+            FanSpeed = fanSpeed;
+            CreationTime = creationTime;
+            LastUpdateTime = lastUpdateTime;
+        }
+
         public void SetFanSpeedLow()
         {
             if (Status == DeviceStatus.On)

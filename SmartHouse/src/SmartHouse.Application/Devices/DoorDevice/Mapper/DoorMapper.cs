@@ -37,7 +37,7 @@ namespace SmartHouse.Application.Devices.DoorDevice.Mapper
         public static Door ToDomain(DoorDto dto)
         {
             return new Door(
-                Name.Create(dto.Name),
+                dto.Name,
                 Pin.Create(dto.Pin),
                 dto.IsLocked,
                 dto.IsOpen,

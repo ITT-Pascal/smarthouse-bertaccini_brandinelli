@@ -18,6 +18,7 @@ namespace SmartHouse.Application.Devices.CCTVDevice.Mapper
                 CCTVVisionType.DefaultVision => "DEFAULT VISION",
                 CCTVVisionType.NightVision => "NIGHT VISION",
                 CCTVVisionType.ThermalVision => "THERMAL VISION",
+                _ => throw new ArgumentException("Invalid vision type value")
             };
         }
 
@@ -28,6 +29,7 @@ namespace SmartHouse.Application.Devices.CCTVDevice.Mapper
                 "DEFAULT VISION" => CCTVVisionType.DefaultVision,
                 "NIGHT VISION" => CCTVVisionType.NightVision,
                 "THERMAL VISION" => CCTVVisionType.ThermalVision,
+                _ => throw new ArgumentException("Invalid vision type value")
             };
         }
     }
