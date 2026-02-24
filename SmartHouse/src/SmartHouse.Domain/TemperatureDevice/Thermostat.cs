@@ -22,7 +22,16 @@ namespace SmartHouse.Domain.TemperatureDevice
         public Thermostat(string name) : base(name)
         {           
             Temperature = Temperature.Create(DefaultTemperature);
-        }       
+        }
+
+        public Thermostat(Guid id, string name, DeviceStatus status, double temperature, DateTime creationTime, DateTime lastUpdateTime) : base(name)
+        {
+            Id = id;
+            Status = status;
+            Temperature = Temperature.Create(temperature);
+            CreationTime = creationTime;
+            LastUpdateTime = lastUpdateTime;
+        }
 
         public void IncreaseTemperature()
         {

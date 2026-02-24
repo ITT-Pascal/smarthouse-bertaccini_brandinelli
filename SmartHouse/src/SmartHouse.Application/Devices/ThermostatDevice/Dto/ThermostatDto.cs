@@ -11,7 +11,7 @@ namespace SmartHouse.Application.Devices.ThermostatDevice.Dto
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Status { get; set; }
-        public string FanSpeed { get; set; }
+        public double Temperature { get; set; }
         public DateTime CreationTime { get; set; }
         public DateTime LastUpdateTime { get; set; }
 
@@ -21,7 +21,7 @@ namespace SmartHouse.Application.Devices.ThermostatDevice.Dto
                 $"Id: {Id}\n" +
                 $"Name: {Name}\n" +
                 $"Status: {Status}\n" +
-                $"FanSpeed: {FanSpeed}\n" +
+                $"Temperature: {Temperature}\n" +
                 $"Created: {CreationTime}\n" +
                 $"Last update: {LastUpdateTime}\n";
         }
