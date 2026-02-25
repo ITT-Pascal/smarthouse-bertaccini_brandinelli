@@ -1,4 +1,6 @@
-﻿using SmartHouse.Domain.CCTVDevice;
+﻿using SmartHouse.Application.Devices.CCTVDevice.Dto;
+using SmartHouse.Application.Devices.CCTVDevice.Mapper;
+using SmartHouse.Domain.CCTVDevice;
 using SmartHouse.Domain.CCTVDevice.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,9 +19,9 @@ namespace SmartHouse.Application.Devices.CCTVDevice.Queries
             _CCTVRepository = CCTVRepository;
         }
 
-        public CCTV Execute(Guid id)
+        public CCTVDto Execute(Guid id)
         {
-            return _CCTVRepository.GetById(id);
+            return CCTVMapper.ToDto(_CCTVRepository.GetById(id));
         }
     }
 }
