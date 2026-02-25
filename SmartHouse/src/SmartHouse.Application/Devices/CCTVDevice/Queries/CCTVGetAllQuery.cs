@@ -1,4 +1,6 @@
-﻿using SmartHouse.Domain.CCTVDevice;
+﻿using SmartHouse.Application.Devices.CCTVDevice.Dto;
+using SmartHouse.Application.Devices.CCTVDevice.Mapper;
+using SmartHouse.Domain.CCTVDevice;
 using SmartHouse.Domain.CCTVDevice.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,14 +19,14 @@ namespace SmartHouse.Application.Devices.CCTVDevice.Queries
             _repository = repos;
         }
 
-        public List<CCTV> Execute()
+        public List<CCTVDto> Execute()
         {
-            List<CCTV> result = new List<CCTV>();
+            List<CCTVDto> result = new List<CCTVDto>();
 
             foreach(CCTV c in _repository.GetAll())
             {
                 if (c != null)
-                    result.Add(c);
+                    result.Add(CCTVMapper.ToDto(c));
             }
             return result;
         }
