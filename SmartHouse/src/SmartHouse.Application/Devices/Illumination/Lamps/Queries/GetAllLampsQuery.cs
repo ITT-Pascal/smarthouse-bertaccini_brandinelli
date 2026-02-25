@@ -1,4 +1,6 @@
-﻿using SmartHouse.Domain.Illumination;
+﻿using SmartHouse.Application.Devices.Illumination.Lamps.Dto;
+using SmartHouse.Application.Devices.Illumination.Lamps.Mapper;
+using SmartHouse.Domain.Illumination;
 using SmartHouse.Domain.IlluminationDevice.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,15 +19,15 @@ namespace SmartHouse.Application.Devices.Illumination.Lamps.Queries
             _lamprepository = lamprepository;
         }
 
-        public List<Lamp> Execute()
+        public List<LampDto> Execute()
         {
-            List<Lamp> result = new List<Lamp>();
+            List<LampDto> result = new List<LampDto>();
 
             foreach(Lamp l in _lamprepository.GetAll())
             {
                 if(l != null)
                 {
-                    result.Add(l);
+                    result.Add(LampMapper.ToDto(l));
                 }
             }
             return result;

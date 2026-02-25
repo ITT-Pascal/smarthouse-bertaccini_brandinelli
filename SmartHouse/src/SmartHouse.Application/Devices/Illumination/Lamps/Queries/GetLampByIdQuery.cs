@@ -1,4 +1,6 @@
-﻿using SmartHouse.Domain.Illumination;
+﻿using SmartHouse.Application.Devices.Illumination.Lamps.Dto;
+using SmartHouse.Application.Devices.Illumination.Lamps.Mapper;
+using SmartHouse.Domain.Illumination;
 using SmartHouse.Domain.IlluminationDevice.Repositories;
 using System;
 using System.Collections.Generic;
@@ -19,9 +21,9 @@ namespace SmartHouse.Application.Devices.Illumination.Lamps.Queries
 
         //To Do: to refactor with DTO (next lesson)
 
-        public Lamp Execute(Guid id)
+        public LampDto Execute(Guid id)
         {
-            return _lampRepository.GetById(id);
+            return LampMapper.ToDto(_lampRepository.GetById(id));
         }
     }
 }
