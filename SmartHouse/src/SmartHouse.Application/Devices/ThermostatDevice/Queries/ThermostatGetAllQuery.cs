@@ -1,4 +1,6 @@
-﻿using SmartHouse.Domain.TemperatureDevice;
+﻿using SmartHouse.Application.Devices.ThermostatDevice.Dto;
+using SmartHouse.Application.Devices.ThermostatDevice.Mapper;
+using SmartHouse.Domain.TemperatureDevice;
 using SmartHouse.Domain.TemperatureDevice.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,14 +19,14 @@ namespace SmartHouse.Application.Devices.ThermostatDevice.Queries
             _repository = repos;
         }
 
-        public List<Thermostat> Execute()
+        public List<ThermostatDto> Execute()
         {
-            List<Thermostat> result = new List<Thermostat>();
+            List<ThermostatDto> result = new List<ThermostatDto>();
 
             foreach(Thermostat t in _repository.GetAll())
             {
                 if (t != null)
-                    result.Add(t);
+                    result.Add(ThermostatMapper.ToDto(t));
             }
             return result;
         }

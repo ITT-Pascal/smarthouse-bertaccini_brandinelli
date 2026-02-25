@@ -1,4 +1,6 @@
-﻿using SmartHouse.Domain.TemperatureDevice;
+﻿using SmartHouse.Application.Devices.ThermostatDevice.Dto;
+using SmartHouse.Application.Devices.ThermostatDevice.Mapper;
+using SmartHouse.Domain.TemperatureDevice;
 using SmartHouse.Domain.TemperatureDevice.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,9 +19,9 @@ namespace SmartHouse.Application.Devices.ThermostatDevice.Queries
             _thermostatRepository = thermostatRepository;
         }
 
-        public Thermostat Execute(Guid id)
+        public ThermostatDto Execute(Guid id)
         {
-            return _thermostatRepository.GetById(id);
+            return ThermostatMapper.ToDto(_thermostatRepository.GetById(id));
         }
     }
 }

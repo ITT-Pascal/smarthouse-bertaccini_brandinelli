@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SmartHouse.Domain.Doors;
+using SmartHouse.Application.Devices.DoorDevice.Mapper;
+using SmartHouse.Application.Devices.DoorDevice.Dto;
 
 namespace SmartHouse.Application.Devices.DoorDevice.Queries
 {
@@ -18,9 +20,9 @@ namespace SmartHouse.Application.Devices.DoorDevice.Queries
             _doorRepository = doorRepository;
         }
 
-        public Door Execute(Guid id)
+        public DoorDto Execute(Guid id)
         {
-            return _doorRepository.GetById(id);
+            return DoorMapper.ToDto(_doorRepository.GetById(id));
         }
     }
 }
