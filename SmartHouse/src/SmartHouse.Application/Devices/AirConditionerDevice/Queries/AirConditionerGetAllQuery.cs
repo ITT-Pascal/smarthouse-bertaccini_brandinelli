@@ -1,4 +1,6 @@
-﻿using SmartHouse.Domain.AirConditionerDevice;
+﻿using SmartHouse.Application.Devices.AirConditionerDevice.Dto;
+using SmartHouse.Application.Devices.AirConditionerDevice.Mapper;
+using SmartHouse.Domain.AirConditionerDevice;
 using SmartHouse.Domain.AirConditionerDevice.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,14 +19,14 @@ namespace SmartHouse.Application.Devices.AirConditionerDevice.Queries
             _repository = repos;
         }
 
-        public List<AirConditioner> Execute()
+        public List<AirConditionerDto> Execute()
         {
-            List<AirConditioner> result = new List<AirConditioner>();
+            List<AirConditionerDto> result = new List<AirConditionerDto>();
 
             foreach(AirConditioner a in _repository.GetAll())
             {
                 if (a != null)
-                    result.Add(a);
+                    result.Add(AirConditionerMapper.ToDto(a));
             }
             return result;
         }

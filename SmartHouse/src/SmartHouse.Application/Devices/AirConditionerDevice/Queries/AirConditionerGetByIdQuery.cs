@@ -1,4 +1,6 @@
-﻿using SmartHouse.Domain.AirConditionerDevice;
+﻿using SmartHouse.Application.Devices.AirConditionerDevice.Dto;
+using SmartHouse.Application.Devices.AirConditionerDevice.Mapper;
+using SmartHouse.Domain.AirConditionerDevice;
 using SmartHouse.Domain.AirConditionerDevice.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,9 +19,9 @@ namespace SmartHouse.Application.Devices.AirConditionerDevice.Queries
             _airconditionerrepository = airconditionerRepository;
         }
 
-        public AirConditioner Execute(Guid id)
+        public AirConditionerDto Execute(Guid id)
         {
-            return _airconditionerrepository.GetById(id);
+            return AirConditionerMapper.ToDto(_airconditionerrepository.GetById(id));
         }
     }
 }
