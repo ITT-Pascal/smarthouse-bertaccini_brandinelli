@@ -9,11 +9,11 @@ using System.Xml.Linq;
 
 namespace SmartHouse.Infrastructure.Repositories.Devices.DoorDevice.InMemory
 {
-    public class InMemoryLampRepository : IDoorRepository
+    public class InMemoryDoorRepository : IDoorRepository
     {
         private readonly List<Door> _doors;
 
-        public InMemoryLampRepository()
+        public InMemoryDoorRepository()
         {
             _doors = new List<Door>
             {
@@ -32,30 +32,30 @@ namespace SmartHouse.Infrastructure.Repositories.Devices.DoorDevice.InMemory
         {
             Door? result = null;
 
-            foreach (Door l in _doors)
-                if (l.Id == id)
-                    result = l;
+            foreach (Door d in _doors)
+                if (d.Id == id)
+                    result = d;
 
             return result;
         }
 
-        public void Add(Door lamp)
+        public void Add(Door door)
         {
-            if (lamp != null)
-                _doors.Add(lamp);
+            if (door != null)
+                _doors.Add(door);
             else
-                throw new ArgumentException("lamp cannot be null");
+                throw new ArgumentException("Door cannot be null");
         }
 
         public void Delete(Guid id)
         {
-            var lamp = GetById(id);
+            var door = GetById(id);
 
-            if (lamp != null)
-                _doors.Remove(lamp);
+            if (door != null)
+                _doors.Remove(door);
         }
 
-        public void Update(Door lamp)
+        public void Update(Door door)
         {
             //To do
         }
