@@ -1,6 +1,5 @@
 ﻿using SmartHouse.Domain.AirConditionerDevice;
 using SmartHouse.Domain.AirConditionerDevice.Repositories;
-using SmartHouse.Domain.Doors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +44,7 @@ namespace SmartHouse.Infrastructure.Repositories.Devices.AirConditionerDevice.In
             if (airConditioner != null)
                 _airConditioners.Add(airConditioner);
             else
-                throw new ArgumentException("lamp cannot be null");
+                throw new ArgumentException("AirConditioner cannot be null");
         }
 
         public void Delete(Guid id)
