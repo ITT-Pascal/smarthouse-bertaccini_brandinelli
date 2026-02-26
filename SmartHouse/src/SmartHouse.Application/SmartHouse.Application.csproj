@@ -16,9 +16,4 @@
     <ProjectReference Include="..\SmartHouse.Domain\SmartHouse.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Devices\Environment\Dto\" />
-    <Folder Include="Devices\Environment\Mapper\" />
-  </ItemGroup>
-
 </Project>

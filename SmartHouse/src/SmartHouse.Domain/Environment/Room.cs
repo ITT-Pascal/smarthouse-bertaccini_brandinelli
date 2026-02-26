@@ -16,16 +16,25 @@ namespace SmartHouse.Domain.Environment
         public List<AbstractDevice> Devices { get; private set; }
         public Name Name { get; }
         public Guid Id { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-        public DateTime LastUpdatedAt { get; private set; }
+        public DateTime CreationTime { get; private set; }
+        public DateTime LastUpdateTime { get; private set; }
 
         public Room(string name)
         {
             Name = Name.Create(name);
             Devices = new List<AbstractDevice>();
             Id = Guid.NewGuid();
-            CreatedAt = DateTime.UtcNow;
-            LastUpdatedAt = DateTime.UtcNow;
+            CreationTime = DateTime.UtcNow;
+            LastUpdateTime = DateTime.UtcNow;
+        }
+
+        public Room(Guid id, string name, List<AbstractDevice> devices, DateTime creationtime, DateTime lastupdatetime)
+        {
+            Id = id;
+            Name = Name.Create(name);
+            Devices = devices;
+            CreationTime = creationtime;
+            LastUpdateTime = lastupdatetime;
         }
 
         public void AddDevice(AbstractDevice device)
@@ -34,7 +43,7 @@ namespace SmartHouse.Domain.Environment
                 throw new ArgumentException("Device cannot be null");
 
             Devices.Add(device);
-            LastUpdatedAt = DateTime.UtcNow;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void AddDeviceInPosition(AbstractDevice device, int position)
@@ -45,7 +54,7 @@ namespace SmartHouse.Domain.Environment
                 throw new ArgumentException("Position cannot be negative");
 
             Devices.Insert(position, device);
-            LastUpdatedAt = DateTime.UtcNow;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void RemoveDevice(AbstractDevice device)
@@ -54,7 +63,7 @@ namespace SmartHouse.Domain.Environment
                 throw new ArgumentException("Device cannot be null");
 
             Devices.Remove(device);
-            LastUpdatedAt = DateTime.UtcNow;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void RemoveDevice(Name name)
@@ -69,7 +78,7 @@ namespace SmartHouse.Domain.Environment
                     Devices.RemoveAt(i);
                 }
             }
-            LastUpdatedAt = DateTime.UtcNow;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void RemoveDevice(Guid id)
@@ -84,7 +93,7 @@ namespace SmartHouse.Domain.Environment
                     Devices.RemoveAt(i);
                 }
             }
-            LastUpdatedAt = DateTime.UtcNow;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void RemoveDeviceInPosition(int position)
@@ -93,7 +102,7 @@ namespace SmartHouse.Domain.Environment
                 throw new ArgumentException("Position cannot be negative");
 
             Devices.RemoveAt(position);
-            LastUpdatedAt = DateTime.UtcNow;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void SwitchOn(AbstractDevice device)
@@ -102,7 +111,7 @@ namespace SmartHouse.Domain.Environment
                 throw new ArgumentException("Device cannot be null");
 
             device.SwitchOn();
-            LastUpdatedAt = DateTime.UtcNow;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void SwitchOn(Name name)
@@ -112,7 +121,7 @@ namespace SmartHouse.Domain.Environment
                 if (Devices[i].Name == name)
                     Devices[i].SwitchOn();
             }
-            LastUpdatedAt = DateTime.UtcNow;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void SwitchOn(Guid id)
@@ -122,7 +131,7 @@ namespace SmartHouse.Domain.Environment
                 if (Devices[i].Id == id)
                     Devices[i].SwitchOn();
             }
-            LastUpdatedAt = DateTime.UtcNow;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void SwitchOff(AbstractDevice device)
@@ -131,7 +140,7 @@ namespace SmartHouse.Domain.Environment
                 throw new ArgumentException("Device cannot be null");
 
             device.SwitchOff();
-            LastUpdatedAt = DateTime.UtcNow;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void SwitchOff(Name name)
@@ -141,7 +150,7 @@ namespace SmartHouse.Domain.Environment
                 if (Devices[i].Name == name)
                     Devices[i].SwitchOff();
             }
-            LastUpdatedAt = DateTime.UtcNow;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void SwitchOff(Guid id)
@@ -151,7 +160,7 @@ namespace SmartHouse.Domain.Environment
                 if (Devices[i].Id == id)
                     Devices[i].SwitchOff();
             }
-            LastUpdatedAt = DateTime.UtcNow;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void AllSwitchOn()
@@ -160,7 +169,7 @@ namespace SmartHouse.Domain.Environment
             {
                 Devices[i].SwitchOn();
             }
-            LastUpdatedAt = DateTime.UtcNow;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void AllSwitchOff()
@@ -169,7 +178,7 @@ namespace SmartHouse.Domain.Environment
             {
                 Devices[i].SwitchOff();
             }
-            LastUpdatedAt = DateTime.UtcNow;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void SwitchOnOff(AbstractDevice device)
@@ -178,7 +187,7 @@ namespace SmartHouse.Domain.Environment
                 throw new ArgumentException("Device does not exist");
 
             device.SwitchOnOff();
-            LastUpdatedAt = DateTime.UtcNow;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void SwitchOnOff(Name name)
@@ -188,7 +197,7 @@ namespace SmartHouse.Domain.Environment
                 if (Devices[i].Name == name)
                     Devices[i].SwitchOnOff();
             }
-            LastUpdatedAt = DateTime.UtcNow;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void SwitchOnOff(Guid id)
@@ -198,7 +207,7 @@ namespace SmartHouse.Domain.Environment
                 if (Devices[i].Id == id)
                     Devices[i].SwitchOnOff();
             }
-            LastUpdatedAt = DateTime.UtcNow;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         public void AllSwitchOnOff()
@@ -207,7 +216,7 @@ namespace SmartHouse.Domain.Environment
             {
                 Devices[i].SwitchOnOff();
             }
-            LastUpdatedAt = DateTime.UtcNow;
+            LastUpdateTime = DateTime.UtcNow;
         }
 
         //public void AllIncreaseFanSpeed()
