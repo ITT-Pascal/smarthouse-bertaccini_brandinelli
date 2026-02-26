@@ -9,11 +9,11 @@ using System.Xml.Linq;
 
 namespace SmartHouse.Infrastructure.Repositories.Devices.CCTVDevice.InMemory
 {
-    public class InMemoryLampRepository : ICCTVRepository
+    public class InMemoryCCTVRepository : ICCTVRepository
     {
         private readonly List<CCTV> _cctvs;
 
-        public InMemoryLampRepository()
+        public InMemoryCCTVRepository()
         {
             _cctvs = new List<CCTV>
             {
@@ -44,7 +44,7 @@ namespace SmartHouse.Infrastructure.Repositories.Devices.CCTVDevice.InMemory
             if (cctv != null)
                 _cctvs.Add(cctv);
             else
-                throw new ArgumentException("lamp cannot be null");
+                throw new ArgumentException("CCTV cannot be null");
         }
 
         public void Delete(Guid id)
