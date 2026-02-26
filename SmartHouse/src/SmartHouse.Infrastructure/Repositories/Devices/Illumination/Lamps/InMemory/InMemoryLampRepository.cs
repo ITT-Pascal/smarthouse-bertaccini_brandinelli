@@ -38,7 +38,7 @@ namespace SmartHouse.Infrastructure.Repositories.Devices.Illumination.Lamps.InMe
             if (lamp != null)
                 _lamps.Add(lamp);
             else
-                throw new ArgumentException("lamp cannot be null");
+                throw new ArgumentException("Lamp cannot be null");
         }
 
         public void Delete(Guid id)
