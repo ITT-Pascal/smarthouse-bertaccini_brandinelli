@@ -32,30 +32,30 @@ namespace SmartHouse.Infrastructure.Repositories.Devices.CCTVDevice.InMemory
         {
             CCTV? result = null;
 
-            foreach (CCTV l in _cctvs)
-                if (l.Id == id)
-                    result = l;
+            foreach (CCTV c in _cctvs)
+                if (c.Id == id)
+                    result = c;
 
             return result;
         }
 
-        public void Add(CCTV lamp)
+        public void Add(CCTV cctv)
         {
-            if (lamp != null)
-                _cctvs.Add(lamp);
+            if (cctv != null)
+                _cctvs.Add(cctv);
             else
                 throw new ArgumentException("lamp cannot be null");
         }
 
         public void Delete(Guid id)
         {
-            var lamp = GetById(id);
+            var cctv = GetById(id);
 
-            if (lamp != null)
-                _cctvs.Remove(lamp);
+            if (cctv != null)
+                _cctvs.Remove(cctv);
         }
 
-        public void Update(CCTV lamp)
+        public void Update(CCTV cctv)
         {
             //To do
         }
