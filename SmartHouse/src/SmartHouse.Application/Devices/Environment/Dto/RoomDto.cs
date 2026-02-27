@@ -13,7 +13,7 @@ namespace SmartHouse.Application.Devices.Environment.Dto
         public string Name { get; set; }
         public DateTime CreationTime { get; set; }
         public DateTime LastUpdateTime { get; set; }
-        public List<AbstractDevice> Devices { get; set; }
+        public List<Object> Devices { get; set; }
 
         public override string ToString()
         {

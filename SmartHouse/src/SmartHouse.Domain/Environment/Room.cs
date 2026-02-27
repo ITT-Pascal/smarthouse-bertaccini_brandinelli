@@ -28,7 +28,7 @@ namespace SmartHouse.Domain.Environment
             LastUpdateTime = DateTime.UtcNow;
         }
 
-        public Room(Guid id, string name, List<AbstractDevice> devices, DateTime creationtime, DateTime lastupdatetime)
+        public Room(Guid id, string name, List<Object> devices, DateTime creationtime, DateTime lastupdatetime)
         {
             Id = id;
             Name = Name.Create(name);

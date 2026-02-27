@@ -16,7 +16,7 @@ namespace SmartHouse.Application.Devices.Environment.Mapper
             {
                 Id = room.Id,
                 Name = room.Name._name,
-                Devices = room.Devices,
+                Devices = ,
                 CreationTime = room.CreationTime,
                 LastUpdateTime = room.LastUpdateTime,               
             };
