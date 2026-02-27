@@ -22,15 +22,9 @@ namespace SmartHouse.Infrastructure.Repositories.Devices.Illumination.Lamps.InMe
             return _lamps;
         }
 
-        public Lamp? GetById(Guid id)
+        public Lamp GetById(Guid id)
         {
-            Lamp? result = null;
-
-            foreach (Lamp l in _lamps)
-                if (l.Id == id)
-                    result = l;
-
-            return result;                 
+            return _lamps.FirstOrDefault(lamp => lamp.Id == id);               
         }
 
         public void Add(Lamp lamp)

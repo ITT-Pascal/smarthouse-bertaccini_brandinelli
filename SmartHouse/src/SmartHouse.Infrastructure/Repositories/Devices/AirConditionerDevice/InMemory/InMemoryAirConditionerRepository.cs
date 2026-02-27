@@ -28,15 +28,9 @@ namespace SmartHouse.Infrastructure.Repositories.Devices.AirConditionerDevice.In
             return _airConditioners;
         }
 
-        public AirConditioner? GetById(Guid id)
+        public AirConditioner GetById(Guid id)
         {
-            AirConditioner? result = null;
-
-            foreach (AirConditioner a in _airConditioners)
-                if (a.Id == id)
-                    result = a;
-
-            return result;
+            return _airConditioners.FirstOrDefault(airconditioner => airconditioner.Id == id);
         }
 
         public void Add(AirConditioner airConditioner)

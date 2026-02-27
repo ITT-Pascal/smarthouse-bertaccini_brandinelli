@@ -28,15 +28,9 @@ namespace SmartHouse.Infrastructure.Repositories.Devices.DoorDevice.InMemory
             return _doors;
         }
 
-        public Door? GetById(Guid id)
+        public Door GetById(Guid id)
         {
-            Door? result = null;
-
-            foreach (Door d in _doors)
-                if (d.Id == id)
-                    result = d;
-
-            return result;
+            return _doors.FirstOrDefault(door => door.Id == id);
         }
 
         public void Add(Door door)

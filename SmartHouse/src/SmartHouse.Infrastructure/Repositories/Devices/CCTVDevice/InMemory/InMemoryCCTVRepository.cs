@@ -28,15 +28,9 @@ namespace SmartHouse.Infrastructure.Repositories.Devices.CCTVDevice.InMemory
             return _cctvs;
         }
 
-        public CCTV? GetById(Guid id)
+        public CCTV GetById(Guid id)
         {
-            CCTV? result = null;
-
-            foreach (CCTV c in _cctvs)
-                if (c.Id == id)
-                    result = c;
-
-            return result;
+            return _cctvs.FirstOrDefault(cctv => cctv.Id == id);
         }
 
         public void Add(CCTV cctv)

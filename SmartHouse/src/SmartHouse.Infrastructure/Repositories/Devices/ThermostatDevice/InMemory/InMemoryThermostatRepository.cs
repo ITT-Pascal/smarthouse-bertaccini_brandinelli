@@ -28,14 +28,9 @@ namespace SmartHouse.Infrastructure.Repositories.Devices.ThermostatDevice.InMemo
             return _thermostats;
         }
 
-        public Thermostat? GetById(Guid id)
+        public Thermostat GetById(Guid id)
         {
-            Thermostat? result = null;
-            foreach (Thermostat t in _thermostats)
-                if (t.Id == id)
-                    result = t;
-
-            return result;
+            return _thermostats.FirstOrDefault(thermostat => thermostat.Id == id);
         }
 
         public void Add(Thermostat t)
