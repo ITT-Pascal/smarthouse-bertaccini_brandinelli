@@ -25,14 +25,14 @@ public class CCTVController
 
         if (cctvs.Count == 0)
         {
-            Console.WriteLine("No lamps available");
+            Console.WriteLine("No CCTVs available");
             return;
         }
 
         for (int i = 0; i < cctvs.Count; i++)
         {
-            var l = cctvs[i];
-            Console.WriteLine($"{i + 1}. {l.Name}\n{l}");
+            var c = cctvs[i];
+            Console.WriteLine($"{i + 1}. {c.Name}\n{c}");
         }
     }
 
@@ -96,7 +96,7 @@ public class CCTVController
         }
 
         new ChangePinCCTVCommand(_repository).Execute(new Guid(id), int.Parse(currentpin), int.Parse(newpin));
-        Console.WriteLine("CCTV removed!");
+        Console.WriteLine("Pin changed");
     }
 
     public void DecreaseZoom()
