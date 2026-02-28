@@ -26,6 +26,105 @@ public class LampController
         Console.WriteLine("Lamp added!");
     }
 
+    public void RemoveLamp()
+    {
+        Console.Write("Lamp Id: ");
+        string id = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(id))
+        {
+            Console.WriteLine("Invalid Id");
+            return;
+        }
+
+        new RemoveLampCommand(_repository).Execute(new Guid(id));
+        Console.WriteLine("Lamp removed!");
+    }
+
+    public void Brighten()
+    {
+        Console.Write("Lamp Id: ");
+        string id = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(id))
+        {
+            Console.WriteLine("Invalid Id");
+            return;
+        }
+
+        new BrightenLampCommand(_repository).Execute(new Guid(id));
+        Console.WriteLine("Increased lamp brightness!");
+    }
+
+    public void ChangeBrightness()
+    {
+        Console.Write("Lamp Id: ");
+        string id = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(id))
+        {
+            Console.WriteLine("Invalid Id");
+            return;
+        }
+
+        Console.Write("New brightness: ");
+        string newbrightness = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(newbrightness))
+        {
+            Console.WriteLine("Invalid brightness");
+            return;
+        }
+
+        new ChangeBrightnessLampCommand(_repository).Execute(new Guid(id), int.Parse(newbrightness));
+        Console.WriteLine("Changed lamp brightness!");
+    }
+
+    public void Dimmer()
+    {
+        Console.Write("Lamp Id: ");
+        string id = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(id))
+        {
+            Console.WriteLine("Invalid Id");
+            return;
+        }
+
+        new DimmerLampCommand(_repository).Execute(new Guid(id));
+        Console.WriteLine("Decreased lamp brightness!");
+    }
+
+    public void SwitchOn()
+    {
+        Console.Write("Lamp Id: ");
+        string id = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(id))
+        {
+            Console.WriteLine("Invalid Id");
+            return;
+        }
+
+        new SwitchLampOnCommand(_repository).Execute(new Guid(id));
+        Console.WriteLine("Turned lamp on!");
+    }
+
+    public void SwitchOff()
+    {
+        Console.Write("Lamp Id: ");
+        string id = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(id))
+        {
+            Console.WriteLine("Invalid Id");
+            return;
+        }
+
+        new SwitchLampOffCommand(_repository).Execute(new Guid(id));
+        Console.WriteLine("Turned lamp off!");
+    }
+
     public void ShowLamps()
     {
         var lamps = new GetAllLampsQuery(_repository).Execute();

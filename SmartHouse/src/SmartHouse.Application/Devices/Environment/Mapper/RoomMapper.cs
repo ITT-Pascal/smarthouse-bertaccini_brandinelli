@@ -1,4 +1,5 @@
 ﻿using SmartHouse.Application.Devices.Environment.Dto;
+using SmartHouse.Domain.Abstractions;
 using SmartHouse.Domain.Environment;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,16 @@ namespace SmartHouse.Application.Devices.Environment.Mapper
     {
         public static RoomDto ToDto(Room room)
         {
+            List<Object> objects = new List<Object>();
+            foreach(AbstractDevice abstractDevice in room.Devices)
+            {
+                objects.Add((Object)abstractDevice);
+            }
             return new RoomDto
             {
                 Id = room.Id,
                 Name = room.Name._name,
-                Devices = ,
+                Devices = objects,
                 CreationTime = room.CreationTime,
                 LastUpdateTime = room.LastUpdateTime,               
             };
@@ -24,10 +30,15 @@ namespace SmartHouse.Application.Devices.Environment.Mapper
 
         public static Room ToDomain(RoomDto dto)
         {
+            List<AbstractDevice> abstractDevices = new List<AbstractDevice>();
+            foreach(Object obj in dto.Devices)
+            {
+                abstractDevices.Add((AbstractDevice)obj);
+            }
             return new Room(
                 dto.Id,
                 dto.Name,
-                dto.Devices,
+                abstractDevices,
                 dto.CreationTime,
                 dto.LastUpdateTime
             );    
