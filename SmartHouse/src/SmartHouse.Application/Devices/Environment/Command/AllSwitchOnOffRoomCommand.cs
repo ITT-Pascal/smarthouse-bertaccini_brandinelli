@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmartHouse.Domain.Environment;
 using SmartHouse.Domain.Environment.Repositories;
+using SmartHouse.Domain.Environment;
 
 namespace SmartHouse.Application.Devices.Environment.Command
 {
-    public class AllSwitchOnRoomCommand
+    public class AllSwitchOnOffRoomCommand
     {
         private readonly IRoomRepository _roomRepository;
 
-        public AllSwitchOnRoomCommand(IRoomRepository roomRepository)
+        public AllSwitchOnOffRoomCommand(IRoomRepository roomRepository)
         {
             _roomRepository = roomRepository;
         }
@@ -22,7 +22,7 @@ namespace SmartHouse.Application.Devices.Environment.Command
             Room room = _roomRepository.GetById(roomId);
             if (room != null)
             {
-                room.AllSwitchOn();
+                room.AllSwitchOnOff();
                 _roomRepository.Update(room);
             }
         }

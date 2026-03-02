@@ -8,11 +8,11 @@ using SmartHouse.Domain.Environment.Repositories;
 
 namespace SmartHouse.Application.Devices.Environment.Command
 {
-    public class AllSwitchOnRoomCommand
+    public class SwitchOnRoomCommand
     {
         private readonly IRoomRepository _roomRepository;
 
-        public AllSwitchOnRoomCommand(IRoomRepository roomRepository)
+        public SwitchOnRoomCommand(IRoomRepository roomRepository)
         {
             _roomRepository = roomRepository;
         }
@@ -22,7 +22,7 @@ namespace SmartHouse.Application.Devices.Environment.Command
             Room room = _roomRepository.GetById(roomId);
             if (room != null)
             {
-                room.AllSwitchOn();
+                room.SwitchOn(roomId);
                 _roomRepository.Update(room);
             }
         }
