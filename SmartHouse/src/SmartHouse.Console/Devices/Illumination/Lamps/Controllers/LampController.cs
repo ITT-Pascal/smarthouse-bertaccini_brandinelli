@@ -112,8 +112,7 @@ public class LampController
 
     public void SwitchOff()
     {
-        Console.Write("Lamp Id: ");
-        string id = Console.ReadLine();
+        string id = SelectLamp();
 
         if (string.IsNullOrWhiteSpace(id))
         {
@@ -142,6 +141,35 @@ public class LampController
         {
             var l = lamps[i];
             Console.WriteLine($"{i + 1}. {l.Name}\n{l}");
+        }
+    }
+
+    public string SelectLamp()
+    {
+        var lamps = new GetAllLampsQuery(_repository).Execute();
+
+        if (lamps.Count == 0)
+        {
+            Console.WriteLine("No lamps available");
+            return null;
+        }
+
+        Console.Write("Lamp number: ");
+        int num = int.Parse(Console.ReadLine());
+
+        if(num<1 || num > lamps.Count)
+        {
+            Console.WriteLine("There is no corresponding lamp");
+            return null;
+        }    
+
+        try
+        {
+            return lamps[num].Id.ToString();
+        }catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+            return null;
         }
     }
 }
