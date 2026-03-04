@@ -28,86 +28,107 @@ public class LampController
 
     public void RemoveLamp()
     {
-        Console.Write("Lamp Id: ");
-        string id = Console.ReadLine();
-
-        if (string.IsNullOrWhiteSpace(id))
+        string id = SelectLamp();
+        
+        if(string.IsNullOrWhiteSpace(id))
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot Find Selected Lamp");
             return;
         }
 
-        new RemoveLampCommand(_repository).Execute(new Guid(id));
-        Console.WriteLine("Lamp removed!");
+        try
+        {
+            new RemoveLampCommand(_repository).Execute(new Guid(id));
+            Console.WriteLine("Lamp removed!");
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     public void Brighten()
     {
-        Console.Write("Lamp Id: ");
-        string id = Console.ReadLine();
+        string id = SelectLamp();
 
         if (string.IsNullOrWhiteSpace(id))
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot Find Selected Lamp");
             return;
         }
 
-        new BrightenLampCommand(_repository).Execute(new Guid(id));
-        Console.WriteLine("Increased lamp brightness!");
+        try
+        {
+            new BrightenLampCommand(_repository).Execute(new Guid(id));
+            Console.WriteLine("Increased lamp brightness!");
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     public void ChangeBrightness()
     {
-        Console.Write("Lamp Id: ");
-        string id = Console.ReadLine();
+        string id = SelectLamp();
 
         if (string.IsNullOrWhiteSpace(id))
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot Find Selected Lamp");
             return;
         }
 
         Console.Write("New brightness: ");
-        string newbrightness = Console.ReadLine();
-
-        if (string.IsNullOrWhiteSpace(newbrightness))
+        if (!int.TryParse(Console.ReadLine(), out int newbrightness))
         {
             Console.WriteLine("Invalid brightness");
             return;
         }
 
-        new ChangeBrightnessLampCommand(_repository).Execute(new Guid(id), int.Parse(newbrightness));
+        new ChangeBrightnessLampCommand(_repository).Execute(new Guid(id),newbrightness);
         Console.WriteLine("Changed lamp brightness!");
     }
 
     public void Dimmer()
     {
-        Console.Write("Lamp Id: ");
-        string id = Console.ReadLine();
+        string id = SelectLamp();
 
         if (string.IsNullOrWhiteSpace(id))
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot Find Selected Lamp");
             return;
         }
 
-        new DimmerLampCommand(_repository).Execute(new Guid(id));
-        Console.WriteLine("Decreased lamp brightness!");
+        try
+        {
+            new DimmerLampCommand(_repository).Execute(new Guid(id));
+            Console.WriteLine("Decreased lamp brightness!");
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     public void SwitchOn()
     {
-        Console.Write("Lamp Id: ");
-        string id = Console.ReadLine();
+        string id = SelectLamp();
 
         if (string.IsNullOrWhiteSpace(id))
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot Find Selected Lamp");
             return;
         }
 
-        new SwitchLampOnCommand(_repository).Execute(new Guid(id));
-        Console.WriteLine("Turned lamp on!");
+        try
+        {
+            new SwitchLampOnCommand(_repository).Execute(new Guid(id));
+            Console.WriteLine("Turned lamp on!");
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     public void SwitchOff()
@@ -116,12 +137,18 @@ public class LampController
 
         if (string.IsNullOrWhiteSpace(id))
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot Find Selected Lamp");
             return;
         }
 
-        new SwitchLampOffCommand(_repository).Execute(new Guid(id));
-        Console.WriteLine("Turned lamp off!");
+        try
+        {
+            new SwitchLampOffCommand(_repository).Execute(new Guid(id));
+            Console.WriteLine("Turned lamp off!");
+        }catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     public void ShowLamps()
@@ -155,7 +182,11 @@ public class LampController
         }
 
         Console.Write("Lamp number: ");
-        int num = int.Parse(Console.ReadLine());
+        if(!int.TryParse(Console.ReadLine(), out int num))
+        {
+            Console.WriteLine("Invalid number");
+            return null;
+        }
 
         if(num<1 || num > lamps.Count)
         {
@@ -165,7 +196,7 @@ public class LampController
 
         try
         {
-            return lamps[num].Id.ToString();
+            return lamps[num-1].Id.ToString();
         }catch (ArgumentException ex)
         {
             Console.WriteLine($"ERROR: {ex.Message}");

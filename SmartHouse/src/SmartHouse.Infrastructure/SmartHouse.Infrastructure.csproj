@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Repositories\Devices\Illumination\Lamps\Json\**" />
+    <EmbeddedResource Remove="Repositories\Devices\Illumination\Lamps\Json\**" />
+    <None Remove="Repositories\Devices\Illumination\Lamps\Json\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SmartHouse.Application\SmartHouse.Application.csproj" />
     <ProjectReference Include="..\SmartHouse.Domain\SmartHouse.Domain.csproj" />
   </ItemGroup>

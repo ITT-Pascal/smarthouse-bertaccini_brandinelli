@@ -21,7 +21,6 @@ class Program
             Console.Clear();
             controller.ShowLamps();
 
-
             Console.Write("Choose an option: ");
             string choice = Console.ReadLine();
 
@@ -41,7 +40,19 @@ class Program
                 case "4":
                     controller.SwitchOff();
                     break;
+                case "5":
+                    controller.Brighten();
+                    break;
+                case "6":
+                    controller.Dimmer();
+                    break;
+                case "7":
+                    controller.ChangeBrightness();
+                    break;
             }
+
+            Console.WriteLine("Press Enter To go back to the menu");
+            Console.ReadLine();
         }
     }
 }
