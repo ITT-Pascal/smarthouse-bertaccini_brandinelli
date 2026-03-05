@@ -31,5 +31,14 @@ namespace SmartHouse.Domain.TemperatureDevice
             return Temperature.Create(t._temp - d);
         }
 
+        public static bool operator ==(Temperature t, double d)
+        {
+            return t._temp == d;
+        }
+
+        public static bool operator !=(Temperature t, double d)
+        {
+            return t._temp != d;
+        }
     }
 }

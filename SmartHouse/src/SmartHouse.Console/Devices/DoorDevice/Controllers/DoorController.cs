@@ -1,5 +1,8 @@
-﻿using SmartHouse.Application.Devices.DoorDevice.Commands;
+﻿using SmartHouse.Application.Devices.Abstraction.Mapper;
+using SmartHouse.Application.Devices.DoorDevice.Commands;
 using SmartHouse.Application.Devices.DoorDevice.Queries;
+using SmartHouse.Application.Devices.Illumination.Lamps.Queries;
+using SmartHouse.Domain.Abstractions;
 using SmartHouse.Domain.DoorsDevice.Repositories;
 using System;
 using System.Collections.Generic;
@@ -35,6 +38,8 @@ public class DoorController
             Console.WriteLine($"{i + 1}. {d.Name}\n{d}");
         }
     }
+
+    public void ShowMenu() { }
 
     public void AddDoor()
     {
@@ -149,31 +154,92 @@ public class DoorController
 
     public void Open()
     {
-        Console.Write("Door Id: ");
-        string id = Console.ReadLine();
+        Guid id = new Guid(SelectDoor());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot find selected door");
             return;
         }
 
-        new OpenDoorCommand(_repository).Execute(new Guid(id));
-        Console.WriteLine("Opened Door");
+        try
+        {
+            if (DeviceStatusMapper.ToDomain(new DoorGetByIdQuery(_repository).Execute(id).Status) == DeviceStatus.Off)
+                Console.WriteLine("Door must be on!");
+            else if (new DoorGetByIdQuery(_repository).Execute(id).IsLocked == true)
+                Console.WriteLine("Door must be unlocked!");
+            else if (new DoorGetByIdQuery(_repository).Execute(id).IsOpen == true)
+                Console.WriteLine("Door is alredy open");
+            else
+            {
+                new OpenDoorCommand(_repository).Execute(id);
+                Console.WriteLine("Opened door");
+            }
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     public void Close()
     {
-        Console.Write("Door Id: ");
-        string id = Console.ReadLine();
+        Guid id = new Guid(SelectDoor());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot find selected door");
             return;
         }
 
-        new CloseDoorCommand(_repository).Execute(new Guid(id));
-        Console.WriteLine("Closed Door");
+        try 
+        {
+            if (DeviceStatusMapper.ToDomain(new DoorGetByIdQuery(_repository).Execute(id).Status) == DeviceStatus.Off)
+                Console.WriteLine("Door must be on!");
+            else if (new DoorGetByIdQuery(_repository).Execute(id).IsOpen == false)
+                Console.WriteLine("Door is alredy closed");
+            else
+            {
+                new CloseDoorCommand(_repository).Execute(id);
+                Console.WriteLine("Closed door");
+            }
+        }catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
+    }
+
+    private string SelectDoor()
+    {
+        var doors = new DoorGetAllQuery(_repository).Execute();
+
+        if (doors.Count == 0)
+        {
+            Console.WriteLine("No doors available");
+            return null;
+        }
+
+        Console.Write("Door number: ");
+        if (!int.TryParse(Console.ReadLine(), out int num))
+        {
+            Console.WriteLine("Invalid number");
+            return null;
+        }
+
+        if (num < 1 || num > doors.Count)
+        {
+            Console.WriteLine("There is no corresponding door");
+            return null;
+        }
+
+        try
+        {
+            return doors[num - 1].Id.ToString();
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+            return null;
+        }
     }
 }

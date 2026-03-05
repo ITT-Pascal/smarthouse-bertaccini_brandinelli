@@ -19,7 +19,9 @@ class Program
         while (!exit)
         {
             Console.Clear();
+            Console.Write("\x1b[3J");
             controller.ShowLamps();
+            controller.ShowMenu();
 
             Console.Write("Choose an option: ");
             string choice = Console.ReadLine();

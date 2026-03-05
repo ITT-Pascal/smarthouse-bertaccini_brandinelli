@@ -12,12 +12,11 @@ namespace SmartHouse.Domain.TemperatureDevice
     {
         public Temperature Temperature { get; private set; }
 
-        public const double MinTemperature = 15;
-        public const double DefaultTemperature = 20;
-        public const double MaxTemperature = 30;
-        public const double DefaultJump = 0.1;
-
-       
+        public readonly double MinTemperature = 15;
+        public readonly double DefaultTemperature = 20;
+        public readonly double MaxTemperature = 30;
+        public readonly double DefaultJump = 0.1;
+      
 
         public Thermostat(string name) : base(name)
         {           

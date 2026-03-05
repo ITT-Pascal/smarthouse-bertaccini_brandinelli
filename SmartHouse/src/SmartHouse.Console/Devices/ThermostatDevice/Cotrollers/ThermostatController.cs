@@ -1,7 +1,11 @@
-﻿using SmartHouse.Application.Devices.Illumination.Lamps.Commands;
+﻿using SmartHouse.Application.Devices.Abstraction.Mapper;
+using SmartHouse.Application.Devices.Illumination.Lamps.Commands;
 using SmartHouse.Application.Devices.Illumination.Lamps.Queries;
 using SmartHouse.Application.Devices.ThermostatDevice.Command;
+using SmartHouse.Application.Devices.ThermostatDevice.Mapper;
 using SmartHouse.Application.Devices.ThermostatDevice.Queries;
+using SmartHouse.Domain.Abstractions;
+using SmartHouse.Domain.TemperatureDevice;
 using SmartHouse.Domain.TemperatureDevice.Repositories;
 using System;
 using System.Collections.Generic;
@@ -35,36 +39,101 @@ public class ThermostatController
 
     public void RemoveThermostat()
     {
-        Console.Write("Thermostat Id: ");
-        string id = Console.ReadLine();
+        string id = SelectThermostat();
 
         if(string.IsNullOrWhiteSpace(id))
         {
-            throw new ArgumentException("Invalid id");
+            throw new ArgumentException("Cannot find selected thermostat");
             return;
         }
 
-        new RemoveThermostatCommand(_repository).Execute(new Guid(id));
-        Console.WriteLine("Thermostat Removed!");
+        try
+        {
+            new RemoveThermostatCommand(_repository).Execute(new Guid(id));
+            Console.WriteLine("Thermostat Removed!");
+        }catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
+    }
+    public void SwitchOn()
+    {
+        string id = SelectThermostat();
+
+        if (string.IsNullOrWhiteSpace(id))
+        {
+            Console.WriteLine("Cannot find selected thermostat");
+            return;
+        }
+
+        try
+        {
+            if (DeviceStatusMapper.ToDomain(new ThermostatGetByIdQuery(_repository).Execute(new Guid(id)).Status) == DeviceStatus.On)
+                Console.WriteLine("Thermostat is alredy on!");
+            else
+            {
+                new ThermostatSwitchOnCommand(_repository).Execute(new Guid(id));
+                Console.WriteLine("Turned thermostat on!");
+            }
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
+    }
+
+    public void SwitchOff()
+    {
+        string id = SelectThermostat();
+
+        if (string.IsNullOrWhiteSpace(id))
+        {
+            Console.WriteLine("Cannot find selected thermostat");
+            return;
+        }
+
+        try
+        {
+            if (DeviceStatusMapper.ToDomain(new ThermostatGetByIdQuery(_repository).Execute(new Guid(id)).Status) == DeviceStatus.Off)
+                Console.WriteLine("Thermostat is alredy off!");
+            else
+            {
+                new ThermostatSwitchOffCommand(_repository).Execute(new Guid(id));
+                Console.WriteLine("Turned thermostat off!");
+            }
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     public void SetTemperature()
     {
-        Console.Write("Thermostat Id: ");
-        string id = Console.ReadLine();
+        string id = SelectThermostat();
 
         if (string.IsNullOrWhiteSpace(id))
         {
-            throw new ArgumentException("Invalid id");
+            throw new ArgumentException("Cannot find selected thermostat");
+            return;
+        }
+
+        if (DeviceStatusMapper.ToDomain(new ThermostatGetByIdQuery(_repository).Execute(new Guid(id)).Status) == DeviceStatus.Off)
+        {
+            Console.WriteLine("Thermostat must be turned on!");
             return;
         }
 
         Console.Write("New temperature : ");
-        string temp = Console.ReadLine();
+        if(!double.TryParse(Console.ReadLine(), out double temp))
+        {
+            Console.WriteLine("Invalid temperature!");
+            return;
+        }
 
         try
         {
-            new ThermostatSetTemperatureCommand(_repository).Execute(new Guid(id), double.Parse(temp));
+            new ThermostatSetTemperatureCommand(_repository).Execute(new Guid(id), temp);
             Console.WriteLine("Temperature Set!");
         }catch (ArgumentException ex)
         {
@@ -74,19 +143,25 @@ public class ThermostatController
 
     public void DecreaseTemperature()
     {
-        Console.Write("Thermostat Id: ");
-        string id = Console.ReadLine();
+        string id = SelectThermostat();
 
         if (string.IsNullOrWhiteSpace(id))
         {
-            throw new ArgumentException("Invalid id");
+            throw new ArgumentException("Cannot find selected thermostat");
             return;
         }
 
         try
         {
-            new ThermostatDecreaseTemperatureCommand(_repository).Execute(new Guid(id));
-            Console.WriteLine("Temperature Decreased!");
+            if (DeviceStatusMapper.ToDomain(new ThermostatGetByIdQuery(_repository).Execute(new Guid(id)).Status) == DeviceStatus.Off)
+                Console.WriteLine("Thermostat must be turned on!");
+            else if (ThermostatMapper.ToDomain(new ThermostatGetByIdQuery(_repository).Execute(new Guid(id))).Temperature == new Thermostat("Check").MinTemperature)
+                Console.WriteLine("Temperature is alredy at it's minimum");
+            else
+            {
+                new ThermostatDecreaseTemperatureCommand(_repository).Execute(new Guid(id));
+                Console.WriteLine("Temperature Decreased!");
+            }          
         }catch (ArgumentException ex)
         {
             Console.WriteLine($"ERROR: {ex.Message}");
@@ -95,19 +170,25 @@ public class ThermostatController
 
     public void IncreaseTemperature()
     {
-        Console.Write("Thermostat id: ");
-        string id = Console.ReadLine();
+        string id = SelectThermostat();
 
         if (string.IsNullOrWhiteSpace(id))
         {
-            throw new ArgumentException("Invalid id");
+            throw new ArgumentException("Cannot find selected thermostat");
             return;
         }
 
         try
         {
-            new ThermostatIncreaseTemperatureCommand(_repository).Execute(new Guid(id));
-            Console.WriteLine("Temperature Increased!");
+            if (DeviceStatusMapper.ToDomain(new ThermostatGetByIdQuery(_repository).Execute(new Guid(id)).Status) == DeviceStatus.Off)
+                Console.WriteLine("Thermostat must be turned on!");
+            else if (ThermostatMapper.ToDomain(new ThermostatGetByIdQuery(_repository).Execute(new Guid(id))).Temperature == new Thermostat("Check").MaxTemperature)
+                Console.WriteLine("Temperature is alredy at it's maximum");
+            else
+            {
+                new ThermostatIncreaseTemperatureCommand(_repository).Execute(new Guid(id));
+                Console.WriteLine("Temperature Increased!");
+            }          
         }catch(ArgumentException ex)
         {
             Console.WriteLine($"ERROR: {ex.Message}");
@@ -131,6 +212,51 @@ public class ThermostatController
         {
             var l = thermostats[i];
             Console.WriteLine($"{i + 1}. {l.Name}\n{l}");
+        }
+    }
+
+    public void ShowMenu()
+    {
+        Console.WriteLine("1 - Add thermostat \n" +
+                          "2 - Remove thermostat \n" +
+                          "3 - Switch On \n" +
+                          "4 - Switch Off \n" +
+                          "5 - Increase temperature \n" +
+                          "6 - Decrease temperature \n" +
+                          "7 - Set temperature ");
+    }
+
+    private string SelectThermostat()
+    {
+        var thermostats = new ThermostatGetAllQuery(_repository).Execute();
+
+        if (thermostats.Count == 0)
+        {
+            Console.WriteLine("No thermostats available");
+            return null;
+        }
+
+        Console.Write("Thermostat number: ");
+        if (!int.TryParse(Console.ReadLine(), out int num))
+        {
+            Console.WriteLine("Invalid number");
+            return null;
+        }
+
+        if (num < 1 || num > thermostats.Count)
+        {
+            Console.WriteLine("There is no corresponding thermostat");
+            return null;
+        }
+
+        try
+        {
+            return thermostats[num - 1].Id.ToString();
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+            return null;
         }
     }
 }

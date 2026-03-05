@@ -1,6 +1,11 @@
-﻿using SmartHouse.Application.Devices.Illumination.Lamps.Commands;
+﻿using SmartHouse.Application.Devices.Abstraction.Mapper;
+using SmartHouse.Application.Devices.Illumination.Lamps.Commands;
+using SmartHouse.Application.Devices.Illumination.Lamps.Mapper;
 using SmartHouse.Application.Devices.Illumination.Lamps.Queries;
+using SmartHouse.Domain.Abstractions;
+using SmartHouse.Domain.Illumination;
 using SmartHouse.Domain.IlluminationDevice.Repositories;
+using System.ComponentModel.Design;
 
 public class LampController
 {
@@ -59,8 +64,15 @@ public class LampController
 
         try
         {
-            new BrightenLampCommand(_repository).Execute(new Guid(id));
-            Console.WriteLine("Increased lamp brightness!");
+            if (DeviceStatusMapper.ToDomain(new GetLampByIdQuery(_repository).Execute(new Guid(id)).Status) == DeviceStatus.Off)
+                Console.WriteLine("Lamp must be turned on!");
+            else if (LampMapper.ToDomain(new GetLampByIdQuery(_repository).Execute(new Guid(id))).Brightness == new Lamp("Check").MaxBrightness)
+                Console.WriteLine("Brightness is alredy at it's maximum");
+            else
+            {
+                new BrightenLampCommand(_repository).Execute(new Guid(id));
+                Console.WriteLine("Increased lamp brightness!");
+            }
         }
         catch (ArgumentException ex)
         {
@@ -78,6 +90,12 @@ public class LampController
             return;
         }
 
+        if (DeviceStatusMapper.ToDomain(new GetLampByIdQuery(_repository).Execute(new Guid(id)).Status) == DeviceStatus.Off)
+        {
+            Console.WriteLine("Lamp must be turned on!");
+            return;
+        }
+
         Console.Write("New brightness: ");
         if (!int.TryParse(Console.ReadLine(), out int newbrightness))
         {
@@ -85,8 +103,15 @@ public class LampController
             return;
         }
 
-        new ChangeBrightnessLampCommand(_repository).Execute(new Guid(id),newbrightness);
-        Console.WriteLine("Changed lamp brightness!");
+        try
+        {
+            new ChangeBrightnessLampCommand(_repository).Execute(new Guid(id), newbrightness);
+            Console.WriteLine("Changed lamp brightness!");
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     public void Dimmer()
@@ -101,8 +126,15 @@ public class LampController
 
         try
         {
-            new DimmerLampCommand(_repository).Execute(new Guid(id));
-            Console.WriteLine("Decreased lamp brightness!");
+            if (DeviceStatusMapper.ToDomain(new GetLampByIdQuery(_repository).Execute(new Guid(id)).Status) == DeviceStatus.Off)
+                Console.WriteLine("Lamp must be turned on!");
+            else if (LampMapper.ToDomain(new GetLampByIdQuery(_repository).Execute(new Guid(id))).Brightness == new Lamp("Check").MinBrightness)
+                Console.WriteLine("Brightness is alredy at it's minimum value");
+            else
+            {
+                new DimmerLampCommand(_repository).Execute(new Guid(id));
+                Console.WriteLine("Decreased lamp brightness!");
+            }         
         }
         catch (ArgumentException ex)
         {
@@ -121,9 +153,14 @@ public class LampController
         }
 
         try
-        {
-            new SwitchLampOnCommand(_repository).Execute(new Guid(id));
-            Console.WriteLine("Turned lamp on!");
+        {           
+            if (DeviceStatusMapper.ToDomain(new GetLampByIdQuery(_repository).Execute(new Guid(id)).Status) == DeviceStatus.On)
+                Console.WriteLine("Lamp is alredy on!");
+            else
+            {
+                new SwitchLampOnCommand(_repository).Execute(new Guid(id));
+                Console.WriteLine("Turned lamp on!");
+            }            
         }
         catch (ArgumentException ex)
         {
@@ -143,8 +180,13 @@ public class LampController
 
         try
         {
-            new SwitchLampOffCommand(_repository).Execute(new Guid(id));
-            Console.WriteLine("Turned lamp off!");
+            if (DeviceStatusMapper.ToDomain(new GetLampByIdQuery(_repository).Execute(new Guid(id)).Status) == DeviceStatus.Off)
+                Console.WriteLine("Lamp is alredy off!");
+            else
+            {
+                new SwitchLampOffCommand(_repository).Execute(new Guid(id));
+                Console.WriteLine("Turned lamp off!");
+            }      
         }catch (ArgumentException ex)
         {
             Console.WriteLine($"ERROR: {ex.Message}");
@@ -170,8 +212,18 @@ public class LampController
             Console.WriteLine($"{i + 1}. {l.Name}\n{l}");
         }
     }
+    public void ShowMenu()
+    {
+        Console.WriteLine("1 - Add lamp \n" +
+                          "2 - Remove lamp \n" +
+                          "3 - Switch On \n" +
+                          "4 - Switch Off \n" +
+                          "5 - Brighten \n" +
+                          "6 - Dimmer \n" +
+                          "7 - Change brightness ");
+    }
 
-    public string SelectLamp()
+    private string SelectLamp()
     {
         var lamps = new GetAllLampsQuery(_repository).Execute();
 
