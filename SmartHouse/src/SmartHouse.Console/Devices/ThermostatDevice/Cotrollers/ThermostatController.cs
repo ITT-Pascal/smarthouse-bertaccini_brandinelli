@@ -39,9 +39,9 @@ public class ThermostatController
 
     public void RemoveThermostat()
     {
-        string id = SelectThermostat();
+        Guid id = new Guid(SelectThermostat());
 
-        if(string.IsNullOrWhiteSpace(id))
+        if(id == null)
         {
             throw new ArgumentException("Cannot find selected thermostat");
             return;
@@ -49,7 +49,7 @@ public class ThermostatController
 
         try
         {
-            new RemoveThermostatCommand(_repository).Execute(new Guid(id));
+            new RemoveThermostatCommand(_repository).Execute(id);
             Console.WriteLine("Thermostat Removed!");
         }catch (ArgumentException ex)
         {
@@ -58,9 +58,9 @@ public class ThermostatController
     }
     public void SwitchOn()
     {
-        string id = SelectThermostat();
+        Guid id = new Guid(SelectThermostat());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
             Console.WriteLine("Cannot find selected thermostat");
             return;
@@ -68,11 +68,11 @@ public class ThermostatController
 
         try
         {
-            if (DeviceStatusMapper.ToDomain(new ThermostatGetByIdQuery(_repository).Execute(new Guid(id)).Status) == DeviceStatus.On)
+            if (new ThermostatCheckIsOnQuery(_repository).Execute(id))
                 Console.WriteLine("Thermostat is alredy on!");
             else
             {
-                new ThermostatSwitchOnCommand(_repository).Execute(new Guid(id));
+                new ThermostatSwitchOnCommand(_repository).Execute(id);
                 Console.WriteLine("Turned thermostat on!");
             }
         }
@@ -84,9 +84,9 @@ public class ThermostatController
 
     public void SwitchOff()
     {
-        string id = SelectThermostat();
+        Guid id = new Guid(SelectThermostat());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
             Console.WriteLine("Cannot find selected thermostat");
             return;
@@ -94,11 +94,11 @@ public class ThermostatController
 
         try
         {
-            if (DeviceStatusMapper.ToDomain(new ThermostatGetByIdQuery(_repository).Execute(new Guid(id)).Status) == DeviceStatus.Off)
+            if (!new ThermostatCheckIsOnQuery(_repository).Execute(id))
                 Console.WriteLine("Thermostat is alredy off!");
             else
             {
-                new ThermostatSwitchOffCommand(_repository).Execute(new Guid(id));
+                new ThermostatSwitchOffCommand(_repository).Execute(id);
                 Console.WriteLine("Turned thermostat off!");
             }
         }
@@ -110,15 +110,15 @@ public class ThermostatController
 
     public void SetTemperature()
     {
-        string id = SelectThermostat();
+        Guid id = new Guid(SelectThermostat());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
             throw new ArgumentException("Cannot find selected thermostat");
             return;
         }
 
-        if (DeviceStatusMapper.ToDomain(new ThermostatGetByIdQuery(_repository).Execute(new Guid(id)).Status) == DeviceStatus.Off)
+        if (!new ThermostatCheckIsOnQuery(_repository).Execute(id))
         {
             Console.WriteLine("Thermostat must be turned on!");
             return;
@@ -133,7 +133,7 @@ public class ThermostatController
 
         try
         {
-            new ThermostatSetTemperatureCommand(_repository).Execute(new Guid(id), temp);
+            new ThermostatSetTemperatureCommand(_repository).Execute(id, temp);
             Console.WriteLine("Temperature Set!");
         }catch (ArgumentException ex)
         {
@@ -143,9 +143,9 @@ public class ThermostatController
 
     public void DecreaseTemperature()
     {
-        string id = SelectThermostat();
+        Guid id = new Guid(SelectThermostat());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
             throw new ArgumentException("Cannot find selected thermostat");
             return;
@@ -153,9 +153,9 @@ public class ThermostatController
 
         try
         {
-            if (DeviceStatusMapper.ToDomain(new ThermostatGetByIdQuery(_repository).Execute(new Guid(id)).Status) == DeviceStatus.Off)
+            if (!new ThermostatCheckIsOnQuery(_repository).Execute(id))
                 Console.WriteLine("Thermostat must be turned on!");
-            else if (ThermostatMapper.ToDomain(new ThermostatGetByIdQuery(_repository).Execute(new Guid(id))).Temperature == new Thermostat("Check").MinTemperature)
+            else if (new ThermostatCheckTemperatureIsMinQuery(_repository).Execute(id))
                 Console.WriteLine("Temperature is alredy at it's minimum");
             else
             {
@@ -170,9 +170,9 @@ public class ThermostatController
 
     public void IncreaseTemperature()
     {
-        string id = SelectThermostat();
+        Guid id = new Guid(SelectThermostat());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
             throw new ArgumentException("Cannot find selected thermostat");
             return;
@@ -180,9 +180,9 @@ public class ThermostatController
 
         try
         {
-            if (DeviceStatusMapper.ToDomain(new ThermostatGetByIdQuery(_repository).Execute(new Guid(id)).Status) == DeviceStatus.Off)
+            if (!new ThermostatCheckIsOnQuery(_repository).Execute(id))
                 Console.WriteLine("Thermostat must be turned on!");
-            else if (ThermostatMapper.ToDomain(new ThermostatGetByIdQuery(_repository).Execute(new Guid(id))).Temperature == new Thermostat("Check").MaxTemperature)
+            else if (new ThermostatCheckTemperatureIsMaxQuery(_repository).Execute(id))
                 Console.WriteLine("Temperature is alredy at it's maximum");
             else
             {
