@@ -331,4 +331,38 @@ public class CCTVController
             Console.ReadLine();
         }
     }
+
+    private string SelectCCTV()
+    {
+        var cctvs = new CCTVGetAllQuery(_repository).Execute();
+
+        if (cctvs.Count == 0)
+        {
+            Console.WriteLine("No cctvs available");
+            return null;
+        }
+
+        Console.Write("CCTV number: ");
+        if (!int.TryParse(Console.ReadLine(), out int num))
+        {
+            Console.WriteLine("Invalid number");
+            return null;
+        }
+
+        if (num < 1 || num > cctvs.Count)
+        {
+            Console.WriteLine("There is no corresponding CCTV");
+            return null;
+        }
+
+        try
+        {
+            return cctvs[num - 1].Id.ToString();
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+            return null;
+        }
+    }
 }

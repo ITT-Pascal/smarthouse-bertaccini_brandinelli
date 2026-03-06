@@ -1,5 +1,6 @@
 ﻿using SmartHouse.Application.Devices.AirConditionerDevice.Commands;
 using SmartHouse.Application.Devices.AirConditionerDevice.Queries;
+using SmartHouse.Application.Devices.CCTVDevice.Queries;
 using SmartHouse.Domain.AirConditionerDevice.Repositories;
 using System;
 using System.Collections.Generic;
@@ -196,6 +197,40 @@ public class AirConditionerController
 
             Console.WriteLine("Press Enter To go back to the menu");
             Console.ReadLine();
+        }
+    }
+
+    private string SelectAirConditioner()
+    {
+        var airConditioners = new AirConditionerGetAllQuery(_repository).Execute();
+
+        if (airConditioners.Count == 0)
+        {
+            Console.WriteLine("No air conditioners available");
+            return null;
+        }
+
+        Console.Write("Air conditioner number: ");
+        if (!int.TryParse(Console.ReadLine(), out int num))
+        {
+            Console.WriteLine("Invalid number");
+            return null;
+        }
+
+        if (num < 1 || num > airConditioners.Count)
+        {
+            Console.WriteLine("There is no corresponding air conditioner");
+            return null;
+        }
+
+        try
+        {
+            return airConditioners[num - 1].Id.ToString();
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+            return null;
         }
     }
 }
