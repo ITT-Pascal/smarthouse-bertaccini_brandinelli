@@ -58,6 +58,7 @@ class Program
                 case "5":
                     IDoorRepository doorRepository = new InMemoryDoorRepository();
                     DoorController doorController = new DoorController(doorRepository);
+                    doorController.ShowMenu(doorController);
                     break;
             }
         }

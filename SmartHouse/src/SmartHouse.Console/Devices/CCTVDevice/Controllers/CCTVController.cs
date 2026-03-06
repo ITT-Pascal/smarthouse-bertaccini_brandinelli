@@ -16,25 +16,6 @@ public class CCTVController
     {
         _repository = repos;
     }
-    public void ShowCCTVS()
-    {
-        var cctvs = new CCTVGetAllQuery(_repository).Execute();
-            
-        Console.WriteLine("CCTVS:");
-        Console.WriteLine("------------------------------");
-
-        if (cctvs.Count == 0)
-        {
-            Console.WriteLine("No CCTVs available");
-            return;
-        }
-
-        for (int i = 0; i < cctvs.Count; i++)
-        {
-            var c = cctvs[i];
-            Console.WriteLine($"{i + 1}. {c.Name}\n{c}");
-        }
-    }
 
     public void AddCCTV()
     {
@@ -51,7 +32,7 @@ public class CCTVController
         Console.WriteLine("CCTV added!");
     }
 
-    public void RemoveLamp()
+    public void RemoveCCTV()
     {
         Console.Write("CCTV Id: ");
         string id = Console.ReadLine();
@@ -250,5 +231,88 @@ public class CCTVController
 
         new SetCCTVVisionCommand(_repository).Execute(new Guid(id), VisionTypeMapper.ToDomain(visiontype));
         Console.WriteLine("Setted CCTV default zoom");
+    }
+
+    private void ShowCCTVS()
+    {
+        var cctvs = new CCTVGetAllQuery(_repository).Execute();
+
+        Console.WriteLine("CCTVS:");
+        Console.WriteLine("------------------------------");
+
+        if (cctvs.Count == 0)
+        {
+            Console.WriteLine("No CCTVs available");
+            return;
+        }
+
+        for (int i = 0; i < cctvs.Count; i++)
+        {
+            var c = cctvs[i];
+            Console.WriteLine($"{i + 1}. {c.Name}\n{c}");
+        }
+    }
+
+    private void ShowChoices()
+    {
+        Console.WriteLine("1 - Add CCTV \n" +
+                          "2 - Remove CCTV \n" +
+                          "3 - Change pin \n" +
+                          "4 - Lock \n" +
+                          "5 - Unlock \n" +
+                          "6 - Increase zoom \n" +
+                          "7 - Decrease zoom \n" + 
+                          "8 - Set default zoom \n" + 
+                          "9 - Set max zoom \n" +
+                          "10 - Set min zoom \n" +
+                          "11 - Switch on \n" + 
+                          "12 - Set vision ");
+    }
+
+    public void ShowMenu(CCTVController controller)
+    {
+
+        bool exit = false;
+
+        while (!exit)
+        {
+            Console.Clear();
+            Console.Write("\x1b[3J");
+            controller.ShowCCTVS();
+            controller.ShowChoices();
+
+            Console.Write("Choose an option: ");
+            string choice = Console.ReadLine();
+
+            Console.WriteLine();
+
+            switch (choice)
+            {
+                case "1":
+                    controller.AddDoor();
+                    break;
+                case "2":
+                    controller.RemoveDoor();
+                    break;
+                case "3":
+                    controller.ChangePin();
+                    break;
+                case "4":
+                    controller.Lock();
+                    break;
+                case "5":
+                    controller.Unlock();
+                    break;
+                case "6":
+                    controller.Open();
+                    break;
+                case "7":
+                    controller.Close();
+                    break;
+            }
+
+            Console.WriteLine("Press Enter To go back to the menu");
+            Console.ReadLine();
+        }
     }
 }

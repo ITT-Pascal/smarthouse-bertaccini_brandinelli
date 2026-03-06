@@ -1,5 +1,4 @@
 ﻿using SmartHouse.Application.Devices.Abstraction.Mapper;
-using SmartHouse.Application.Devices.Abstractions.Query;
 using SmartHouse.Application.Devices.Illumination.Lamps.Commands;
 using SmartHouse.Application.Devices.Illumination.Lamps.Mapper;
 using SmartHouse.Application.Devices.Illumination.Lamps.Queries;
