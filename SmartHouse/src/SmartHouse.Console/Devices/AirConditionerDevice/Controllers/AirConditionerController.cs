@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class AirConditionerDevice
+public class AirConditionerController
 {
     private readonly IAirConditionerRepository _repository;
 
-    public AirConditionerDevice(IAirConditionerRepository repos)
+    public AirConditionerController(IAirConditionerRepository repos)
     {
         _repository = repos;
     }

@@ -1,7 +1,13 @@
-﻿using SmartHouse.Domain.CCTVDevice.Repositories;
+﻿using SmartHouse.Domain.AirConditionerDevice.Repositories;
+using SmartHouse.Domain.CCTVDevice.Repositories;
+using SmartHouse.Domain.DoorsDevice.Repositories;
 using SmartHouse.Domain.IlluminationDevice.Repositories;
+using SmartHouse.Domain.TemperatureDevice.Repositories;
+using SmartHouse.Infrastructure.Repositories.Devices.AirConditionerDevice.InMemory;
 using SmartHouse.Infrastructure.Repositories.Devices.CCTVDevice.InMemory;
+using SmartHouse.Infrastructure.Repositories.Devices.DoorDevice.InMemory;
 using SmartHouse.Infrastructure.Repositories.Devices.Illumination.Lamps.InMemory;
+using SmartHouse.Infrastructure.Repositories.Devices.ThermostatDevice.InMemory;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -39,6 +45,19 @@ class Program
                 case "2":
                     ICCTVRepository cctvRepository = new InMemoryCCTVRepository();
                     CCTVController cctvController = new CCTVController(cctvRepository);
+                    break;
+                case "3":
+                    IAirConditionerRepository airConditionerRepository = new InMemoryAirConditionerRepository();
+                    AirConditionerController airConditionerController = new AirConditionerController(airConditionerRepository);
+                    break;
+                case "4":
+                    IThermostatRepository thermostatRepository = new InMemoryThermostatRepository();
+                    ThermostatController thermostatController = new ThermostatController(thermostatRepository);
+                    thermostatController.ShowMenu(thermostatController);
+                    break;
+                case "5":
+                    IDoorRepository doorRepository = new InMemoryDoorRepository();
+                    DoorController doorController = new DoorController(doorRepository);
                     break;
             }
         }

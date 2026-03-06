@@ -195,7 +195,7 @@ public class ThermostatController
         }
     }
 
-    public void ShowThermostats()
+    private void ShowThermostats()
     {
         var thermostats = new ThermostatGetAllQuery(_repository).Execute();
 
@@ -215,7 +215,7 @@ public class ThermostatController
         }
     }
 
-    public void ShowMenu()
+    private void ShowChoices()
     {
         Console.WriteLine("1 - Add thermostat \n" +
                           "2 - Remove thermostat \n" +
@@ -224,6 +224,48 @@ public class ThermostatController
                           "5 - Increase temperature \n" +
                           "6 - Decrease temperature \n" +
                           "7 - Set temperature ");
+    }
+
+    public void ShowMenu(ThermostatController controller)
+    {
+
+        Console.Clear();
+        Console.Write("\x1b[3J");
+        controller.ShowThermostats();
+        controller.ShowChoices();
+
+        Console.Write("Choose an option: ");
+        string choice = Console.ReadLine();
+
+        Console.WriteLine();
+
+        switch (choice)
+        {
+            case "1":
+                controller.AddThermostat();
+                break;
+            case "2":
+                controller.RemoveThermostat();
+                break;
+            case "3":
+                controller.SwitchOn();
+                break;
+            case "4":
+                controller.SwitchOff();
+                break;
+            case "5":
+                controller.IncreaseTemperature();
+                break;
+            case "6":
+                controller.DecreaseTemperature();
+                break;
+            case "7":
+                controller.SetTemperature();
+                break;
+        }
+
+        Console.WriteLine("Press Enter To go back to the menu");
+        Console.ReadLine();
     }
 
     private string SelectThermostat()
