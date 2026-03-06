@@ -6,6 +6,7 @@ using SmartHouse.Application.Devices.Illumination.Lamps.Queries;
 using SmartHouse.Domain.Abstractions;
 using SmartHouse.Domain.Illumination;
 using SmartHouse.Domain.IlluminationDevice.Repositories;
+using SmartHouse.Infrastructure.Repositories.Devices.Illumination.Lamps.InMemory;
 using System.ComponentModel.Design;
 
 public class LampController
@@ -194,7 +195,7 @@ public class LampController
         }
     }
 
-    public void ShowLamps()
+    private void ShowLamps()
     {
         var lamps = new GetAllLampsQuery(_repository).Execute();
 
@@ -213,7 +214,7 @@ public class LampController
             Console.WriteLine($"{i + 1}. {l.Name}\n{l}");
         }
     }
-    public void ShowMenu()
+    private void ShowChoices()
     {
         Console.WriteLine("1 - Add lamp \n" +
                           "2 - Remove lamp \n" +
@@ -222,6 +223,48 @@ public class LampController
                           "5 - Brighten \n" +
                           "6 - Dimmer \n" +
                           "7 - Change brightness ");
+    }
+
+    public void ShowMenu(LampController controller)
+    {
+
+        Console.Clear();
+        Console.Write("\x1b[3J");
+        controller.ShowLamps();
+        controller.ShowChoices();
+
+        Console.Write("Choose an option: ");
+        string choice = Console.ReadLine();
+
+        Console.WriteLine();
+
+        switch (choice)
+        {
+            case "1":
+                controller.AddLamp();
+                break;
+            case "2":
+                controller.RemoveLamp();
+                break;
+            case "3":
+                controller.SwitchOn();
+                break;
+            case "4":
+                controller.SwitchOff();
+                break;
+            case "5":
+                controller.Brighten();
+                break;
+            case "6":
+                controller.Dimmer();
+                break;
+            case "7":
+                controller.ChangeBrightness();
+                break;
+        }
+
+        Console.WriteLine("Press Enter To go back to the menu");
+        Console.ReadLine();
     }
 
     private string SelectLamp()

@@ -1,5 +1,13 @@
-﻿using SmartHouse.Domain.IlluminationDevice.Repositories;
+﻿using SmartHouse.Domain.AirConditionerDevice.Repositories;
+using SmartHouse.Domain.CCTVDevice.Repositories;
+using SmartHouse.Domain.DoorsDevice.Repositories;
+using SmartHouse.Domain.IlluminationDevice.Repositories;
+using SmartHouse.Domain.TemperatureDevice.Repositories;
+using SmartHouse.Infrastructure.Repositories.Devices.AirConditionerDevice.InMemory;
+using SmartHouse.Infrastructure.Repositories.Devices.CCTVDevice.InMemory;
+using SmartHouse.Infrastructure.Repositories.Devices.DoorDevice.InMemory;
 using SmartHouse.Infrastructure.Repositories.Devices.Illumination.Lamps.InMemory;
+using SmartHouse.Infrastructure.Repositories.Devices.ThermostatDevice.InMemory;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,50 +19,47 @@ class Program
 {
     static void Main()
     {
-        ILampRepository repository = new InMemoryLampRepository();
-        LampController controller = new LampController(repository);
 
         bool exit = false;
 
         while (!exit)
         {
             Console.Clear();
-            Console.Write("\x1b[3J");
-            controller.ShowLamps();
-            controller.ShowMenu();
+
+            Console.WriteLine("1 - Lamps \n" +
+                          "2 - CCTVS \n" +
+                          "3 - Air Conditioner \n" +
+                          "4 - Thermostat \n" +
+                          "5 - Door \n" );
 
             Console.Write("Choose an option: ");
             string choice = Console.ReadLine();
 
-            Console.WriteLine();
-
             switch (choice)
             {
                 case "1":
-                    controller.AddLamp();
+                    ILampRepository lampRepository = new InMemoryLampRepository();
+                    LampController lampController = new LampController(lampRepository);
+                    lampController.ShowMenu(lampController);
                     break;
                 case "2":
-                    controller.RemoveLamp();
+                    ICCTVRepository cctvRepository = new InMemoryCCTVRepository();
+                    CCTVController cctvController = new CCTVController(cctvRepository);
                     break;
                 case "3":
-                    controller.SwitchOn();
+                    IAirConditionerRepository airConditionerRepository = new InMemoryAirConditionerRepository();
+                    AirConditionerController airConditionerController = new AirConditionerController(airConditionerRepository);
                     break;
                 case "4":
-                    controller.SwitchOff();
+                    IThermostatRepository thermostatRepository = new InMemoryThermostatRepository();
+                    ThermostatController thermostatController = new ThermostatController(thermostatRepository);
+                    thermostatController.ShowMenu(thermostatController);
                     break;
                 case "5":
-                    controller.Brighten();
-                    break;
-                case "6":
-                    controller.Dimmer();
-                    break;
-                case "7":
-                    controller.ChangeBrightness();
+                    IDoorRepository doorRepository = new InMemoryDoorRepository();
+                    DoorController doorController = new DoorController(doorRepository);
                     break;
             }
-
-            Console.WriteLine("Press Enter To go back to the menu");
-            Console.ReadLine();
         }
     }
 }
