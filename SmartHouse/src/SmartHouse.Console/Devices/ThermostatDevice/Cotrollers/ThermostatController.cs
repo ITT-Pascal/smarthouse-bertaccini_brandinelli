@@ -210,8 +210,8 @@ public class ThermostatController
 
         for (int i = 0; i < thermostats.Count; i++)
         {
-            var l = thermostats[i];
-            Console.WriteLine($"{i + 1}. {l.Name}\n{l}");
+            var t = thermostats[i];
+            Console.WriteLine($"{i + 1}. {t.Name}\n{t}");
         }
     }
 
@@ -229,43 +229,48 @@ public class ThermostatController
     public void ShowMenu(ThermostatController controller)
     {
 
-        Console.Clear();
-        Console.Write("\x1b[3J");
-        controller.ShowThermostats();
-        controller.ShowChoices();
+        bool exit = false;
 
-        Console.Write("Choose an option: ");
-        string choice = Console.ReadLine();
-
-        Console.WriteLine();
-
-        switch (choice)
+        while (!exit)
         {
-            case "1":
-                controller.AddThermostat();
-                break;
-            case "2":
-                controller.RemoveThermostat();
-                break;
-            case "3":
-                controller.SwitchOn();
-                break;
-            case "4":
-                controller.SwitchOff();
-                break;
-            case "5":
-                controller.IncreaseTemperature();
-                break;
-            case "6":
-                controller.DecreaseTemperature();
-                break;
-            case "7":
-                controller.SetTemperature();
-                break;
-        }
+            Console.Clear();
+            Console.Write("\x1b[3J");
+            controller.ShowThermostats();
+            controller.ShowChoices();
 
-        Console.WriteLine("Press Enter To go back to the menu");
-        Console.ReadLine();
+            Console.Write("Choose an option: ");
+            string choice = Console.ReadLine();
+
+            Console.WriteLine();
+
+            switch (choice)
+            {
+                case "1":
+                    controller.AddThermostat();
+                    break;
+                case "2":
+                    controller.RemoveThermostat();
+                    break;
+                case "3":
+                    controller.SwitchOn();
+                    break;
+                case "4":
+                    controller.SwitchOff();
+                    break;
+                case "5":
+                    controller.IncreaseTemperature();
+                    break;
+                case "6":
+                    controller.DecreaseTemperature();
+                    break;
+                case "7":
+                    controller.SetTemperature();
+                    break;
+            }
+
+            Console.WriteLine("Press Enter To go back to the menu");
+            Console.ReadLine();
+        }
     }
 
     private string SelectThermostat()

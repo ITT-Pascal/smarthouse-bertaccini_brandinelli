@@ -225,45 +225,49 @@ public class LampController
     }
 
     public void ShowMenu(LampController controller)
-    {
+    { 
+        bool exit = false;
 
-        Console.Clear();
-        Console.Write("\x1b[3J");
-        controller.ShowLamps();
-        controller.ShowChoices();
-
-        Console.Write("Choose an option: ");
-        string choice = Console.ReadLine();
-
-        Console.WriteLine();
-
-        switch (choice)
+        while (!exit)
         {
-            case "1":
-                controller.AddLamp();
-                break;
-            case "2":
-                controller.RemoveLamp();
-                break;
-            case "3":
-                controller.SwitchOn();
-                break;
-            case "4":
-                controller.SwitchOff();
-                break;
-            case "5":
-                controller.Brighten();
-                break;
-            case "6":
-                controller.Dimmer();
-                break;
-            case "7":
-                controller.ChangeBrightness();
-                break;
-        }
+            Console.Clear();
+            Console.Write("\x1b[3J");
+            controller.ShowLamps();
+            controller.ShowChoices();
 
-        Console.WriteLine("Press Enter To go back to the menu");
-        Console.ReadLine();
+            Console.Write("Choose an option: ");
+            string choice = Console.ReadLine();
+
+            Console.WriteLine();
+
+            switch (choice)
+            {
+                case "1":
+                    controller.AddLamp();
+                    break;
+                case "2":
+                    controller.RemoveLamp();
+                    break;
+                case "3":
+                    controller.SwitchOn();
+                    break;
+                case "4":
+                    controller.SwitchOff();
+                    break;
+                case "5":
+                    controller.Brighten();
+                    break;
+                case "6":
+                    controller.Dimmer();
+                    break;
+                case "7":
+                    controller.ChangeBrightness();
+                    break;
+            }
+
+            Console.WriteLine("Press Enter To go back to the menu");
+            Console.ReadLine();
+        }
     }
 
     private string SelectLamp()
