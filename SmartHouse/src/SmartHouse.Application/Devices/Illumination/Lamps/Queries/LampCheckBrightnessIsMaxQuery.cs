@@ -22,8 +22,7 @@ namespace SmartHouse.Application.Devices.Illumination.Lamps.Queries
 
             if (brightness == new Lamp("Check").MaxBrightness)
                 return true;
-            else
-                return false;
+            return false;
         }
     }
 }
