@@ -62,14 +62,14 @@ namespace SmartHouse.Domain.CCTVDevice
 
         public void Lock()
         {
-            if (IsLocked == false && PIN != null)
+            if (IsLocked == false && PIN != null && Status == DeviceStatus.Off)
             {
                 IsLocked = true;
                 LastUpdateTime = DateTime.UtcNow;
             }
             else
             {
-                throw new ArgumentException("The CCTV is alredy locked or isn't lockable");
+                throw new ArgumentException("The CCTV either: is alredy locked, isn't lockable or has to be turned off");
             }
         }
 
@@ -83,6 +83,7 @@ namespace SmartHouse.Domain.CCTVDevice
                         throw new ArgumentException("The PIN cannot be the same");
 
                     PIN = Pin.Create(newPin);
+                    LastUpdateTime = DateTime.UtcNow;
                 }
                 else
                     throw new ArgumentException("Inserted current pin is wrong");
@@ -104,7 +105,7 @@ namespace SmartHouse.Domain.CCTVDevice
 
         public void SetVision(CCTVVisionType type)
         {
-            if (IsLocked == false)
+            if (IsLocked == false && Status == DeviceStatus.On)
             {
                 switch (type)
                 {
@@ -132,7 +133,7 @@ namespace SmartHouse.Domain.CCTVDevice
 
         public void SetMinZoom()
         {
-            if (!IsLocked)
+            if (!IsLocked && Status == DeviceStatus.On)
             {
                 if (Zoom.Equals(MinZoom))
                     throw new ArgumentException("Zoom is already at minimum");
@@ -144,7 +145,7 @@ namespace SmartHouse.Domain.CCTVDevice
 
         public void SetDefaultZoom()
         {
-            if (!IsLocked)
+            if (!IsLocked && Status == DeviceStatus.On)
             {
                 if (Zoom.Equals(DefaultZoom))
                     throw new ArgumentException("Zoom is already at default");
@@ -155,7 +156,7 @@ namespace SmartHouse.Domain.CCTVDevice
 
         public void SetMaxZoom()
         {
-            if (!IsLocked)
+            if (!IsLocked && Status == DeviceStatus.On)
             {
                 if (Zoom.Equals(MaxZoom))
                     throw new ArgumentException("Zoom is already at maximum");
@@ -167,7 +168,7 @@ namespace SmartHouse.Domain.CCTVDevice
 
         public void IncreaseZoom()
         {
-            if (!IsLocked)
+            if (!IsLocked && Status == DeviceStatus.On)
             {
                 Zoom += DefaultJump;
                 LastUpdateTime = DateTime.UtcNow;
@@ -176,7 +177,7 @@ namespace SmartHouse.Domain.CCTVDevice
 
         public void DecreaseZoom()
         {
-            if (!IsLocked)
+            if (!IsLocked && Status == DeviceStatus.On)
             {
                 Zoom -= DefaultJump;
                 LastUpdateTime = DateTime.UtcNow;

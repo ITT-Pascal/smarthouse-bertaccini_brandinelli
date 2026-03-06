@@ -24,10 +24,10 @@ namespace SmartHouse.Application.Devices.CCTVDevice.Dto
                 $"Id: {Id}\n" +
                 $"Name: {Name}\n" +
                 $"Status: {Status}\n" +
+                $"IsLocked: {IsLocked}\n" +
                 $"Pin: {Pin}\n" +
                 $"VisionType: {VisionType}\n" +
                 $"Zoom: {Zoom}\n" +
-                $"IsLocked: {IsLocked}\n" +
                 $"Created: {CreationTime}\n" +
                 $"Last update: {LastUpdateTime}\n";
         }

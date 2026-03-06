@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,12 +26,14 @@ class Program
         while (!exit)
         {
             Console.Clear();
+            Console.Write("\x1b[3J");
 
             Console.WriteLine("1 - Lamps \n" +
                           "2 - CCTVS \n" +
                           "3 - Air Conditioner \n" +
                           "4 - Thermostat \n" +
-                          "5 - Door \n" );
+                          "5 - Door \n" +
+                          "6 - Exit");
 
             Console.Write("Choose an option: ");
             string choice = Console.ReadLine();
@@ -60,7 +63,18 @@ class Program
                     DoorController doorController = new DoorController(doorRepository);
                     doorController.ShowMenu(doorController);
                     break;
+                case "6":
+                    exit = true;
+                    break;
+                default:
+                    Console.WriteLine("Invalid Choice");
+                    break;
             }
         }
+
+        Console.Clear();
+        Console.Write("\x1b[3J");
+        Console.WriteLine("See you next time!");
+        Console.Write("\nPress enter to close the menu....");
     }
 }

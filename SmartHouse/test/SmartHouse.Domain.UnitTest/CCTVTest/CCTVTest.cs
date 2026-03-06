@@ -23,6 +23,8 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
         {
             CCTV newCCTV = new CCTV("Salvatore");
 
+            newCCTV.SwitchOn();
+
             Assert.Throws<ArgumentException>(() => newCCTV.SetVision(CCTVVisionType.DefaultVision));
         }
 
@@ -31,6 +33,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
         {
             CCTV newCCTV = new CCTV("Salvatore");
 
+            newCCTV.SwitchOn();
             newCCTV.SetVision(CCTVVisionType.NightVision);
             newCCTV.SetVision(CCTVVisionType.DefaultVision);
 
@@ -43,6 +46,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
         {
             CCTV newCCTV = new CCTV("Salvatore");
 
+            newCCTV.SwitchOn();
             newCCTV.SetVision(CCTVVisionType.NightVision);
 
             Assert.Throws<ArgumentException>(() => newCCTV.SetVision(CCTVVisionType.NightVision));
@@ -53,6 +57,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
         {
             CCTV newCCTV = new CCTV("Salvatore");
 
+            newCCTV.SwitchOn();
             newCCTV.SetVision(CCTVVisionType.NightVision);
 
             Assert.Equal(CCTVVisionType.NightVision, newCCTV.VisionType);
@@ -64,6 +69,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
         {
             CCTV newCCTV = new CCTV("Salvatore");
 
+            newCCTV.SwitchOn();
             newCCTV.SetVision(CCTVVisionType.ThermalVision);
 
             Assert.Throws<ArgumentException>(() => newCCTV.SetVision(CCTVVisionType.ThermalVision));
@@ -74,6 +80,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
         {
             CCTV newCCTV = new CCTV("Salvatore");
 
+            newCCTV.SwitchOn();
             newCCTV.SetVision(CCTVVisionType.ThermalVision);
 
             Assert.Equal(CCTVVisionType.ThermalVision, newCCTV.VisionType);
@@ -85,6 +92,8 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
         {
             CCTV newCCTV = new CCTV("Salvatore");
 
+            newCCTV.SwitchOn();
+
             Assert.Throws<ArgumentException>(() => newCCTV.SetDefaultZoom());
         }
 
@@ -93,6 +102,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
         {
             CCTV newCCTV = new CCTV("Salvatore");
 
+            newCCTV.SwitchOn();
             newCCTV.SetMaxZoom();
             newCCTV.SetDefaultZoom();
 
@@ -105,6 +115,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
         {
             CCTV newCCTV = new CCTV("Salvatore");
 
+            newCCTV.SwitchOn();
             newCCTV.SetMinZoom();
 
             Assert.Throws<ArgumentException>(() => newCCTV.SetMinZoom());
@@ -115,6 +126,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
         {
             CCTV newCCTV = new CCTV("Salvatore");
 
+            newCCTV.SwitchOn();
             newCCTV.SetMinZoom();
 
             Assert.Equal(Zoom.Create(0.5), newCCTV.Zoom);
@@ -126,6 +138,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
         {
             CCTV newCCTV = new CCTV("Salvatore");
 
+            newCCTV.SwitchOn();
             newCCTV.SetMaxZoom();
 
             Assert.Throws<ArgumentException>(() => newCCTV.SetMaxZoom());
@@ -136,6 +149,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
         {
             CCTV newCCTV = new CCTV("Salvatore");
 
+            newCCTV.SwitchOn();
             newCCTV.SetMaxZoom();
 
             Assert.Equal(Zoom.Create(10.0), newCCTV.Zoom);
@@ -146,6 +160,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
         {
             CCTV newCCTV = new CCTV("Salvatore");
 
+            newCCTV.SwitchOn();
             newCCTV.IncreaseZoom();
 
             Assert.Equal(Zoom.Create(1.1), newCCTV.Zoom);
@@ -156,9 +171,21 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
         {
             CCTV newCCTV = new CCTV("Salvatore");
 
+            newCCTV.SwitchOn();
             newCCTV.DecreaseZoom();
 
             Assert.Equal(Zoom.Create(0.9), newCCTV.Zoom);
+        }
+
+        [Fact]
+
+        public void When_WantToLockButCCTVDoesNotHavePIN_CannotLock()
+        {
+            CCTV newCCTV = new CCTV("Salvatore");
+
+            newCCTV.SwitchOn();
+
+            Assert.Throws<ArgumentException>(() => newCCTV.Lock());
         }
 
         [Fact]
@@ -173,6 +200,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
             CCTV newCCTV = new CCTV("Salvatore", 1234);
 
             newCCTV.Unlock(PIN);
+            newCCTV.SwitchOn();
 
             Assert.Throws<ArgumentException>(() => newCCTV.SetVision(CCTVVisionType.DefaultVision));
         }
@@ -183,6 +211,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
             CCTV newCCTV = new CCTV("Salvatore", 1234);
 
             newCCTV.Unlock(PIN);
+            newCCTV.SwitchOn();
             newCCTV.SetVision(CCTVVisionType.NightVision);
             newCCTV.SetVision(CCTVVisionType.DefaultVision);
 
@@ -196,6 +225,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
             CCTV newCCTV = new CCTV("Salvatore", 1234);
 
             newCCTV.Unlock(PIN);
+            newCCTV.SwitchOn();
             newCCTV.SetVision(CCTVVisionType.NightVision);
 
             Assert.Throws<ArgumentException>(() => newCCTV.SetVision(CCTVVisionType.NightVision));
@@ -207,6 +237,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
             CCTV newCCTV = new CCTV("Salvatore", 1234);
 
             newCCTV.Unlock(PIN);
+            newCCTV.SwitchOn();
             newCCTV.SetVision(CCTVVisionType.NightVision);
 
             Assert.Equal(CCTVVisionType.NightVision, newCCTV.VisionType);
@@ -219,6 +250,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
             CCTV newCCTV = new CCTV("Salvatore", 1234);
 
             newCCTV.Unlock(PIN);
+            newCCTV.SwitchOn();
             newCCTV.SetVision(CCTVVisionType.ThermalVision);
 
             Assert.Throws<ArgumentException>(() => newCCTV.SetVision(CCTVVisionType.ThermalVision));
@@ -230,6 +262,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
             CCTV newCCTV = new CCTV("Salvatore", 1234);
 
             newCCTV.Unlock(PIN);
+            newCCTV.SwitchOn();
             newCCTV.SetVision(CCTVVisionType.ThermalVision);
 
             Assert.Equal(CCTVVisionType.ThermalVision, newCCTV.VisionType);
@@ -242,6 +275,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
             CCTV newCCTV = new CCTV("Salvatore", 1234);
 
             newCCTV.Unlock(PIN);
+            newCCTV.SwitchOn();
 
             Assert.Throws<ArgumentException>(() => newCCTV.SetDefaultZoom());
         }
@@ -252,6 +286,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
             CCTV newCCTV = new CCTV("Salvatore", 1234);
 
             newCCTV.Unlock(PIN);
+            newCCTV.SwitchOn();
             newCCTV.SetMaxZoom();
             newCCTV.SetDefaultZoom();
 
@@ -265,6 +300,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
             CCTV newCCTV = new CCTV("Salvatore", 1234);
 
             newCCTV.Unlock(PIN);
+            newCCTV.SwitchOn();
             newCCTV.SetMinZoom();
 
             Assert.Throws<ArgumentException>(() => newCCTV.SetMinZoom());
@@ -276,6 +312,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
             CCTV newCCTV = new CCTV("Salvatore", 1234);
 
             newCCTV.Unlock(PIN);
+            newCCTV.SwitchOn();
             newCCTV.SetMinZoom();
 
             Assert.Equal(Zoom.Create(0.5), newCCTV.Zoom);
@@ -288,6 +325,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
             CCTV newCCTV = new CCTV("Salvatore", 1234);
 
             newCCTV.Unlock(PIN);
+            newCCTV.SwitchOn();
             newCCTV.SetMaxZoom();
 
             Assert.Throws<ArgumentException>(() => newCCTV.SetMaxZoom());
@@ -299,6 +337,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
             CCTV newCCTV = new CCTV("Salvatore", 1234);
 
             newCCTV.Unlock(PIN);
+            newCCTV.SwitchOn();
             newCCTV.SetMaxZoom();
 
             Assert.Equal(Zoom.Create(10.0), newCCTV.Zoom);
@@ -310,6 +349,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
             CCTV newCCTV = new CCTV("Salvatore", 1234);
 
             newCCTV.Unlock(PIN);
+            newCCTV.SwitchOn();
             newCCTV.IncreaseZoom();
 
             Assert.Equal(Zoom.Create(1.1), newCCTV.Zoom);
@@ -321,6 +361,7 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
             CCTV newCCTV = new CCTV("Salvatore", 1234);
 
             newCCTV.Unlock(PIN);
+            newCCTV.SwitchOn();
             newCCTV.DecreaseZoom();
 
             Assert.Equal(Zoom.Create(0.9), newCCTV.Zoom);
@@ -507,6 +548,53 @@ namespace SmartHouse.Domain.UnitTest.CCTVTest
             newCCTV.Unlock(PIN);
 
             Assert.Throws<ArgumentException>( () => newCCTV.ChangePIN(1233, 4321));
+        }
+
+        [Fact]
+
+        public void When_WnatToSetNightVisionCCTVIsUnlockedButIsOff_CannotSet()
+        {
+            CCTV newCCTV = new CCTV("Salvatore");
+
+            newCCTV.SetVision(CCTVVisionType.NightVision);
+
+            Assert.Equal(CCTVVisionType.DefaultVision, newCCTV.VisionType);
+        }
+
+        [Fact]
+
+        public void When_WnatToSetMaxZoomCCTVIsUnlockedButIsOff_CannotDoIt()
+        {
+            CCTV newCCTV = new CCTV("Salvatore");
+
+            newCCTV.SetMaxZoom();
+
+            Assert.Equal(newCCTV.DefaultZoom, newCCTV.Zoom);
+        }
+
+        [Fact]
+
+        public void When_WnatToSetMinZoomCCTVIsUnlockedButIsOff_CannotDoIt()
+        {
+            CCTV newCCTV = new CCTV("Salvatore");
+
+            newCCTV.SetMinZoom();
+
+            Assert.Equal(newCCTV.DefaultZoom, newCCTV.Zoom);
+        }
+
+        [Fact]
+
+        public void When_WnatToSetDefaultZoomCCTVIsUnlockedButIsOff_CannotDoIt()
+        {
+            CCTV newCCTV = new CCTV("Salvatore");
+
+            newCCTV.SwitchOn();
+            newCCTV.SetMaxZoom();
+            newCCTV.SwitchOff();
+            newCCTV.SetDefaultZoom();
+
+            Assert.Equal(newCCTV.MaxZoom, newCCTV.Zoom);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using SmartHouse.Application.Devices.CCTVDevice.Commands;
 using SmartHouse.Application.Devices.CCTVDevice.Mapper;
 using SmartHouse.Application.Devices.CCTVDevice.Queries;
+using SmartHouse.Application.Devices.Illumination.Lamps.Queries;
 using SmartHouse.Domain.CCTVDevice.Repositories;
 using System;
 using System.Collections.Generic;
@@ -28,195 +29,342 @@ public class CCTVController
             return;
         }
 
-        new AddCCTVCommand(_repository).Execute(name);
+        Console.Write("CCTV Pin: ");
+        if(!int.TryParse(Console.ReadLine(), out int pin))
+        {
+            Console.WriteLine("Invalid Pin");
+            return;
+        }
+
+        new AddCCTVCommand(_repository).Execute(name,pin);
         Console.WriteLine("CCTV added!");
     }
 
     public void RemoveCCTV()
     {
-        Console.Write("CCTV Id: ");
-        string id = Console.ReadLine();
+        Guid id = new Guid(SelectCCTV());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot find selected cctv");
             return;
         }
 
-        new RemoveCCTVCommand(_repository).Execute(new Guid(id));
-        Console.WriteLine("CCTV removed!");
+        try
+        {
+            new RemoveCCTVCommand(_repository).Execute(id);
+            Console.WriteLine("CCTV removed!");
+        }catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
+       
     }
 
     public void ChangePin()
     {
-        Console.Write("CCTV Id: ");
-        string id = Console.ReadLine();
+        Guid id = new Guid(SelectCCTV());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot find selected cctv");
             return;
         }
 
         Console.Write("Current pin: ");
-        string currentpin = Console.ReadLine();
-
-        if (string.IsNullOrWhiteSpace(currentpin))
+        if(!int.TryParse(Console.ReadLine(), out int currentpin))
         {
             Console.WriteLine("Invalid Pin");
             return;
-        }
+        }      
 
         Console.Write("New pin: ");
-        string newpin = Console.ReadLine();
-
-        if (string.IsNullOrWhiteSpace(newpin))
+        if (!int.TryParse(Console.ReadLine(), out int newpin))
         {
             Console.WriteLine("Invalid Pin");
             return;
         }
 
-        new ChangePinCCTVCommand(_repository).Execute(new Guid(id), int.Parse(currentpin), int.Parse(newpin));
-        Console.WriteLine("Pin changed");
+        try
+        {
+            if (new CCTVCheckIsLockedQuery(_repository).Execute(id))
+                Console.WriteLine("CCTV must be unlocked!");
+            else
+            {
+                new ChangePinCCTVCommand(_repository).Execute(id, currentpin, newpin);
+                Console.WriteLine("Pin changed");
+            }
+        }catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     public void DecreaseZoom()
     {
-        Console.Write("CCTV Id: ");
-        string id = Console.ReadLine();
+        Guid id = new Guid(SelectCCTV());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot find selected cctv");
             return;
         }
 
-        new DecreaseCCTVZoomCommand(_repository).Execute(new Guid(id));
-        Console.WriteLine("CCTV zoom decreased");
+        try
+        {
+            if (new CCTVCheckIsLockedQuery(_repository).Execute(id))
+                Console.WriteLine("CCTV must be unlocked and turned on!");
+            else if (!new CCTVCheckIsOnQuery(_repository).Execute(id))
+                Console.WriteLine("CCTV must be turned on!");
+            else
+            {
+                new DecreaseCCTVZoomCommand(_repository).Execute(id);
+                Console.WriteLine("CCTV zoom decreased");
+            }
+        }catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     public void IncreaseZoom()
     {
-        Console.Write("CCTV Id: ");
-        string id = Console.ReadLine();
+        Guid id = new Guid(SelectCCTV());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot find selected cctv");
             return;
         }
 
-        new IncreaseCCTVZoomCommand(_repository).Execute(new Guid(id));
-        Console.WriteLine("CCTV zoom increased");
+        try
+        {
+            if (new CCTVCheckIsLockedQuery(_repository).Execute(id))
+                Console.WriteLine("CCTV must be unlocked and turned on!");
+            else if (!new CCTVCheckIsOnQuery(_repository).Execute(id))
+                Console.WriteLine("CCTV must be turned on!");
+            else
+            {
+                new IncreaseCCTVZoomCommand(_repository).Execute(id);
+                Console.WriteLine("CCTV zoom increased");
+            }
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     public void Lock()
     {
-        Console.Write("CCTV Id: ");
-        string id = Console.ReadLine();
+        Guid id = new Guid(SelectCCTV());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot find selected cctv");
             return;
         }
 
-        new LockCCTVCommand(_repository).Execute(new Guid(id));
-        Console.WriteLine("Locked CCTV");
+        try
+        {
+            if (new CCTVCheckIsLockedQuery(_repository).Execute(id))
+                Console.WriteLine("CCTV is alredy locked!");
+            else if (new CCTVCheckIsOnQuery(_repository).Execute(id))
+                Console.WriteLine("CCTV must be turned off before locking!");
+            else
+            {
+                new LockCCTVCommand(_repository).Execute(id);
+                Console.WriteLine("Locked CCTV");
+            }
+        }catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     public void Unlock()
     {
-        Console.Write("CCTV Id: ");
-        string id = Console.ReadLine();
+        Guid id = new Guid(SelectCCTV());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot find selected cctv");
             return;
         }
 
         Console.Write("Current Pin: ");
-        string currentpin = Console.ReadLine();
-
-        if (string.IsNullOrWhiteSpace(currentpin))
+        if(!int.TryParse(Console.ReadLine(), out int currentpin))
         {
             Console.WriteLine("Invalid Pin");
             return;
         }
 
-        new UnlockCCTVCommand(_repository).Execute(new Guid(id), int.Parse(currentpin));
-        Console.WriteLine("Unlocked CCTV");
+        try
+        {
+            if (!new CCTVCheckIsLockedQuery(_repository).Execute(id))
+                Console.WriteLine("CCTV is alredy unlocked!");
+            else
+            {
+                new UnlockCCTVCommand(_repository).Execute(id, currentpin);
+                Console.WriteLine("Unlocked CCTV");
+            }
+        }catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     public void SetDefaultZoom()
     {
-        Console.Write("CCTV Id: ");
-        string id = Console.ReadLine();
+        Guid id = new Guid(SelectCCTV());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot find selected cctv");
             return;
         }
 
-        new SetCCTVDefaultZoomCommand(_repository).Execute(new Guid(id));
-        Console.WriteLine("Setted CCTV to default zoom");
+        try
+        {
+            if (new CCTVCheckIsLockedQuery(_repository).Execute(id))
+                Console.WriteLine("CCTV must be unlocked and turned on!");
+            else if (!new CCTVCheckIsOnQuery(_repository).Execute(id))
+                Console.WriteLine("CCTV must be turned on!");
+            else if (new CCTVCheckZoomIsDefaultQuery(_repository).Execute(id))
+                Console.WriteLine("Zoom is alredy at it's default value");
+            else
+            {
+                new SetCCTVDefaultZoomCommand(_repository).Execute(id);
+                Console.WriteLine("Set Zoom to it's default value");
+            }
+        }catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     public void SetMaxZoom()
     {
-        Console.Write("CCTV Id: ");
-        string id = Console.ReadLine();
+        Guid id = new Guid(SelectCCTV());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot find selected cctv");
             return;
         }
 
-        new SetCCTVMaxZoomCommand(_repository).Execute(new Guid(id));
-        Console.WriteLine("Setted CCTV to max zoom");
+        try
+        {
+            if (new CCTVCheckIsLockedQuery(_repository).Execute(id))
+                Console.WriteLine("CCTV must be unlocked and turned on!");
+            else if (!new CCTVCheckIsOnQuery(_repository).Execute(id))
+                Console.WriteLine("CCTV must be turned on!");
+            else if (new CCTVCheckZoomIsMaxQuery(_repository).Execute(id))
+                Console.WriteLine("Zoom is alredy at it's maximum value");
+            else
+            {
+                new SetCCTVMaxZoomCommand(_repository).Execute(id);
+                Console.WriteLine("Set Zoom to it's max value");
+            }
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     public void SetMinZoom()
     {
-        Console.Write("CCTV Id: ");
-        string id = Console.ReadLine();
+        Guid id = new Guid(SelectCCTV());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot find selected cctv");
             return;
         }
 
-        new SetCCTVMinZoomCommand(_repository).Execute(new Guid(id));
-        Console.WriteLine("Setted CCTV to min zoom");
+        try
+        {
+            if (new CCTVCheckIsLockedQuery(_repository).Execute(id))
+                Console.WriteLine("CCTV must be unlocked and turned on!");
+            else if (!new CCTVCheckIsOnQuery(_repository).Execute(id))
+                Console.WriteLine("CCTV must be turned on!");
+            else if (new CCTVCheckZoomIsMinQuery(_repository).Execute(id))
+                Console.WriteLine("Zoom is alredy at it's minimum value");
+            else
+            {
+                new SetCCTVMinZoomCommand(_repository).Execute(id);
+                Console.WriteLine("Set Zoom to it's minimum value");
+            }
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     public void SwitchOn()
     {
-        Console.Write("CCTV Id: ");
-        string id = Console.ReadLine();
+        Guid id = new Guid(SelectCCTV());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot find selected cctv");
             return;
         }
 
-        new SwitchCCTVOnCommand(_repository).Execute(new Guid(id));
-        Console.WriteLine("Turned CCTV on");
+        try
+        {
+            if (new CCTVCheckIsLockedQuery(_repository).Execute(id))
+                Console.WriteLine("CCTV must be unlocked!");
+            else if (new CCTVCheckIsOnQuery(_repository).Execute(id))
+                Console.WriteLine("CCTV is alredy on!");
+            else
+            {
+                new SwitchCCTVOnCommand(_repository).Execute(id);
+                Console.WriteLine("Turned CCTV on");
+            }
+        }catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
+    }
+
+    public void SwitchOff()
+    {
+        Guid id = new Guid(SelectCCTV());
+
+        if (id == null)
+        {
+            Console.WriteLine("Cannot find selected cctv");
+            return;
+        }
+
+        try
+        {
+            if (new CCTVCheckIsLockedQuery(_repository).Execute(id))
+                Console.WriteLine("CCTV is alredy off and locked!");
+            else if (!new CCTVCheckIsOnQuery(_repository).Execute(id))
+                Console.WriteLine("CCTV is alredy off!");
+            else
+            {
+                new SwitchCCTVOffCommand(_repository).Execute(id);
+                Console.WriteLine("Turned CCTV off");
+            }
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     public void SetVision()
     {
-        Console.Write("CCTV Id: ");
-        string id = Console.ReadLine();
+        Guid id = new Guid(SelectCCTV());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot find selected cctv");
             return;
         }
 
@@ -229,8 +377,21 @@ public class CCTVController
             return;
         }
 
-        new SetCCTVVisionCommand(_repository).Execute(new Guid(id), VisionTypeMapper.ToDomain(visiontype));
-        Console.WriteLine("Setted CCTV default zoom");
+        try
+        {
+            if (new CCTVCheckIsLockedQuery(_repository).Execute(id))
+                Console.WriteLine("CCTV must be unlocked and turned on!");
+            else if (!new CCTVCheckIsOnQuery(_repository).Execute(id))
+                Console.WriteLine("CCTV must be turned on!");
+            else
+            {
+                new SetCCTVVisionCommand(_repository).Execute(id, visiontype);
+                Console.WriteLine("Set selected vision type!");
+            }
+        }catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     private void ShowCCTVS()
@@ -260,13 +421,15 @@ public class CCTVController
                           "3 - Change pin \n" +
                           "4 - Lock \n" +
                           "5 - Unlock \n" +
-                          "6 - Increase zoom \n" +
-                          "7 - Decrease zoom \n" + 
+                          "6 - Switch On \n" +
+                          "7 - Switch Off \n" + 
                           "8 - Set default zoom \n" + 
                           "9 - Set max zoom \n" +
                           "10 - Set min zoom \n" +
-                          "11 - Switch on \n" + 
-                          "12 - Set vision ");
+                          "11 - Increase zoom \n" + 
+                          "12 - Decrease zoom \n" +
+                          "13 - Set vision \n" +
+                          "14 - Do back to device selection menu");
     }
 
     public void ShowMenu(CCTVController controller)
@@ -289,10 +452,10 @@ public class CCTVController
             switch (choice)
             {
                 case "1":
-                    controller.AddDoor();
+                    controller.AddCCTV();
                     break;
                 case "2":
-                    controller.RemoveDoor();
+                    controller.RemoveCCTV();
                     break;
                 case "3":
                     controller.ChangePin();
@@ -304,15 +467,73 @@ public class CCTVController
                     controller.Unlock();
                     break;
                 case "6":
-                    controller.Open();
+                    controller.SwitchOn();
                     break;
                 case "7":
-                    controller.Close();
+                    controller.SwitchOff();
+                    break;
+                case "8":
+                    controller.SetDefaultZoom();
+                    break;
+                case "9":
+                    controller.SetMaxZoom();
+                    break;
+                case "10":
+                    controller.SetMinZoom();
+                    break;
+                case "11":
+                    controller.IncreaseZoom();
+                    break;
+                case "12":
+                    controller.DecreaseZoom();
+                    break;
+                case "13":
+                    controller.SetVision();
+                    break;
+                case "14":
+                    exit = true;
+                    break;
+                default:
+                    Console.WriteLine("Invalid Choice");
                     break;
             }
 
             Console.WriteLine("Press Enter To go back to the menu");
             Console.ReadLine();
+        }
+    }
+
+    private string SelectCCTV()
+    {
+        var cctvs = new CCTVGetAllQuery(_repository).Execute();
+
+        if (cctvs.Count == 0)
+        {
+            Console.WriteLine("No cctvs available");
+            return null;
+        }
+
+        Console.Write("CCTV number: ");
+        if (!int.TryParse(Console.ReadLine(), out int num))
+        {
+            Console.WriteLine("Invalid number");
+            return null;
+        }
+
+        if (num < 1 || num > cctvs.Count)
+        {
+            Console.WriteLine("There is no corresponding cctv");
+            return null;
+        }
+
+        try
+        {
+            return cctvs[num - 1].Id.ToString();
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+            return null;
         }
     }
 }

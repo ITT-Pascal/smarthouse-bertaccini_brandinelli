@@ -17,9 +17,9 @@ namespace SmartHouse.Application.Devices.CCTVDevice.Commands
             _CCTVRepository = CCTVRepository;
         }
 
-        public void Execute(string name)
+        public void Execute(string name, int pin)
         {
-            _CCTVRepository.Add(new CCTV(name));
+            _CCTVRepository.Add(new CCTV(name,pin));
         }
     }
 }

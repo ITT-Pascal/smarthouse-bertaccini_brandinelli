@@ -221,7 +221,8 @@ public class LampController
                           "4 - Switch Off \n" +
                           "5 - Brighten \n" +
                           "6 - Dimmer \n" +
-                          "7 - Change brightness ");
+                          "7 - Change brightness \n" +
+                          "8 - Go back to device selection");
     }
 
     public void ShowMenu(LampController controller)
@@ -262,6 +263,12 @@ public class LampController
                     break;
                 case "7":
                     controller.ChangeBrightness();
+                    break;
+                case "8":
+                    exit = true;
+                    break;
+                default:
+                    Console.WriteLine("Invalid Choice");
                     break;
             }
 

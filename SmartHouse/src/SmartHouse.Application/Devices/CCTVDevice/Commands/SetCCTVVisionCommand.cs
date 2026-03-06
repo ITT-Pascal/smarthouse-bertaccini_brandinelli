@@ -1,4 +1,5 @@
-﻿using SmartHouse.Domain.Abstractions;
+﻿using SmartHouse.Application.Devices.CCTVDevice.Mapper;
+using SmartHouse.Domain.Abstractions;
 using SmartHouse.Domain.CCTVDevice;
 using SmartHouse.Domain.CCTVDevice.Repositories;
 using System;
@@ -18,12 +19,12 @@ namespace SmartHouse.Application.Devices.CCTVDevice.Commands
             _CCTVRepository = CCTVRepository;
         }
 
-        public void Execute(Guid id, CCTVVisionType visionType)
+        public void Execute(Guid id, string visionType)
         {
             CCTV cctv = _CCTVRepository.GetById(id);
             if (cctv != null)
             {
-                cctv.SetVision(visionType);
+                cctv.SetVision(VisionTypeMapper.ToDomain(visionType));
                 _CCTVRepository.Update(cctv);
             }
         }
