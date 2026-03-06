@@ -19,9 +19,9 @@ namespace SmartHouse.Application.Devices.CCTVDevice.Mapper
     {
         
 
-        public static CCTVDto ToDto(CCTV cctv)
+        public static Dto.CCTVDto ToDto(Domain.CCTVDevice.CCTV cctv)
         {
-            return new CCTVDto
+            return new Dto.CCTVDto
             {
                 Id = cctv.Id,
                 Name = cctv.Name._name,
@@ -30,14 +30,14 @@ namespace SmartHouse.Application.Devices.CCTVDevice.Mapper
                 LastUpdateTime = cctv.LastUpdateTime,
                 Pin = cctv.PIN.PIN,
                 IsLocked = cctv.IsLocked,
-                VisionType = cctv.VisionType.ToString(),
+                VisionType = VisionTypeMapper.ToDto(cctv.VisionType),
                 Zoom = cctv.Zoom._zoom,
             };
         }
 
-        public static CCTV ToDomain(CCTVDto dto)
+        public static Domain.CCTVDevice.CCTV ToDomain(Dto.CCTVDto dto)
         {
-            return new CCTV(
+            return new Domain.CCTVDevice.CCTV(
                 dto.Id,
                 dto.Name,
                 DeviceStatusMapper.ToDomain(dto.Status),

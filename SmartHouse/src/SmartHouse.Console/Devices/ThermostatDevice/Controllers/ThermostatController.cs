@@ -224,7 +224,7 @@ public class ThermostatController
                           "5 - Increase temperature \n" +
                           "6 - Decrease temperature \n" +
                           "7 - Set temperature \n" +
-                          "8 - Go back to device selection");
+                          "8 - Go back to device selection menu");
     }
 
     public void ShowMenu(ThermostatController controller)

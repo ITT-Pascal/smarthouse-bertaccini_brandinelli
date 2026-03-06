@@ -1,4 +1,5 @@
-﻿using SmartHouse.Domain.CCTVDevice;
+﻿using SmartHouse.Application.Devices.CCTVDevice.Dto;
+using SmartHouse.Domain.CCTVDevice;
 using SmartHouse.Domain.CCTVDevice.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,23 +18,23 @@ namespace SmartHouse.Infrastructure.Repositories.Devices.CCTVDevice.InMemory
         {
             _cctvs = new List<CCTV>
             {
-                new CCTV("Stefano", 1234),
-                new CCTV("Pasquale", 4321),
-                new CCTV("Giovanni", 2143)
+                new Domain.CCTVDevice.CCTV("Stefano", 1234),
+                new Domain.CCTVDevice.CCTV("Pasquale", 4321),
+                new Domain.CCTVDevice.CCTV("Giovanni", 2143)
             };
         }
 
-        public List<CCTV> GetAll()
+        public List<Domain.CCTVDevice.CCTV> GetAll()
         {
             return _cctvs;
         }
 
-        public CCTV GetById(Guid id)
+        public Domain.CCTVDevice.CCTV GetById(Guid id)
         {
             return _cctvs.FirstOrDefault(cctv => cctv.Id == id);
         }
 
-        public void Add(CCTV cctv)
+        public void Add(Domain.CCTVDevice.CCTV cctv)
         {
             if (cctv != null)
                 _cctvs.Add(cctv);
@@ -49,7 +50,7 @@ namespace SmartHouse.Infrastructure.Repositories.Devices.CCTVDevice.InMemory
                 _cctvs.Remove(cctv);
         }
 
-        public void Update(CCTV cctv)
+        public void Update(Domain.CCTVDevice.CCTV cctv)
         {
             //To do
         }

@@ -71,6 +71,12 @@ public class CCTVController
             return;
         }
 
+        if (new CCTVCheckIsLockedQuery(_repository).Execute(id))
+        {
+            Console.WriteLine("CCTV must be unlocked!");
+            return;
+        }
+
         Console.Write("Current pin: ");
         if(!int.TryParse(Console.ReadLine(), out int currentpin))
         {
@@ -87,13 +93,8 @@ public class CCTVController
 
         try
         {
-            if (new CCTVCheckIsLockedQuery(_repository).Execute(id))
-                Console.WriteLine("CCTV must be unlocked!");
-            else
-            {
                 new ChangePinCCTVCommand(_repository).Execute(id, currentpin, newpin);
                 Console.WriteLine("Pin changed");
-            }
         }catch (ArgumentException ex)
         {
             Console.WriteLine($"ERROR: {ex.Message}");
@@ -192,6 +193,12 @@ public class CCTVController
             return;
         }
 
+        if (!new CCTVCheckIsLockedQuery(_repository).Execute(id))
+        {
+            Console.WriteLine("CCTV is alredy unlocked!");
+            return;
+        }
+
         Console.Write("Current Pin: ");
         if(!int.TryParse(Console.ReadLine(), out int currentpin))
         {
@@ -200,14 +207,10 @@ public class CCTVController
         }
 
         try
-        {
-            if (!new CCTVCheckIsLockedQuery(_repository).Execute(id))
-                Console.WriteLine("CCTV is alredy unlocked!");
-            else
-            {
+        {            
                 new UnlockCCTVCommand(_repository).Execute(id, currentpin);
                 Console.WriteLine("Unlocked CCTV");
-            }
+            
         }catch (ArgumentException ex)
         {
             Console.WriteLine($"ERROR: {ex.Message}");
@@ -368,14 +371,11 @@ public class CCTVController
             return;
         }
 
-        Console.Write("Vision Type: ");
-        string visiontype = Console.ReadLine();
-
-        if (string.IsNullOrWhiteSpace(visiontype))
-        {
-            Console.WriteLine("Invalid vision type");
-            return;
-        }
+        Console.Write("Select: \n" +
+            "1 - Default vision \n" +
+            "2 - Night vision \n" +
+            "3 - Thermal vision \n");
+        string choice = Console.ReadLine();
 
         try
         {
@@ -385,8 +385,10 @@ public class CCTVController
                 Console.WriteLine("CCTV must be turned on!");
             else
             {
-                new SetCCTVVisionCommand(_repository).Execute(id, visiontype);
-                Console.WriteLine("Set selected vision type!");
+                if (new SetCCTVVisionCommand(_repository).Execute(id, choice))
+                    Console.WriteLine("Set selected vision type!");
+                else
+                    Console.WriteLine();
             }
         }catch (ArgumentException ex)
         {
@@ -429,7 +431,7 @@ public class CCTVController
                           "11 - Increase zoom \n" + 
                           "12 - Decrease zoom \n" +
                           "13 - Set vision \n" +
-                          "14 - Do back to device selection menu");
+                          "14 - Go back to device selection menu");
     }
 
     public void ShowMenu(CCTVController controller)

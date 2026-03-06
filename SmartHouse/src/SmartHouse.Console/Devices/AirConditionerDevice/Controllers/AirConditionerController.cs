@@ -34,92 +34,211 @@ public class AirConditionerController
 
     public void RemoveAirConditioner()
     {
-        Console.Write("AirConditioner Id: ");
-        string id = Console.ReadLine();
+        Guid id = new Guid(SelectAirConditioner());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if(id == null)
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot find selected air conditioner");
             return;
         }
 
-        new RemoveAirConditionerCommand(_repository).Execute(new Guid(id));
-        Console.WriteLine("AirConditioner removed!");
+        try
+        {
+            new RemoveAirConditionerCommand(_repository).Execute(id);
+            Console.WriteLine("AirConditioner removed!");
+        }catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
+    }
+
+    public void SwitchOn()
+    {
+        Guid id = new Guid(SelectAirConditioner());
+
+        if (id == null)
+        {
+            Console.WriteLine("Cannot find selected air conditioner");
+            return;
+        }
+
+        try
+        {
+            if (new AirConditionerCheckIsOnQuery(_repository).Execute(id))
+                Console.WriteLine("Air conditioner is alredy on!");
+            else
+            {
+                new AirConditionerSwitchOnCommand(_repository).Execute(id);
+                Console.WriteLine("Air conditioner turned on!");
+            }
+        }catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
+    }
+
+    public void SwitchOff()
+    {
+        Guid id = new Guid(SelectAirConditioner());
+
+        if (id == null)
+        {
+            Console.WriteLine("Cannot find selected air conditioner");
+            return;
+        }
+
+        try
+        {
+            if (!new AirConditionerCheckIsOnQuery(_repository).Execute(id))
+                Console.WriteLine("Air conditioner is alredy off!");
+            else
+            {
+                new AirConditionerSwitchOnCommand(_repository).Execute(id);
+                Console.WriteLine("Air conditioner turned off!");
+            }
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     public void IncreaseFanSpeed()
     {
-        Console.Write("AirConditioner Id: ");
-        string id = Console.ReadLine();
+        Guid id = new Guid(SelectAirConditioner());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot find selected air conditioner");
             return;
         }
 
-        new AirConditionerIncreaseFanSpeedCommand(_repository).Execute(new Guid(id));
-        Console.WriteLine("Increased airConditioner fan speed");
+        try
+        {
+            if (!new AirConditionerCheckIsOnQuery(_repository).Execute(id))
+                Console.WriteLine("Air conditioner must be turned on!");
+            else if (new AirConditionerCheckFanSpeedHighQuery(_repository).Execute(id))
+                Console.WriteLine("Fan speed is alredy at it's maximum");
+            else
+            {
+                new AirConditionerIncreaseFanSpeedCommand(_repository).Execute(id);
+                Console.WriteLine("Increased air conditioner fan speed");
+            }
+        }catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     public void DecreaseFanSpeed()
     {
-        Console.Write("AirConditioner Id: ");
-        string id = Console.ReadLine();
+        Guid id = new Guid(SelectAirConditioner());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot find selected air conditioner");
             return;
         }
 
-        new AirConditionerDecreaseFanSpeedCommand(_repository).Execute(new Guid(id));
-        Console.WriteLine("Decreased airConditioner fan speed");
+        try
+        {
+            if (!new AirConditionerCheckIsOnQuery(_repository).Execute(id))
+                Console.WriteLine("Air conditioner must be turned on!");
+            else if (new AirConditionerCheckFanSpeedLowQuery(_repository).Execute(id))
+                Console.WriteLine("Fan speed is alredy at it's minimum");
+            else
+            {
+                new AirConditionerDecreaseFanSpeedCommand(_repository).Execute(id);
+                Console.WriteLine("Decreased air conditioner fan speed");
+            }
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     public void SetFanSpeedHigh()
     {
-        Console.Write("AirConditioner Id: ");
-        string id = Console.ReadLine();
+        Guid id = new Guid(SelectAirConditioner());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot find selected air conditioner");
             return;
         }
 
-        new AirConditionerSetFanSpeedHigh(_repository).Execute(new Guid(id));
-        Console.WriteLine("Setted airConditioner fan speed in high");
+        try
+        {
+            if (!new AirConditionerCheckIsOnQuery(_repository).Execute(id))
+                Console.WriteLine("Air conditioner must be turned on!");
+            else if (new AirConditionerCheckFanSpeedHighQuery(_repository).Execute(id))
+                Console.WriteLine("Fan speed is alredy set to high!");
+            else
+            {
+                new AirConditionerSetFanSpeedHigh(_repository).Execute(id);
+                Console.WriteLine("Set air conditioner fan speed to high");
+            }
+        }catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     public void SetFanSpeedMedium()
     {
-        Console.Write("AirConditioner Id: ");
-        string id = Console.ReadLine();
+        Guid id = new Guid(SelectAirConditioner());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot find selected air conditioner");
             return;
         }
 
-        new AirConditionerSetFanSpeedMedium(_repository).Execute(new Guid(id));
-        Console.WriteLine("Setted airConditioner fan speed in medium");
+        try
+        {
+            if (!new AirConditionerCheckIsOnQuery(_repository).Execute(id))
+                Console.WriteLine("Air conditioner must be turned on!");
+            else if (new AirConditionerCheckFanSpeedMediumQuery(_repository).Execute(id))
+                Console.WriteLine("Fan speed is alredy set to medium!");
+            else
+            {
+                new AirConditionerSetFanSpeedMedium(_repository).Execute(id);
+                Console.WriteLine("Set air conditioner fan speed to medium");
+            }
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     public void SetFanSpeedLow()
     {
-        Console.Write("AirConditioner Id: ");
-        string id = Console.ReadLine();
+        Guid id = new Guid(SelectAirConditioner());
 
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == null)
         {
-            Console.WriteLine("Invalid Id");
+            Console.WriteLine("Cannot find selected air conditioner");
             return;
         }
 
-        new AirConditionerSetFanSpeedLow(_repository).Execute(new Guid(id));
-        Console.WriteLine("Setted airConditioner fan speed in low");
+        try
+        {
+            if (!new AirConditionerCheckIsOnQuery(_repository).Execute(id))
+                Console.WriteLine("Air conditioner must be turned on!");
+            else if (new AirConditionerCheckFanSpeedLowQuery(_repository).Execute(id))
+                Console.WriteLine("Fan speed is alredy set to low!");
+            else
+            {
+                new AirConditionerSetFanSpeedLow(_repository).Execute(id);
+                Console.WriteLine("Set air conditioner fan speed to low");
+            }
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+        }
     }
 
     private void ShowAirConditioners()
@@ -146,11 +265,14 @@ public class AirConditionerController
     {
         Console.WriteLine("1 - Add air conditioner \n" +
                           "2 - Remove air conditioner \n" +
-                          "3 - Increase fan speed \n" +
-                          "4 - Decrease fan speed \n" +
-                          "5 - Set fan speed high \n" +
-                          "6 - Set fan speed medium \n" +
-                          "7 - Set fan speed low ");
+                          "3 - Switch On \n" +
+                          "4 - Switch Off \n" +
+                          "5 - Increase fan speed \n" +
+                          "6 - Decrease fan speed \n" +
+                          "7 - Set fan speed high \n" +
+                          "8 - Set fan speed medium \n" +
+                          "9 - Set fan speed low \n" +
+                          "10 - Go back to device selection menu");
     }
 
     public void ShowMenu(AirConditionerController controller)
@@ -179,19 +301,31 @@ public class AirConditionerController
                     controller.RemoveAirConditioner();
                     break;
                 case "3":
-                    controller.IncreaseFanSpeed();
+                    controller.SwitchOn();
                     break;
                 case "4":
-                    controller.DecreaseFanSpeed();
+                    controller.SwitchOff();
                     break;
                 case "5":
-                    controller.SetFanSpeedHigh();
+                    controller.IncreaseFanSpeed();
                     break;
                 case "6":
-                    controller.SetFanSpeedMedium();
+                    controller.DecreaseFanSpeed();
                     break;
                 case "7":
+                    controller.SetFanSpeedHigh();
+                    break;
+                case "8":
                     controller.SetFanSpeedMedium();
+                    break;
+                case "9":
+                    controller.SetFanSpeedLow();
+                    break;
+                case "10":
+                    exit = true;
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice");
                     break;
             }
 

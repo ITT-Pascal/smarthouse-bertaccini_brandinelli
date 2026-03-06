@@ -222,7 +222,7 @@ public class LampController
                           "5 - Brighten \n" +
                           "6 - Dimmer \n" +
                           "7 - Change brightness \n" +
-                          "8 - Go back to device selection");
+                          "8 - Go back to device selection menu");
     }
 
     public void ShowMenu(LampController controller)

@@ -19,14 +19,33 @@ namespace SmartHouse.Application.Devices.CCTVDevice.Commands
             _CCTVRepository = CCTVRepository;
         }
 
-        public void Execute(Guid id, string visionType)
+        public bool Execute(Guid id, string visionchoice)
         {
             CCTV cctv = _CCTVRepository.GetById(id);
+            CCTVVisionType visiontype;
+            switch (visionchoice)
+            {
+                case "1":
+                    visiontype = CCTVVisionType.DefaultVision;
+                    break;
+                case "2":
+                    visiontype = CCTVVisionType.NightVision;
+                    break;
+                case "3":
+                    visiontype = CCTVVisionType.ThermalVision;
+                    break;
+                default:
+                    Console.WriteLine("Invalid vision type");
+                    return false;
+                    break;
+            }
             if (cctv != null)
             {
-                cctv.SetVision(VisionTypeMapper.ToDomain(visionType));
+                cctv.SetVision(visiontype);
                 _CCTVRepository.Update(cctv);
+                return true;
             }
+            return false;
         }
     }
 }
