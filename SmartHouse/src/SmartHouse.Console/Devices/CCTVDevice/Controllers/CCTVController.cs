@@ -4,6 +4,7 @@ using SmartHouse.Application.Devices.CCTVDevice.Queries;
 using SmartHouse.Domain.CCTVDevice.Repositories;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -289,10 +290,10 @@ public class CCTVController
             switch (choice)
             {
                 case "1":
-                    controller.AddDoor();
+                    controller.AddCCTV();
                     break;
                 case "2":
-                    controller.RemoveDoor();
+                    controller.RemoveCCTV();
                     break;
                 case "3":
                     controller.ChangePin();
@@ -304,10 +305,25 @@ public class CCTVController
                     controller.Unlock();
                     break;
                 case "6":
-                    controller.Open();
+                    controller.IncreaseZoom();
                     break;
                 case "7":
-                    controller.Close();
+                    controller.DecreaseZoom();
+                    break;
+                case "8":
+                    controller.SetDefaultZoom();
+                    break;
+                case "9":
+                    controller.SetMaxZoom();
+                    break;
+                case "10":
+                    controller.SetMinZoom();
+                    break;
+                case "11":
+                    controller.SwitchOn();
+                    break;
+                case "12":
+                    controller.SetVision();
                     break;
             }
 

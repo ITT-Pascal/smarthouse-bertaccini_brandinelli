@@ -159,7 +159,7 @@ public class ThermostatController
                 Console.WriteLine("Temperature is alredy at it's minimum");
             else
             {
-                new ThermostatDecreaseTemperatureCommand(_repository).Execute(new Guid(id));
+                new ThermostatDecreaseTemperatureCommand(_repository).Execute(id);
                 Console.WriteLine("Temperature Decreased!");
             }          
         }catch (ArgumentException ex)
@@ -186,7 +186,7 @@ public class ThermostatController
                 Console.WriteLine("Temperature is alredy at it's maximum");
             else
             {
-                new ThermostatIncreaseTemperatureCommand(_repository).Execute(new Guid(id));
+                new ThermostatIncreaseTemperatureCommand(_repository).Execute(id);
                 Console.WriteLine("Temperature Increased!");
             }          
         }catch(ArgumentException ex)

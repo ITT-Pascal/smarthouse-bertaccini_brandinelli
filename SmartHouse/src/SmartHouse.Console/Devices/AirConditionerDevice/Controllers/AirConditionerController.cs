@@ -16,27 +16,7 @@ public class AirConditionerController
         _repository = repos;
     }
 
-    public void ShowAirConditioners()
-    {
-        var airconditioners = new AirConditionerGetAllQuery(_repository).Execute();
-
-        Console.WriteLine("AirConditioners:");
-        Console.WriteLine("------------------------------");
-
-        if (airconditioners.Count == 0)
-        {
-            Console.WriteLine("No airconditioners available");
-            return;
-        }
-
-        for (int i = 0; i < airconditioners.Count; i++)
-        {
-            var a = airconditioners[i];
-            Console.WriteLine($"{i + 1}. {a.Name}\n{a}");
-        }
-    }
-
-    public void AddDoor()
+    public void AddAirConditioner()
     {
         Console.Write("AirConditioner name: ");
         string name = Console.ReadLine();
@@ -51,7 +31,7 @@ public class AirConditionerController
         Console.WriteLine("AirConditioner added!");
     }
 
-    public void RemoveLamp()
+    public void RemoveAirConditioner()
     {
         Console.Write("AirConditioner Id: ");
         string id = Console.ReadLine();
@@ -139,5 +119,83 @@ public class AirConditionerController
 
         new AirConditionerSetFanSpeedLow(_repository).Execute(new Guid(id));
         Console.WriteLine("Setted airConditioner fan speed in low");
+    }
+
+    private void ShowAirConditioners()
+    {
+        var airconditioners = new AirConditionerGetAllQuery(_repository).Execute();
+
+        Console.WriteLine("AirConditioners:");
+        Console.WriteLine("------------------------------");
+
+        if (airconditioners.Count == 0)
+        {
+            Console.WriteLine("No airconditioners available");
+            return;
+        }
+
+        for (int i = 0; i < airconditioners.Count; i++)
+        {
+            var a = airconditioners[i];
+            Console.WriteLine($"{i + 1}. {a.Name}\n{a}");
+        }
+    }
+
+    private void ShowChoices()
+    {
+        Console.WriteLine("1 - Add air conditioner \n" +
+                          "2 - Remove air conditioner \n" +
+                          "3 - Increase fan speed \n" +
+                          "4 - Decrease fan speed \n" +
+                          "5 - Set fan speed high \n" +
+                          "6 - Set fan speed medium \n" +
+                          "7 - Set fan speed low ");
+    }
+
+    public void ShowMenu(AirConditionerController controller)
+    {
+
+        bool exit = false;
+
+        while (!exit)
+        {
+            Console.Clear();
+            Console.Write("\x1b[3J");
+            controller.ShowAirConditioners();
+            controller.ShowChoices();
+
+            Console.Write("Choose an option: ");
+            string choice = Console.ReadLine();
+
+            Console.WriteLine();
+
+            switch (choice)
+            {
+                case "1":
+                    controller.AddAirConditioner();
+                    break;
+                case "2":
+                    controller.RemoveAirConditioner();
+                    break;
+                case "3":
+                    controller.IncreaseFanSpeed();
+                    break;
+                case "4":
+                    controller.DecreaseFanSpeed();
+                    break;
+                case "5":
+                    controller.SetFanSpeedHigh();
+                    break;
+                case "6":
+                    controller.SetFanSpeedMedium();
+                    break;
+                case "7":
+                    controller.SetFanSpeedMedium();
+                    break;
+            }
+
+            Console.WriteLine("Press Enter To go back to the menu");
+            Console.ReadLine();
+        }
     }
 }
