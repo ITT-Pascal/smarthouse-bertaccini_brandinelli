@@ -10,6 +10,8 @@ namespace SmartHouse.Domain.TemperatureDevice
     {
 
         public double _temp { get; init; }
+        private const double MinTemp = 15;
+        private const double MaxTemp = 30;
 
         private Temperature(double value)
         {
@@ -18,7 +20,7 @@ namespace SmartHouse.Domain.TemperatureDevice
 
         public static Temperature Create(double value)
         {
-            return new Temperature(Math.Clamp(value, Thermostat.MinTemperature, Thermostat.MaxTemperature));
+            return new Temperature(Math.Clamp(value, MinTemp,MaxTemp));
         }
 
         public static Temperature operator +(Temperature t, double d)

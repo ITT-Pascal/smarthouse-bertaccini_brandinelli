@@ -1,4 +1,6 @@
-﻿using SmartHouse.Domain.IlluminationDevice.Repositories;
+﻿using SmartHouse.Domain.CCTVDevice.Repositories;
+using SmartHouse.Domain.IlluminationDevice.Repositories;
+using SmartHouse.Infrastructure.Repositories.Devices.CCTVDevice.InMemory;
 using SmartHouse.Infrastructure.Repositories.Devices.Illumination.Lamps.InMemory;
 using System;
 using System.Collections.Generic;
@@ -11,50 +13,34 @@ class Program
 {
     static void Main()
     {
-        ILampRepository repository = new InMemoryLampRepository();
-        LampController controller = new LampController(repository);
 
         bool exit = false;
 
         while (!exit)
         {
             Console.Clear();
-            Console.Write("\x1b[3J");
-            controller.ShowLamps();
-            controller.ShowMenu();
+
+            Console.WriteLine("1 - Lamps \n" +
+                          "2 - CCTVS \n" +
+                          "3 - Air Conditioner \n" +
+                          "4 - Thermostat \n" +
+                          "5 - Door \n" );
 
             Console.Write("Choose an option: ");
             string choice = Console.ReadLine();
 
-            Console.WriteLine();
-
             switch (choice)
             {
                 case "1":
-                    controller.AddLamp();
+                    ILampRepository lampRepository = new InMemoryLampRepository();
+                    LampController lampController = new LampController(lampRepository);
+                    lampController.ShowMenu(lampController);
                     break;
                 case "2":
-                    controller.RemoveLamp();
-                    break;
-                case "3":
-                    controller.SwitchOn();
-                    break;
-                case "4":
-                    controller.SwitchOff();
-                    break;
-                case "5":
-                    controller.Brighten();
-                    break;
-                case "6":
-                    controller.Dimmer();
-                    break;
-                case "7":
-                    controller.ChangeBrightness();
+                    ICCTVRepository cctvRepository = new InMemoryCCTVRepository();
+                    CCTVController cctvController = new CCTVController(cctvRepository);
                     break;
             }
-
-            Console.WriteLine("Press Enter To go back to the menu");
-            Console.ReadLine();
         }
     }
 }
