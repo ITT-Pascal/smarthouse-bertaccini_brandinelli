@@ -1,7 +1,6 @@
 ﻿using SmartHouse.Application.Devices.Abstraction.Mapper;
 using SmartHouse.Application.Devices.DoorDevice.Commands;
 using SmartHouse.Application.Devices.DoorDevice.Queries;
-using SmartHouse.Application.Devices.Illumination.Lamps.Queries;
 using SmartHouse.Domain.Abstractions;
 using SmartHouse.Domain.DoorsDevice.Repositories;
 using System;
@@ -18,28 +17,6 @@ public class DoorController
     {
         _repository = repos;
     }
-
-    public void ShowDoors()
-    {
-        var doors = new DoorGetAllQuery(_repository).Execute();
-
-        Console.WriteLine("Doors:");
-        Console.WriteLine("------------------------------");
-
-        if (doors.Count == 0)
-        {
-            Console.WriteLine("No doors available");
-            return;
-        }
-
-        for (int i = 0; i < doors.Count; i++)
-        {
-            var d = doors[i];
-            Console.WriteLine($"{i + 1}. {d.Name}\n{d}");
-        }
-    }
-
-    public void ShowMenu() { }
 
     public void AddDoor()
     {
@@ -65,7 +42,7 @@ public class DoorController
         Console.WriteLine("Door added!");
     }
 
-    public void RemoveLamp()
+    public void RemoveDoor()
     {
         Console.Write("Door Id: ");
         string id = Console.ReadLine();
@@ -206,6 +183,84 @@ public class DoorController
         }catch (ArgumentException ex)
         {
             Console.WriteLine($"ERROR: {ex.Message}");
+        }
+    }
+
+    private void ShowDoors()
+    {
+        var doors = new DoorGetAllQuery(_repository).Execute();
+
+        Console.WriteLine("Doors:");
+        Console.WriteLine("------------------------------");
+
+        if (doors.Count == 0)
+        {
+            Console.WriteLine("No doors available");
+            return;
+        }
+
+        for (int i = 0; i < doors.Count; i++)
+        {
+            var d = doors[i];
+            Console.WriteLine($"{i + 1}. {d.Name}\n{d}");
+        }
+    }
+
+    private void ShowChoices()
+    {
+        Console.WriteLine("1 - Add door \n" +
+                          "2 - Remove door \n" +
+                          "3 - Change pin \n" +
+                          "4 - Lock \n" +
+                          "5 - Unlock \n" +
+                          "6 - Open \n" +
+                          "7 - Close ");
+    }
+
+    public void ShowMenu(DoorController controller)
+    {
+
+        bool exit = false;
+
+        while (!exit)
+        {
+            Console.Clear();
+            Console.Write("\x1b[3J");
+            controller.ShowDoors();
+            controller.ShowChoices();
+
+            Console.Write("Choose an option: ");
+            string choice = Console.ReadLine();
+
+            Console.WriteLine();
+
+            switch (choice)
+            {
+                case "1":
+                    controller.AddDoor();
+                    break;
+                case "2":
+                    controller.RemoveDoor();
+                    break;
+                case "3":
+                    controller.ChangePin();
+                    break;
+                case "4":
+                    controller.Lock();
+                    break;
+                case "5":
+                    controller.Unlock();
+                    break;
+                case "6":
+                    controller.Open();
+                    break;
+                case "7":
+                    controller.Close();
+                    break;
+            }
+
+            Console.WriteLine("Press Enter To go back to the menu");
+            Console.ReadLine();
         }
     }
 
