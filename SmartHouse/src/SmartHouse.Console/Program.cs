@@ -48,10 +48,12 @@ class Program
                 case "2":
                     ICCTVRepository cctvRepository = new InMemoryCCTVRepository();
                     CCTVController cctvController = new CCTVController(cctvRepository);
+                    cctvController.ShowMenu(cctvController);
                     break;
                 case "3":
                     IAirConditionerRepository airConditionerRepository = new InMemoryAirConditionerRepository();
                     AirConditionerController airConditionerController = new AirConditionerController(airConditionerRepository);
+                    airConditionerController.ShowMenu(airConditionerController);
                     break;
                 case "4":
                     IThermostatRepository thermostatRepository = new InMemoryThermostatRepository();
