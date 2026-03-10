@@ -430,7 +430,8 @@ public class CCTVController
 
     private void ShowChoices()
     {
-        Console.WriteLine("1 - Add CCTV \n" +
+        Console.WriteLine("0 - Go back to device selection menu \n" +
+                          "1 - Add CCTV \n" +
                           "2 - Remove CCTV \n" +
                           "3 - Change pin \n" +
                           "4 - Lock \n" +
@@ -442,8 +443,7 @@ public class CCTVController
                           "10 - Set min zoom \n" +
                           "11 - Increase zoom \n" + 
                           "12 - Decrease zoom \n" +
-                          "13 - Set vision \n" +
-                          "14 - Go back to device selection menu");
+                          "13 - Set vision \n");
     }
 
     public void ShowMenu(CCTVController controller)
@@ -465,6 +465,9 @@ public class CCTVController
 
             switch (choice)
             {
+                case "0":
+                    exit = true;
+                    break;
                 case "1":
                     controller.AddCCTV();
                     break;
@@ -503,9 +506,6 @@ public class CCTVController
                     break;
                 case "13":
                     controller.SetVision();
-                    break;
-                case "14":
-                    exit = true;
                     break;
                 default:
                     Console.WriteLine("Invalid Choice");

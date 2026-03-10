@@ -271,7 +271,8 @@ public class AirConditionerController
 
     private void ShowChoices()
     {
-        Console.WriteLine("1 - Add air conditioner \n" +
+        Console.WriteLine("0 - Go back to device selection menu \n" +
+                          "1 - Add air conditioner \n" +
                           "2 - Remove air conditioner \n" +
                           "3 - Switch On \n" +
                           "4 - Switch Off \n" +
@@ -279,8 +280,7 @@ public class AirConditionerController
                           "6 - Decrease fan speed \n" +
                           "7 - Set fan speed high \n" +
                           "8 - Set fan speed medium \n" +
-                          "9 - Set fan speed low \n" +
-                          "10 - Go back to device selection menu");
+                          "9 - Set fan speed low \n");
     }
 
     public void ShowMenu(AirConditionerController controller)
@@ -302,6 +302,9 @@ public class AirConditionerController
 
             switch (choice)
             {
+                case "0":
+                    exit = true;
+                    break;
                 case "1":
                     controller.AddAirConditioner();
                     break;
@@ -328,9 +331,6 @@ public class AirConditionerController
                     break;
                 case "9":
                     controller.SetFanSpeedLow();
-                    break;
-                case "10":
-                    exit = true;
                     break;
                 default:
                     Console.WriteLine("Invalid choice");

@@ -308,7 +308,8 @@ public class DoorController
 
     private void ShowChoices()
     {
-        Console.WriteLine("1 - Add door \n" +
+        Console.WriteLine("0 - Go back to device selection menu \n" +
+                          "1 - Add door \n" +
                           "2 - Remove door \n" +
                           "3 - Switch On \n" +
                           "4 - Switch Off \n" +
@@ -316,8 +317,7 @@ public class DoorController
                           "6 - Lock \n" +
                           "7 - Unlock \n" +
                           "8 - Open \n" +
-                          "9 - Close \n" +
-                          "10 - Go back to device selection menu");
+                          "9 - Close \n");
     }
 
     public void ShowMenu(DoorController controller)
@@ -339,6 +339,9 @@ public class DoorController
 
             switch (choice)
             {
+                case "0":
+                    exit = true;
+                    break;
                 case "1":
                     controller.AddDoor();
                     break;
@@ -365,9 +368,6 @@ public class DoorController
                     break;
                 case "9":
                     controller.Close();
-                    break;
-                case "10":
-                    exit = true;
                     break;
                 default:
                     Console.WriteLine("Invalid Choice");

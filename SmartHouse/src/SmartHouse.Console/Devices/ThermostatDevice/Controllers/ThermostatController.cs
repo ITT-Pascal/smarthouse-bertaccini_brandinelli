@@ -221,14 +221,14 @@ public class ThermostatController
 
     private void ShowChoices()
     {
-        Console.WriteLine("1 - Add thermostat \n" +
+        Console.WriteLine("0 - Go back to device selection menu \n" +
+                          "1 - Add thermostat \n" +
                           "2 - Remove thermostat \n" +
                           "3 - Switch On \n" +
                           "4 - Switch Off \n" +
                           "5 - Increase temperature \n" +
                           "6 - Decrease temperature \n" +
-                          "7 - Set temperature \n" +
-                          "8 - Go back to device selection menu");
+                          "7 - Set temperature \n");
     }
 
     public void ShowMenu(ThermostatController controller)
@@ -250,6 +250,9 @@ public class ThermostatController
 
             switch (choice)
             {
+                case "0":
+                    exit = true;
+                    break;
                 case "1":
                     controller.AddThermostat();
                     break;
@@ -270,9 +273,6 @@ public class ThermostatController
                     break;
                 case "7":
                     controller.SetTemperature();
-                    break;
-                case "8":
-                    exit = true;
                     break;
                 default:
                     Console.WriteLine("Invalid Choice");

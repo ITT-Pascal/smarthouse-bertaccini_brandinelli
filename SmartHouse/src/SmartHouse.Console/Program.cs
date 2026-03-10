@@ -28,18 +28,21 @@ class Program
             Console.Clear();
             Console.Write("\x1b[3J");
 
-            Console.WriteLine("1 - Lamps \n" +
+            Console.WriteLine("0 - Exit \n" +
+                          "1 - Lamps \n" +
                           "2 - CCTVS \n" +
                           "3 - Air Conditioner \n" +
                           "4 - Thermostat \n" +
-                          "5 - Door \n" +
-                          "6 - Exit");
+                          "5 - Door \n");
 
             Console.Write("Choose an option: ");
             string choice = Console.ReadLine();
 
             switch (choice)
             {
+                case "0":
+                    exit = true;
+                    break;
                 case "1":
                     ILampRepository lampRepository = new InMemoryLampRepository();
                     LampController lampController = new LampController(lampRepository);
@@ -64,10 +67,7 @@ class Program
                     IDoorRepository doorRepository = new InMemoryDoorRepository();
                     DoorController doorController = new DoorController(doorRepository);
                     doorController.ShowMenu(doorController);
-                    break;
-                case "6":
-                    exit = true;
-                    break;
+                    break; 
                 default:
                     Console.WriteLine("Invalid Choice");
                     break;

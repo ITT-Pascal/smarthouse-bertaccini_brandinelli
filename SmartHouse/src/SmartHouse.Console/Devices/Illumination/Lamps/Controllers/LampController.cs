@@ -221,14 +221,14 @@ public class LampController
     }
     private void ShowChoices()
     {
-        Console.WriteLine("1 - Add lamp \n" +
+        Console.WriteLine("0 - Go back to device selection menu \n" +
+                          "1 - Add lamp \n" +
                           "2 - Remove lamp \n" +
                           "3 - Switch On \n" +
                           "4 - Switch Off \n" +
                           "5 - Brighten \n" +
                           "6 - Dimmer \n" +
-                          "7 - Change brightness \n" +
-                          "8 - Go back to device selection menu");
+                          "7 - Change brightness \n");
     }
 
     public void ShowMenu(LampController controller)
@@ -249,6 +249,9 @@ public class LampController
 
             switch (choice)
             {
+                case "0":
+                    exit = true;
+                    break;
                 case "1":
                     controller.AddLamp();
                     break;
@@ -269,9 +272,6 @@ public class LampController
                     break;
                 case "7":
                     controller.ChangeBrightness();
-                    break;
-                case "8":
-                    exit = true;
                     break;
                 default:
                     Console.WriteLine("Invalid Choice");
