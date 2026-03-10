@@ -41,13 +41,14 @@ public class DoorController
 
     public void RemoveDoor()
     {
-        Guid id = new Guid(SelectDoor());
+        string selectedId = SelectDoor();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected door");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -61,13 +62,14 @@ public class DoorController
 
     public void SwitchOn()
     {
-        Guid id = new Guid(SelectDoor());
+        string selectedId = SelectDoor();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected door");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -86,13 +88,14 @@ public class DoorController
 
     public void SwitchOff()
     {
-        Guid id = new Guid(SelectDoor());
+        string selectedId = SelectDoor();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected door");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -112,13 +115,14 @@ public class DoorController
 
     public void ChangePin()
     {
-        Guid id = new Guid(SelectDoor());
+        string selectedId = SelectDoor();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected door");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         if (!new DoorCheckIsOnQuery(_repository).Execute(id))
         {
@@ -157,13 +161,14 @@ public class DoorController
 
     public void Lock()
     {
-        Guid id = new Guid(SelectDoor());
+        string selectedId = SelectDoor();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected door");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -186,13 +191,14 @@ public class DoorController
 
     public void Unlock()
     {
-        Guid id = new Guid(SelectDoor());
+        string selectedId = SelectDoor();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected door");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         if (!new DoorCheckIsOnQuery(_repository).Execute(id))
         {
@@ -223,13 +229,14 @@ public class DoorController
 
     public void Open()
     {
-        Guid id = new Guid(SelectDoor());
+        string selectedId = SelectDoor();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected door");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -253,13 +260,14 @@ public class DoorController
 
     public void Close()
     {
-        Guid id = new Guid(SelectDoor());
+        string selectedId = SelectDoor();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected door");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try 
         {
