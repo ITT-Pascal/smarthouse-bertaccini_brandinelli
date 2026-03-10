@@ -34,13 +34,14 @@ public class LampController
 
     public void RemoveLamp()
     {
-        Guid id = new Guid(SelectLamp());
-        
-        if(id == null)
+        string selectedId = SelectLamp();
+
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot Find Selected Lamp");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -55,13 +56,14 @@ public class LampController
 
     public void Brighten()
     {
-        Guid id = new Guid(SelectLamp());
+        string selectedId = SelectLamp();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot Find Selected Lamp");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -83,13 +85,14 @@ public class LampController
 
     public void ChangeBrightness()
     {
-        Guid id = new Guid(SelectLamp());
+        string selectedId = SelectLamp();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot Find Selected Lamp");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         if (! new LampCheckIsOnQuery(_repository).Execute(id))
         {
@@ -117,13 +120,14 @@ public class LampController
 
     public void Dimmer()
     {
-        Guid id = new Guid (SelectLamp());
+        string selectedId = SelectLamp();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot Find Selected Lamp");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -145,13 +149,14 @@ public class LampController
 
     public void SwitchOn()
     {
-        Guid id = new Guid(SelectLamp());
+        string selectedId = SelectLamp();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot Find Selected Lamp");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {           
@@ -171,13 +176,14 @@ public class LampController
 
     public void SwitchOff()
     {
-        Guid id = new Guid(SelectLamp());
+        string selectedId = SelectLamp();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot Find Selected Lamp");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
