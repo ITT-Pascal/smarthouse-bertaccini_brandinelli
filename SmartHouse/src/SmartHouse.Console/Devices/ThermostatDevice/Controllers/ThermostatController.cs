@@ -1,6 +1,4 @@
 ﻿using SmartHouse.Application.Devices.Abstraction.Mapper;
-using SmartHouse.Application.Devices.Illumination.Lamps.Commands;
-using SmartHouse.Application.Devices.Illumination.Lamps.Queries;
 using SmartHouse.Application.Devices.ThermostatDevice.Command;
 using SmartHouse.Application.Devices.ThermostatDevice.Mapper;
 using SmartHouse.Application.Devices.ThermostatDevice.Queries;
@@ -39,13 +37,14 @@ public class ThermostatController
 
     public void RemoveThermostat()
     {
-        Guid id = new Guid(SelectThermostat());
+        string selectedId = SelectThermostat();
 
-        if(id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            throw new ArgumentException("Cannot find selected thermostat");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -58,13 +57,14 @@ public class ThermostatController
     }
     public void SwitchOn()
     {
-        Guid id = new Guid(SelectThermostat());
+        string selectedId = SelectThermostat();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected thermostat");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -84,13 +84,14 @@ public class ThermostatController
 
     public void SwitchOff()
     {
-        Guid id = new Guid(SelectThermostat());
+        string selectedId = SelectThermostat();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected thermostat");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -110,13 +111,14 @@ public class ThermostatController
 
     public void SetTemperature()
     {
-        Guid id = new Guid(SelectThermostat());
+        string selectedId = SelectThermostat();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            throw new ArgumentException("Cannot find selected thermostat");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         if (!new ThermostatCheckIsOnQuery(_repository).Execute(id))
         {
@@ -143,13 +145,14 @@ public class ThermostatController
 
     public void DecreaseTemperature()
     {
-        Guid id = new Guid(SelectThermostat());
+        string selectedId = SelectThermostat();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            throw new ArgumentException("Cannot find selected thermostat");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -170,13 +173,14 @@ public class ThermostatController
 
     public void IncreaseTemperature()
     {
-        Guid id = new Guid(SelectThermostat());
+        string selectedId = SelectThermostat();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            throw new ArgumentException("Cannot find selected thermostat");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
