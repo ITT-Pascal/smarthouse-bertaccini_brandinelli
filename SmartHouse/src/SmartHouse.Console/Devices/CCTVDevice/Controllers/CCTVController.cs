@@ -42,13 +42,14 @@ public class CCTVController
 
     public void RemoveCCTV()
     {
-        Guid id = new Guid(SelectCCTV());
+        string selectedId = SelectCCTV();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected cctv");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -63,13 +64,14 @@ public class CCTVController
 
     public void ChangePin()
     {
-        Guid id = new Guid(SelectCCTV());
+        string selectedId = SelectCCTV();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected cctv");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         if (new CCTVCheckIsLockedQuery(_repository).Execute(id))
         {
@@ -103,13 +105,14 @@ public class CCTVController
 
     public void DecreaseZoom()
     {
-        Guid id = new Guid(SelectCCTV());
+        string selectedId = SelectCCTV();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected cctv");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -130,13 +133,14 @@ public class CCTVController
 
     public void IncreaseZoom()
     {
-        Guid id = new Guid(SelectCCTV());
+        string selectedId = SelectCCTV();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected cctv");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -158,13 +162,14 @@ public class CCTVController
 
     public void Lock()
     {
-        Guid id = new Guid(SelectCCTV());
+        string selectedId = SelectCCTV();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected cctv");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -185,13 +190,14 @@ public class CCTVController
 
     public void Unlock()
     {
-        Guid id = new Guid(SelectCCTV());
+        string selectedId = SelectCCTV();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected cctv");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         if (!new CCTVCheckIsLockedQuery(_repository).Execute(id))
         {
@@ -219,13 +225,14 @@ public class CCTVController
 
     public void SetDefaultZoom()
     {
-        Guid id = new Guid(SelectCCTV());
+        string selectedId = SelectCCTV();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected cctv");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -248,13 +255,14 @@ public class CCTVController
 
     public void SetMaxZoom()
     {
-        Guid id = new Guid(SelectCCTV());
+        string selectedId = SelectCCTV();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected cctv");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -278,13 +286,14 @@ public class CCTVController
 
     public void SetMinZoom()
     {
-        Guid id = new Guid(SelectCCTV());
+        string selectedId = SelectCCTV();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected cctv");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -308,13 +317,14 @@ public class CCTVController
 
     public void SwitchOn()
     {
-        Guid id = new Guid(SelectCCTV());
+        string selectedId = SelectCCTV();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected cctv");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -335,13 +345,14 @@ public class CCTVController
 
     public void SwitchOff()
     {
-        Guid id = new Guid(SelectCCTV());
+        string selectedId = SelectCCTV();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected cctv");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -363,13 +374,14 @@ public class CCTVController
 
     public void SetVision()
     {
-        Guid id = new Guid(SelectCCTV());
+        string selectedId = SelectCCTV();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected cctv");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         Console.Write("Select: \n" +
             "1 - Default vision \n" +
