@@ -34,13 +34,14 @@ public class AirConditionerController
 
     public void RemoveAirConditioner()
     {
-        Guid id = new Guid(SelectAirConditioner());
+        string selectedId = SelectAirConditioner();
 
-        if(id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected air conditioner");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -54,13 +55,14 @@ public class AirConditionerController
 
     public void SwitchOn()
     {
-        Guid id = new Guid(SelectAirConditioner());
+        string selectedId = SelectAirConditioner();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected air conditioner");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -79,13 +81,14 @@ public class AirConditionerController
 
     public void SwitchOff()
     {
-        Guid id = new Guid(SelectAirConditioner());
+        string selectedId = SelectAirConditioner();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected air conditioner");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -105,13 +108,14 @@ public class AirConditionerController
 
     public void IncreaseFanSpeed()
     {
-        Guid id = new Guid(SelectAirConditioner());
+        string selectedId = SelectAirConditioner();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected air conditioner");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -132,13 +136,14 @@ public class AirConditionerController
 
     public void DecreaseFanSpeed()
     {
-        Guid id = new Guid(SelectAirConditioner());
+        string selectedId = SelectAirConditioner();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected air conditioner");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -160,13 +165,14 @@ public class AirConditionerController
 
     public void SetFanSpeedHigh()
     {
-        Guid id = new Guid(SelectAirConditioner());
+        string selectedId = SelectAirConditioner();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected air conditioner");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -187,13 +193,14 @@ public class AirConditionerController
 
     public void SetFanSpeedMedium()
     {
-        Guid id = new Guid(SelectAirConditioner());
+        string selectedId = SelectAirConditioner();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected air conditioner");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
@@ -215,13 +222,14 @@ public class AirConditionerController
 
     public void SetFanSpeedLow()
     {
-        Guid id = new Guid(SelectAirConditioner());
+        string selectedId = SelectAirConditioner();
 
-        if (id == null)
+        if (string.IsNullOrWhiteSpace(selectedId))
         {
-            Console.WriteLine("Cannot find selected air conditioner");
             return;
         }
+
+        Guid id = new Guid(selectedId);
 
         try
         {
