@@ -1,0 +1,5 @@
+record del name cartella abstractions su abstract device (e ci siamo)
+record del PIN da mettere nelle abstractions
+record di brightness da mettere in illumination device
+record di temperature da mettere in thermostat
+metodo di cambio PIN in door e cctv
