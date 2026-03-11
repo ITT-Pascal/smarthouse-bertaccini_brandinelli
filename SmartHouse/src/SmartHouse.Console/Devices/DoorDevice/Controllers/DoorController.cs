@@ -373,9 +373,6 @@ public class DoorController
                     Console.WriteLine("Invalid Choice");
                     break;
             }
-
-            Console.WriteLine("Press Enter To go back to the menu");
-            Console.ReadLine();
         }
     }
 

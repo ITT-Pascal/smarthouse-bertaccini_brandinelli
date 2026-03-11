@@ -336,9 +336,6 @@ public class AirConditionerController
                     Console.WriteLine("Invalid choice");
                     break;
             }
-
-            Console.WriteLine("Press Enter To go back to the menu");
-            Console.ReadLine();
         }
     }
 
