@@ -100,7 +100,7 @@ public class LampController
             return;
         }
 
-        Console.Write("New brightness: ");
+        Console.Write("New brightness (0-100): ");
         if (!int.TryParse(Console.ReadLine(), out int newbrightness))
         {
             Console.WriteLine("Invalid brightness");
