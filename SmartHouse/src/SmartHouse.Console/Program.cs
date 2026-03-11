@@ -78,5 +78,6 @@ class Program
         Console.Write("\x1b[3J");
         Console.WriteLine("See you next time!");
         Console.Write("\nPress enter to close the menu....");
+        Console.Write("\n", 10);
     }
 }
