@@ -428,83 +428,105 @@ public class CCTVController
         }
     }
 
-    private void ShowChoices()
-    {
-        Console.WriteLine("0 - Go back to device selection menu \n" +
-                          "1 - Add CCTV \n" +
-                          "2 - Remove CCTV \n" +
-                          "3 - Change pin \n" +
-                          "4 - Lock \n" +
-                          "5 - Unlock \n" +
-                          "6 - Switch On \n" +
-                          "7 - Switch Off \n" + 
-                          "8 - Set default zoom \n" + 
-                          "9 - Set max zoom \n" +
-                          "10 - Set min zoom \n" +
-                          "11 - Increase zoom \n" + 
-                          "12 - Decrease zoom \n" +
-                          "13 - Set vision \n");
-    }
-
     public void ShowMenu(CCTVController controller)
     {
 
         bool exit = false;
 
+        string[] options = { "0 - Go back to device selection menu", "1 - Add CCTV", "2 - Remove CCTV", "3 - Change pin", "4 - Lock", "5 - Unlock", "6 - Switch On", "7 - Switch Off", "7 - Unlock", "8 - Set default zoom", "9 - Set max zoom", "10 - Set min zoom", "11 - Increase zoom", "12 - Decrease zoom", "13 - Set vision" };
+        int selected = 0;
+
+        Console.CursorVisible = false;
+
         while (!exit)
         {
-            Console.Clear();
-            Console.Write("\x1b[3J");
-            controller.ShowCCTVS();
-            controller.ShowChoices();
+            bool choiceDone = false;
 
-            Console.Write("Choose an option: ");
-            string choice = Console.ReadLine();
-
-            Console.WriteLine();
-
-            switch (choice)
+            while (!choiceDone)
             {
-                case "0":
+                Console.Clear();
+                Console.Write("\x1b[3J");
+                controller.ShowCCTVS();
+
+                Console.WriteLine("--- SMART HOUSE SYSTEM ---");
+                Console.WriteLine("(Use the arrows keys to move, Enter to select)\n");
+
+                for (int i = 0; i < options.Length; i++)
+                {
+                    if (i == selected)
+                    {
+                        Console.BackgroundColor = ConsoleColor.Gray;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write($"> {options[i]} ");
+                        Console.ResetColor();
+                        Console.WriteLine();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"  {options[i]} ");
+                    }
+                }
+
+                Console.WriteLine("--------------------------");
+
+                ConsoleKey info = Console.ReadKey(true).Key;
+
+                switch (info)
+                {
+                    case ConsoleKey.UpArrow:
+                        selected = (selected == 0) ? options.Length - 1 : selected - 1;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        selected = (selected == options.Length - 1) ? 0 : selected + 1;
+                        break;
+                    case ConsoleKey.Enter:
+                        choiceDone = true;
+                        break;
+                }
+            }
+
+            switch (selected)
+            {
+                case 0:
                     exit = true;
                     break;
-                case "1":
+                case 1:
                     controller.AddCCTV();
                     break;
-                case "2":
+                case 2:
                     controller.RemoveCCTV();
                     break;
-                case "3":
+                case 3:
                     controller.ChangePin();
                     break;
-                case "4":
+                case 4:
                     controller.Lock();
                     break;
-                case "5":
+                case 5:
                     controller.Unlock();
                     break;
-                case "6":
+                case 6:
                     controller.SwitchOn();
                     break;
-                case "7":
+                case 7:
                     controller.SwitchOff();
                     break;
-                case "8":
+                case 8:
                     controller.SetDefaultZoom();
                     break;
-                case "9":
+                case 9:
                     controller.SetMaxZoom();
                     break;
-                case "10":
+                case 10:
                     controller.SetMinZoom();
                     break;
-                case "11":
+                case 11:
                     controller.IncreaseZoom();
                     break;
-                case "12":
+                case 12:
                     controller.DecreaseZoom();
                     break;
-                case "13":
+                case 13:
                     controller.SetVision();
                     break;
                 default:

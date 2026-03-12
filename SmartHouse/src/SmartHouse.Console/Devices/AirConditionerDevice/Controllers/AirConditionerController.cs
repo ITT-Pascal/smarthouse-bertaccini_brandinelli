@@ -288,48 +288,88 @@ public class AirConditionerController
 
         bool exit = false;
 
+        string[] options = { "0 - Go back to device selection menu", "1 - Add air conditioner", "2 - Remove air conditioner", "3 - Switch On", "4 - Switch Off", "5 - Increase fan speed", "6 - Decrease fan speed", "7 - Set fan speed high", "8 - Set fan speed medium", "9 - Set fan speed low" };
+        int selected = 0;
+
+        Console.CursorVisible = false;
+
         while (!exit)
         {
-            Console.Clear();
-            Console.Write("\x1b[3J");
-            controller.ShowAirConditioners();
-            controller.ShowChoices();
+            bool choiceDone = false;
 
-            Console.Write("Choose an option: ");
-            string choice = Console.ReadLine();
-
-            Console.WriteLine();
-
-            switch (choice)
+            while (!choiceDone)
             {
-                case "0":
+                Console.Clear();
+                Console.Write("\x1b[3J");
+                controller.ShowAirConditioners();
+
+                Console.WriteLine("--- SMART HOUSE SYSTEM ---");
+                Console.WriteLine("(Use the arrows keys to move, Enter to select)\n");
+
+                for (int i = 0; i < options.Length; i++)
+                {
+                    if (i == selected)
+                    {
+                        Console.BackgroundColor = ConsoleColor.Gray;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write($"> {options[i]} ");
+                        Console.ResetColor();
+                        Console.WriteLine();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"  {options[i]} ");
+                    }
+                }
+
+                Console.WriteLine("--------------------------");
+
+                ConsoleKey info = Console.ReadKey(true).Key;
+
+                switch (info)
+                {
+                    case ConsoleKey.UpArrow:
+                        selected = (selected == 0) ? options.Length - 1 : selected - 1;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        selected = (selected == options.Length - 1) ? 0 : selected + 1;
+                        break;
+                    case ConsoleKey.Enter:
+                        choiceDone = true;
+                        break;
+                }
+            }
+
+            switch (selected)
+            {
+                case 0:
                     exit = true;
                     break;
-                case "1":
+                case 1:
                     controller.AddAirConditioner();
                     break;
-                case "2":
+                case 2:
                     controller.RemoveAirConditioner();
                     break;
-                case "3":
+                case 3:
                     controller.SwitchOn();
                     break;
-                case "4":
+                case 4:
                     controller.SwitchOff();
                     break;
-                case "5":
+                case 5:
                     controller.IncreaseFanSpeed();
                     break;
-                case "6":
+                case 6:
                     controller.DecreaseFanSpeed();
                     break;
-                case "7":
+                case 7:
                     controller.SetFanSpeedHigh();
                     break;
-                case "8":
+                case 8:
                     controller.SetFanSpeedMedium();
                     break;
-                case "9":
+                case 9:
                     controller.SetFanSpeedLow();
                     break;
                 default:
