@@ -132,7 +132,14 @@ public class LampController
         try
         {
             if (!new LampCheckIsOnQuery(_repository).Execute(id))
+            {
                 Console.WriteLine("Lamp must be turned on!"); //Si potrebbe aggiungere un'accensione automatica della lampada
+                if (TurnChoice(id))
+                {
+                    new DimmerLampCommand(_repository).Execute(id);
+                    Console.WriteLine("Decreased lamp brightness!");
+                }               
+            }
             else if (new LampCheckBrightnessIsMinQuery(_repository).Execute(id))
                 Console.WriteLine("Brightness is alredy at it's maximum");
             else
@@ -310,6 +317,40 @@ public class LampController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
             return null;
+        }
+    }
+
+    private bool TurnChoice(Guid id)
+    {
+        Console.WriteLine("Do you want to turn the lamp on");
+        Console.Write("Select (Y/N): ");
+        string choice = Console.ReadLine().ToLower();
+        switch (choice)
+        {
+            case "y":
+                SmartSwitchOn(id);
+                return true;
+                break;
+            case "n":
+                return false;
+                break;
+            default:
+                Console.WriteLine("Invalid choice");
+                return false;
+                break;
+        }
+    }
+
+    private void SmartSwitchOn(Guid id)
+    {
+        try
+        {
+            new SwitchLampOnCommand(_repository).Execute(id);
+            Console.WriteLine("Turned lamp on!");
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
         }
     }
 }
