@@ -394,7 +394,7 @@ public class LampController
 
     private bool TurnChoice(Guid id)
     {
-        Console.WriteLine("Do you want to turn the lamp on");
+        Console.WriteLine("Do you want to turn the lamp on?");
         Console.Write("Select (Y/N): ");
         string choice = Console.ReadLine().ToLower();
         switch (choice)

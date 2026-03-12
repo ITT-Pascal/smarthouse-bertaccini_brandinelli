@@ -26,6 +26,7 @@ public class CCTVController
         if (string.IsNullOrWhiteSpace(name))
         {
             Console.WriteLine("Invalid name");
+            Thread.Sleep(1500);
             return;
         }
 
@@ -33,11 +34,13 @@ public class CCTVController
         if(!int.TryParse(Console.ReadLine(), out int pin))
         {
             Console.WriteLine("Invalid Pin");
+            Thread.Sleep(1500);
             return;
         }
 
         new AddCCTVCommand(_repository).Execute(name,pin);
         Console.WriteLine("CCTV added!");
+        Thread.Sleep(1500);
     }
 
     public void RemoveCCTV()
@@ -59,7 +62,7 @@ public class CCTVController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
-       
+        Thread.Sleep(1500);
     }
 
     public void ChangePin()
@@ -76,13 +79,18 @@ public class CCTVController
         if (new CCTVCheckIsLockedQuery(_repository).Execute(id))
         {
             Console.WriteLine("CCTV must be unlocked!");
-            return;
+            if (!TurnChoice(id))
+            {
+                Thread.Sleep(1500);
+                return;
+            }
         }
 
         Console.Write("Current pin: ");
         if(!int.TryParse(Console.ReadLine(), out int currentpin))
         {
             Console.WriteLine("Invalid Pin");
+            Thread.Sleep(1500);
             return;
         }      
 
@@ -90,6 +98,7 @@ public class CCTVController
         if (!int.TryParse(Console.ReadLine(), out int newpin))
         {
             Console.WriteLine("Invalid Pin");
+            Thread.Sleep(1500);
             return;
         }
 
@@ -101,6 +110,7 @@ public class CCTVController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void DecreaseZoom()
@@ -448,7 +458,7 @@ public class CCTVController
                 Console.Write("\x1b[3J");
                 controller.ShowCCTVS();
 
-                Console.WriteLine("--- SMART HOUSE SYSTEM ---");
+                Console.WriteLine("---- SELECT AN OPTION ----");
                 Console.WriteLine("(Use the arrows keys to move, Enter to select)\n");
 
                 for (int i = 0; i < options.Length; i++)
@@ -567,6 +577,52 @@ public class CCTVController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
             return null;
+        }
+    }
+
+    private bool TurnChoice(Guid id)
+    {
+        Console.WriteLine("Do you want to unlock the cctv?");
+        Console.Write("Select (Y/N): ");
+        string choice = Console.ReadLine().ToLower();
+        switch (choice)
+        {
+            case "y":
+                Console.Write("Enter Current PIN to unlock: ");
+                if (int.TryParse(Console.ReadLine(), out int pin))
+                {
+                    return SmartUnlockCCTV(id, pin);
+                }
+                else
+                {
+                    Console.WriteLine("Invalid PIN format.");
+                    return false;
+                }
+                break;
+            case "n":
+                return false;
+                break;
+            default:
+                Console.WriteLine("Invalid choice");
+                return false;
+                break;
+        }
+    }
+
+    private bool SmartUnlockCCTV(Guid id, int currentpin)
+    {
+        
+        try
+        {
+            new UnlockCCTVCommand(_repository).Execute(id, currentpin);
+            Console.WriteLine("Unlocked CCTV");
+            return true;
+
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
+            return false;
         }
     }
 }
