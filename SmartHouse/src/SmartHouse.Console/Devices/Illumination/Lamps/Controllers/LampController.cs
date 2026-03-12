@@ -33,6 +33,7 @@ public class LampController
 
         new AddLampCommand(_repository).Execute(name);
         Console.WriteLine("Lamp added!");
+        Thread.Sleep(1500);
     }
 
     public void RemoveLamp()
@@ -55,6 +56,7 @@ public class LampController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void Brighten()
@@ -71,7 +73,14 @@ public class LampController
         try
         {
             if (!new LampCheckIsOnQuery(_repository).Execute(id))
-                Console.WriteLine("Lamp must be turned on!"); //Si potrebbe aggiungere un'accensione automatica della lampada
+            {
+                Console.WriteLine("Lamp must be turned on!");
+                if (TurnChoice(id))
+                {
+                    new BrightenLampCommand(_repository).Execute(id);
+                    Console.WriteLine("Increased lamp brightness!");
+                }
+            }
             else if (new LampCheckBrightnessIsMaxQuery(_repository).Execute(id))
                 Console.WriteLine("Brightness is alredy at it's maximum");
             else
@@ -84,6 +93,7 @@ public class LampController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void ChangeBrightness()
@@ -100,6 +110,27 @@ public class LampController
         if (! new LampCheckIsOnQuery(_repository).Execute(id))
         {
             Console.WriteLine("Lamp must be turned on!");
+            if (TurnChoice(id))
+            {
+                Console.Write("New brightness (0-100): ");
+                if (!int.TryParse(Console.ReadLine(), out int newBrightness))
+                {
+                    Console.WriteLine("Invalid brightness");
+                    Thread.Sleep(1500);
+                    return;
+                }
+
+                try
+                {
+                    new ChangeBrightnessLampCommand(_repository).Execute(id, newBrightness);
+                    Console.WriteLine("Changed lamp brightness!");
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine($"ERROR: {ex.Message}");
+                }
+            }
+            Thread.Sleep(1500);
             return;
         }
 
@@ -107,6 +138,7 @@ public class LampController
         if (!int.TryParse(Console.ReadLine(), out int newbrightness))
         {
             Console.WriteLine("Invalid brightness");
+            Thread.Sleep(1500);
             return;
         }
 
@@ -119,6 +151,7 @@ public class LampController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void Dimmer()
@@ -136,7 +169,7 @@ public class LampController
         {
             if (!new LampCheckIsOnQuery(_repository).Execute(id))
             {
-                Console.WriteLine("Lamp must be turned on!"); //Si potrebbe aggiungere un'accensione automatica della lampada
+                Console.WriteLine("Lamp must be turned on!");
                 if (TurnChoice(id))
                 {
                     new DimmerLampCommand(_repository).Execute(id);
@@ -155,6 +188,7 @@ public class LampController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void SwitchOn()
@@ -182,6 +216,7 @@ public class LampController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void SwitchOff()
@@ -208,6 +243,7 @@ public class LampController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     private void ShowLamps()
@@ -249,7 +285,7 @@ public class LampController
                 Console.Write("\x1b[3J");
                 controller.ShowLamps();
 
-                Console.WriteLine("--- SMART HOUSE SYSTEM ---");
+                Console.WriteLine("---- SELECT AN OPTION ----");
                 Console.WriteLine("(Use the arrows keys to move, Enter to select)\n");
 
                 for (int i = 0; i < options.Length; i++)
@@ -326,6 +362,7 @@ public class LampController
         if (lamps.Count == 0)
         {
             Console.WriteLine("No lamps available");
+            Thread.Sleep(1500);
             return null;
         }
 
@@ -333,12 +370,14 @@ public class LampController
         if(!int.TryParse(Console.ReadLine(), out int num))
         {
             Console.WriteLine("Invalid number");
+            Thread.Sleep(1500);
             return null;
         }
 
         if(num<1 || num > lamps.Count)
         {
             Console.WriteLine("There is no corresponding lamp");
+            Thread.Sleep(1500);
             return null;
         }    
 
@@ -348,6 +387,7 @@ public class LampController
         }catch (ArgumentException ex)
         {
             Console.WriteLine($"ERROR: {ex.Message}");
+            Thread.Sleep(1500);
             return null;
         }
     }
