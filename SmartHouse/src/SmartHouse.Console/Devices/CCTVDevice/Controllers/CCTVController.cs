@@ -79,11 +79,8 @@ public class CCTVController
         if (new CCTVCheckIsLockedQuery(_repository).Execute(id))
         {
             Console.WriteLine("CCTV must be unlocked!");
-            if (!TurnChoice(id))
-            {
-                Thread.Sleep(1500);
-                return;
-            }
+            Thread.Sleep(1500);
+            return;
         }
 
         Console.Write("Current pin: ");
@@ -92,7 +89,12 @@ public class CCTVController
             Console.WriteLine("Invalid Pin");
             Thread.Sleep(1500);
             return;
-        }      
+        }else if (currentpin != new GetCCTVByIdQuery(_repository).Execute(id).Pin)
+        {
+            Console.WriteLine("Wrong Pin");
+            Thread.Sleep(1500);
+            return;
+        }
 
         Console.Write("New pin: ");
         if (!int.TryParse(Console.ReadLine(), out int newpin))
@@ -104,8 +106,8 @@ public class CCTVController
 
         try
         {
-                new ChangePinCCTVCommand(_repository).Execute(id, currentpin, newpin);
-                Console.WriteLine("Pin changed");
+            new ChangePinCCTVCommand(_repository).Execute(id, currentpin, newpin);
+            Console.WriteLine("Pin changed");
         }catch (ArgumentException ex)
         {
             Console.WriteLine($"ERROR: {ex.Message}");
@@ -139,6 +141,7 @@ public class CCTVController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void IncreaseZoom()
@@ -168,6 +171,7 @@ public class CCTVController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void Lock()
@@ -196,6 +200,7 @@ public class CCTVController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void Unlock()
@@ -212,6 +217,7 @@ public class CCTVController
         if (!new CCTVCheckIsLockedQuery(_repository).Execute(id))
         {
             Console.WriteLine("CCTV is alredy unlocked!");
+            Thread.Sleep(1500);
             return;
         }
 
@@ -219,18 +225,20 @@ public class CCTVController
         if(!int.TryParse(Console.ReadLine(), out int currentpin))
         {
             Console.WriteLine("Invalid Pin");
+            Thread.Sleep(1500);
             return;
         }
 
         try
         {            
-                new UnlockCCTVCommand(_repository).Execute(id, currentpin);
-                Console.WriteLine("Unlocked CCTV");
+            new UnlockCCTVCommand(_repository).Execute(id, currentpin);
+            Console.WriteLine("Unlocked CCTV");
             
         }catch (ArgumentException ex)
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void SetDefaultZoom()
@@ -261,6 +269,7 @@ public class CCTVController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void SetMaxZoom()
@@ -292,6 +301,7 @@ public class CCTVController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void SetMinZoom()
@@ -323,6 +333,7 @@ public class CCTVController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void SwitchOn()
@@ -351,6 +362,7 @@ public class CCTVController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void SwitchOff()
@@ -380,6 +392,7 @@ public class CCTVController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void SetVision()
@@ -393,10 +406,11 @@ public class CCTVController
 
         Guid id = new Guid(selectedId);
 
-        Console.Write("Select: \n" +
+        Console.Write("Choices: \n" +
             "1 - Default vision \n" +
             "2 - Night vision \n" +
-            "3 - Thermal vision \n");
+            "3 - Thermal vision \n" +
+            "Select: ");
         string choice = Console.ReadLine();
 
         try
@@ -416,6 +430,7 @@ public class CCTVController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     private void ShowCCTVS()
@@ -443,7 +458,7 @@ public class CCTVController
 
         bool exit = false;
 
-        string[] options = { "0 - Go back to device selection menu", "1 - Add CCTV", "2 - Remove CCTV", "3 - Change pin", "4 - Lock", "5 - Unlock", "6 - Switch On", "7 - Switch Off", "7 - Unlock", "8 - Set default zoom", "9 - Set max zoom", "10 - Set min zoom", "11 - Increase zoom", "12 - Decrease zoom", "13 - Set vision" };
+        string[] options = { "0 - Go back to device selection menu", "1 - Add CCTV", "2 - Remove CCTV", "3 - Change pin", "4 - Lock", "5 - Unlock", "6 - Switch On", "7 - Switch Off", "8 - Set default zoom", "9 - Set max zoom", "10 - Set min zoom", "11 - Increase zoom", "12 - Decrease zoom", "13 - Set vision" };
         int selected = 0;
 
         Console.CursorVisible = false;
@@ -553,6 +568,7 @@ public class CCTVController
         if (cctvs.Count == 0)
         {
             Console.WriteLine("No cctvs available");
+            Thread.Sleep(1500);
             return null;
         }
 
@@ -560,12 +576,14 @@ public class CCTVController
         if (!int.TryParse(Console.ReadLine(), out int num))
         {
             Console.WriteLine("Invalid number");
+            Thread.Sleep(1500);
             return null;
         }
 
         if (num < 1 || num > cctvs.Count)
         {
             Console.WriteLine("There is no corresponding cctv");
+            Thread.Sleep(1500);
             return null;
         }
 
@@ -576,53 +594,53 @@ public class CCTVController
         catch (ArgumentException ex)
         {
             Console.WriteLine($"ERROR: {ex.Message}");
+            Thread.Sleep(1500);
             return null;
         }
     }
 
-    private bool TurnChoice(Guid id)
-    {
-        Console.WriteLine("Do you want to unlock the cctv?");
-        Console.Write("Select (Y/N): ");
-        string choice = Console.ReadLine().ToLower();
-        switch (choice)
-        {
-            case "y":
-                Console.Write("Enter Current PIN to unlock: ");
-                if (int.TryParse(Console.ReadLine(), out int pin))
-                {
-                    return SmartUnlockCCTV(id, pin);
-                }
-                else
-                {
-                    Console.WriteLine("Invalid PIN format.");
-                    return false;
-                }
-                break;
-            case "n":
-                return false;
-                break;
-            default:
-                Console.WriteLine("Invalid choice");
-                return false;
-                break;
-        }
-    }
+    //private bool TurnChoice(Guid id)
+    //{
+    //    Console.WriteLine("Do you want to unlock the cctv?");
+    //    Console.Write("Select (Y/N): ");
+    //    string choice = Console.ReadLine().ToLower();
+    //    switch (choice)
+    //    {
+    //        case "y":
+    //            Console.Write("Enter Current PIN to unlock: ");
+    //            if (int.TryParse(Console.ReadLine(), out int pin))
+    //            {
+    //                return SmartUnlockCCTV(id, pin);
+    //            }
+    //            else
+    //            {
+    //                Console.WriteLine("Invalid PIN format.");
+    //                return false;
+    //            }
+    //            break;
+    //        case "n":
+    //            return false;
+    //            break;
+    //        default:
+    //            Console.WriteLine("Invalid choice");
+    //            return false;
+    //            break;
+    //    }
+    //}
 
-    private bool SmartUnlockCCTV(Guid id, int currentpin)
-    {
+    //private bool SmartUnlockCCTV(Guid id, int currentpin)
+    //{
         
-        try
-        {
-            new UnlockCCTVCommand(_repository).Execute(id, currentpin);
-            Console.WriteLine("Unlocked CCTV");
-            return true;
-
-        }
-        catch (ArgumentException ex)
-        {
-            Console.WriteLine($"ERROR: {ex.Message}");
-            return false;
-        }
-    }
+    //    try
+    //    {
+    //        new UnlockCCTVCommand(_repository).Execute(id, currentpin);
+    //        Console.WriteLine("Unlocked CCTV");
+    //        return true;
+    //    }
+    //    catch (ArgumentException ex)
+    //    {
+    //        Console.WriteLine($"ERROR: {ex.Message}");
+    //        return false;
+    //    }
+    //}
 }

@@ -26,6 +26,7 @@ public class DoorController
         if (string.IsNullOrWhiteSpace(name))
         {
             Console.WriteLine("Invalid name");
+            Thread.Sleep(1500);
             return;
         }
 
@@ -33,10 +34,13 @@ public class DoorController
         if(!int.TryParse(Console.ReadLine(), out int pin))
         {
             Console.WriteLine("Invalid Pin");
+            Thread.Sleep(1500);
+            return;
         }
 
         new AddDoorCommand(_repository).Execute(name, pin);
         Console.WriteLine("Door added!");
+        Thread.Sleep(1500);
     }
 
     public void RemoveDoor()
@@ -58,6 +62,7 @@ public class DoorController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void SwitchOn()
@@ -84,6 +89,7 @@ public class DoorController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void SwitchOff()
@@ -111,6 +117,7 @@ public class DoorController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void ChangePin()
@@ -127,11 +134,13 @@ public class DoorController
         if (!new DoorCheckIsOnQuery(_repository).Execute(id))
         {
             Console.WriteLine("Door must be on and unlocked!");
+            Thread.Sleep(1500);
             return;
         }
         else if (new DoorCheckIsLockedQuery(_repository).Execute(id))
         {
             Console.WriteLine("Door must be unlocked!");
+            Thread.Sleep(1500);
             return;
         }
 
@@ -139,6 +148,12 @@ public class DoorController
         if(!int.TryParse(Console.ReadLine(), out int currentpin))
         {
             Console.WriteLine("Invalid Pin");
+            Thread.Sleep(1500);
+            return;
+        }else if (currentpin != new DoorGetByIdQuery(_repository).Execute(id).Pin)
+        {
+            Console.WriteLine("Wrong Pin");
+            Thread.Sleep(1500);
             return;
         }
 
@@ -146,17 +161,19 @@ public class DoorController
         if(!int.TryParse(Console.ReadLine(),out int newpin))
         {
             Console.WriteLine("Invalid Pin");
+            Thread.Sleep(1500);
             return;
         }
 
         try
         {
-                new ChangePinDoorCommand(_repository).Execute(id, currentpin, newpin);
-                Console.WriteLine("Pin changed!");
+            new ChangePinDoorCommand(_repository).Execute(id, currentpin, newpin);
+            Console.WriteLine("Pin changed!");
         }catch (ArgumentException ex)
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void Lock()
@@ -187,6 +204,7 @@ public class DoorController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void Unlock()
@@ -203,11 +221,13 @@ public class DoorController
         if (!new DoorCheckIsOnQuery(_repository).Execute(id))
         {
             Console.WriteLine("Door must be on!");
+            Thread.Sleep(1500);
             return;
         }
         else if (!new DoorCheckIsLockedQuery(_repository).Execute(id))
         {
             Console.WriteLine("Door is alredy unlocked!");
+            Thread.Sleep(1500);
             return;
         }
 
@@ -215,16 +235,19 @@ public class DoorController
         if(!int.TryParse(Console.ReadLine(),out int currentpin))
         {
             Console.WriteLine("Invalid Pin");
+            Thread.Sleep(1500);
+            return;
         }
 
         try
         {
-                new UnlockDoorCommand(_repository).Execute(id, currentpin);
-                Console.WriteLine("Door unlocked!");
+            new UnlockDoorCommand(_repository).Execute(id, currentpin);
+            Console.WriteLine("Door unlocked!");
         }catch (ArgumentException ex)
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void Open()
@@ -256,6 +279,7 @@ public class DoorController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void Close()
@@ -284,6 +308,7 @@ public class DoorController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     private void ShowDoors()
@@ -409,6 +434,7 @@ public class DoorController
         if (doors.Count == 0)
         {
             Console.WriteLine("No doors available");
+            Thread.Sleep(1500);
             return null;
         }
 
@@ -416,12 +442,14 @@ public class DoorController
         if (!int.TryParse(Console.ReadLine(), out int num))
         {
             Console.WriteLine("Invalid number");
+            Thread.Sleep(1500);
             return null;
         }
 
         if (num < 1 || num > doors.Count)
         {
             Console.WriteLine("There is no corresponding door");
+            Thread.Sleep(1500);
             return null;
         }
 
@@ -432,6 +460,7 @@ public class DoorController
         catch (ArgumentException ex)
         {
             Console.WriteLine($"ERROR: {ex.Message}");
+            Thread.Sleep(1500);
             return null;
         }
     }

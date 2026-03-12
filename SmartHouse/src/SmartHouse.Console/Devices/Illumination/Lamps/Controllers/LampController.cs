@@ -28,6 +28,7 @@ public class LampController
         if(string.IsNullOrWhiteSpace(name))
         {
             Console.WriteLine("Invalid name");
+            Thread.Sleep(1500);
             return;
         }
 

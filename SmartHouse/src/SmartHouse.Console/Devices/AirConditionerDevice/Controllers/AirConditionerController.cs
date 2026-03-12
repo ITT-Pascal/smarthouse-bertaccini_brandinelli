@@ -25,11 +25,13 @@ public class AirConditionerController
         if (string.IsNullOrWhiteSpace(name))
         {
             Console.WriteLine("Invalid name");
+            Thread.Sleep(1500);
             return;
         }
 
         new AddAirConditionerCommand(_repository).Execute(name);
         Console.WriteLine("AirConditioner added!");
+        Thread.Sleep(1500);
     }
 
     public void RemoveAirConditioner()
@@ -51,6 +53,7 @@ public class AirConditionerController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void SwitchOn()
@@ -77,6 +80,7 @@ public class AirConditionerController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void SwitchOff()
@@ -104,6 +108,7 @@ public class AirConditionerController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void IncreaseFanSpeed()
@@ -117,11 +122,33 @@ public class AirConditionerController
 
         Guid id = new Guid(selectedId);
 
+        if(!new AirConditionerCheckIsOnQuery(_repository).Execute(id))
+        {
+            Console.WriteLine("Air conditioner must be turned on!");
+            if(TurnChoice(id))
+            {
+                try
+                {
+                    if (new AirConditionerCheckFanSpeedHighQuery(_repository).Execute(id))
+                        Console.WriteLine("Fan speed is alredy at it's maximum");
+                    else
+                    {
+                        new AirConditionerIncreaseFanSpeedCommand(_repository).Execute(id);
+                        Console.WriteLine("Increased air conditioner fan speed");
+                    }
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine($"ERROR: {ex.Message}");
+                }
+            }
+            Thread.Sleep(1500);
+            return;
+        }
+
         try
         {
-            if (!new AirConditionerCheckIsOnQuery(_repository).Execute(id))
-                Console.WriteLine("Air conditioner must be turned on!");
-            else if (new AirConditionerCheckFanSpeedHighQuery(_repository).Execute(id))
+            if (new AirConditionerCheckFanSpeedHighQuery(_repository).Execute(id))
                 Console.WriteLine("Fan speed is alredy at it's maximum");
             else
             {
@@ -132,6 +159,7 @@ public class AirConditionerController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void DecreaseFanSpeed()
@@ -145,11 +173,33 @@ public class AirConditionerController
 
         Guid id = new Guid(selectedId);
 
+        if (!new AirConditionerCheckIsOnQuery(_repository).Execute(id)) 
+        {
+            Console.WriteLine("Air conditioner must be turned on!");
+            if(TurnChoice(id))
+            {
+                try
+                {
+                    if (new AirConditionerCheckFanSpeedLowQuery(_repository).Execute(id))
+                        Console.WriteLine("Fan speed is alredy at it's minimum");
+                    else
+                    {
+                        new AirConditionerDecreaseFanSpeedCommand(_repository).Execute(id);
+                        Console.WriteLine("Decreased air conditioner fan speed");
+                    }
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine($"ERROR: {ex.Message}");
+                }
+            }
+            Thread.Sleep(1500);
+            return;
+        }
+
         try
         {
-            if (!new AirConditionerCheckIsOnQuery(_repository).Execute(id))
-                Console.WriteLine("Air conditioner must be turned on!");
-            else if (new AirConditionerCheckFanSpeedLowQuery(_repository).Execute(id))
+            if (new AirConditionerCheckFanSpeedLowQuery(_repository).Execute(id))
                 Console.WriteLine("Fan speed is alredy at it's minimum");
             else
             {
@@ -161,6 +211,7 @@ public class AirConditionerController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void SetFanSpeedHigh()
@@ -174,11 +225,33 @@ public class AirConditionerController
 
         Guid id = new Guid(selectedId);
 
+        if (!new AirConditionerCheckIsOnQuery(_repository).Execute(id))
+        {
+            Console.WriteLine("Air conditioner must be turned on!");
+            if(TurnChoice(id))
+            {
+                try
+                {
+                    if (new AirConditionerCheckFanSpeedHighQuery(_repository).Execute(id))
+                        Console.WriteLine("Fan speed is alredy set to high!");
+                    else
+                    {
+                        new AirConditionerSetFanSpeedHigh(_repository).Execute(id);
+                        Console.WriteLine("Set air conditioner fan speed to high");
+                    }
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine($"ERROR: {ex.Message}");
+                }
+            }
+            Thread.Sleep(1500);
+            return;
+        }
+
         try
         {
-            if (!new AirConditionerCheckIsOnQuery(_repository).Execute(id))
-                Console.WriteLine("Air conditioner must be turned on!");
-            else if (new AirConditionerCheckFanSpeedHighQuery(_repository).Execute(id))
+            if (new AirConditionerCheckFanSpeedHighQuery(_repository).Execute(id))
                 Console.WriteLine("Fan speed is alredy set to high!");
             else
             {
@@ -189,6 +262,7 @@ public class AirConditionerController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void SetFanSpeedMedium()
@@ -202,11 +276,33 @@ public class AirConditionerController
 
         Guid id = new Guid(selectedId);
 
+        if (!new AirConditionerCheckIsOnQuery(_repository).Execute(id))
+        {
+            Console.WriteLine("Air conditioner must be turned on!");
+            if(TurnChoice(id))
+            {
+                try
+                {
+                    if (new AirConditionerCheckFanSpeedMediumQuery(_repository).Execute(id))
+                        Console.WriteLine("Fan speed is alredy set to medium!");
+                    else
+                    {
+                        new AirConditionerSetFanSpeedMedium(_repository).Execute(id);
+                        Console.WriteLine("Set air conditioner fan speed to medium");
+                    }
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine($"ERROR: {ex.Message}");
+                }
+            }
+            Thread.Sleep(1500);
+            return;
+        }
+
         try
         {
-            if (!new AirConditionerCheckIsOnQuery(_repository).Execute(id))
-                Console.WriteLine("Air conditioner must be turned on!");
-            else if (new AirConditionerCheckFanSpeedMediumQuery(_repository).Execute(id))
+            if (new AirConditionerCheckFanSpeedMediumQuery(_repository).Execute(id))
                 Console.WriteLine("Fan speed is alredy set to medium!");
             else
             {
@@ -218,6 +314,7 @@ public class AirConditionerController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void SetFanSpeedLow()
@@ -231,11 +328,33 @@ public class AirConditionerController
 
         Guid id = new Guid(selectedId);
 
+        if (!new AirConditionerCheckIsOnQuery(_repository).Execute(id))
+        {
+            Console.WriteLine("Air conditioner must be turned on!");
+            if(TurnChoice(id))
+            {
+                try
+                {
+                    if (new AirConditionerCheckFanSpeedLowQuery(_repository).Execute(id))
+                        Console.WriteLine("Fan speed is alredy set to low!");
+                    else
+                    {
+                        new AirConditionerSetFanSpeedLow(_repository).Execute(id);
+                        Console.WriteLine("Set air conditioner fan speed to low");
+                    }
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine($"ERROR: {ex.Message}");
+                }
+            }
+            Thread.Sleep(1500);
+            return;
+        }
+
         try
         {
-            if (!new AirConditionerCheckIsOnQuery(_repository).Execute(id))
-                Console.WriteLine("Air conditioner must be turned on!");
-            else if (new AirConditionerCheckFanSpeedLowQuery(_repository).Execute(id))
+            if (new AirConditionerCheckFanSpeedLowQuery(_repository).Execute(id))
                 Console.WriteLine("Fan speed is alredy set to low!");
             else
             {
@@ -247,6 +366,7 @@ public class AirConditionerController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     private void ShowAirConditioners()
@@ -267,20 +387,6 @@ public class AirConditionerController
             var a = airconditioners[i];
             Console.WriteLine($"{i + 1}. {a.Name}\n{a}");
         }
-    }
-
-    private void ShowChoices()
-    {
-        Console.WriteLine("0 - Go back to device selection menu \n" +
-                          "1 - Add air conditioner \n" +
-                          "2 - Remove air conditioner \n" +
-                          "3 - Switch On \n" +
-                          "4 - Switch Off \n" +
-                          "5 - Increase fan speed \n" +
-                          "6 - Decrease fan speed \n" +
-                          "7 - Set fan speed high \n" +
-                          "8 - Set fan speed medium \n" +
-                          "9 - Set fan speed low \n");
     }
 
     public void ShowMenu(AirConditionerController controller)
@@ -386,6 +492,7 @@ public class AirConditionerController
         if (airConditioners.Count == 0)
         {
             Console.WriteLine("No air conditioners available");
+            Thread.Sleep(1500);
             return null;
         }
 
@@ -393,12 +500,14 @@ public class AirConditionerController
         if (!int.TryParse(Console.ReadLine(), out int num))
         {
             Console.WriteLine("Invalid number");
+            Thread.Sleep(1500);
             return null;
         }
 
         if (num < 1 || num > airConditioners.Count)
         {
             Console.WriteLine("There is no corresponding air conditioner");
+            Thread.Sleep(1500);
             return null;
         }
 
@@ -410,6 +519,39 @@ public class AirConditionerController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
             return null;
+        }
+        Thread.Sleep(1500);
+    }
+
+    private bool TurnChoice(Guid id)
+    {
+        Console.WriteLine("Do you want to turn the thermostat on?");
+        Console.Write("Select (Y/N): ");
+        string choice = Console.ReadLine().ToLower();
+        switch (choice)
+        {
+            case "y":
+                SmartSwitchOn(id);
+                return true;
+                break;
+            case "n":
+                return false;
+                break;
+            default:
+                Console.WriteLine("Invalid choice");
+                return false;
+                break;
+        }
+    }
+
+    private void SmartSwitchOn(Guid id)
+    {
+        try
+        {
+            new AirConditionerSwitchOnCommand(_repository).Execute(id);
+        }catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
         }
     }
 }

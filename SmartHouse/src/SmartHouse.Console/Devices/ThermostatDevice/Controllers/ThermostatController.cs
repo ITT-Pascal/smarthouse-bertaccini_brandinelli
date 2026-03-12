@@ -28,11 +28,13 @@ public class ThermostatController
         if (string.IsNullOrWhiteSpace(name))
         {
             throw new ArgumentException("Name isn't valid");
+            Thread.Sleep(1500);
             return;
         }
 
         new AddThermostatCommand(_repository).Execute(name);
         Console.WriteLine("Thermostat Added!");
+        Thread.Sleep(1500);
     }
 
     public void RemoveThermostat()
@@ -54,6 +56,7 @@ public class ThermostatController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
     public void SwitchOn()
     {
@@ -80,6 +83,7 @@ public class ThermostatController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void SwitchOff()
@@ -107,6 +111,7 @@ public class ThermostatController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void SetTemperature()
@@ -123,13 +128,35 @@ public class ThermostatController
         if (!new ThermostatCheckIsOnQuery(_repository).Execute(id))
         {
             Console.WriteLine("Thermostat must be turned on!");
+            if (TurnChoice(id))
+            {
+                Console.Write("New temperature (15-30): ");
+                if (!double.TryParse(Console.ReadLine(), out double t))
+                {
+                    Console.WriteLine("Invalid temperature!");
+                    Thread.Sleep(1500);
+                    return;
+                }
+
+                try
+                {
+                    new ThermostatSetTemperatureCommand(_repository).Execute(id, t);
+                    Console.WriteLine("Temperature Set!");
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine($"ERROR: {ex.Message}");
+                }
+            }
+            Thread.Sleep(1500);
             return;
         }
 
-        Console.Write("New temperature : ");
-        if(!double.TryParse(Console.ReadLine(), out double temp))
+        Console.Write("New temperature (15-30): ");
+        if (!double.TryParse(Console.ReadLine(), out double temp))
         {
             Console.WriteLine("Invalid temperature!");
+            Thread.Sleep(1500);
             return;
         }
 
@@ -137,10 +164,12 @@ public class ThermostatController
         {
             new ThermostatSetTemperatureCommand(_repository).Execute(id, temp);
             Console.WriteLine("Temperature Set!");
-        }catch (ArgumentException ex)
+        }
+        catch (ArgumentException ex)
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void DecreaseTemperature()
@@ -154,21 +183,45 @@ public class ThermostatController
 
         Guid id = new Guid(selectedId);
 
+        if (!new ThermostatCheckIsOnQuery(_repository).Execute(id))
+        {
+            Console.WriteLine("Thermostat must be turned on!");
+            if(TurnChoice(id))
+            {
+                try
+                {
+                    if (new ThermostatCheckTemperatureIsMaxQuery(_repository).Execute(id))
+                        Console.WriteLine("Temperature is alredy at it's maximum");
+                    else
+                    {
+                        new ThermostatIncreaseTemperatureCommand(_repository).Execute(id);
+                        Console.WriteLine("Temperature Increased!");
+                    }
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine($"ERROR: {ex.Message}");
+                }
+            }
+            Thread.Sleep(1500);
+            return;
+        }
+
         try
         {
-            if (!new ThermostatCheckIsOnQuery(_repository).Execute(id))
-                Console.WriteLine("Thermostat must be turned on!");
-            else if (new ThermostatCheckTemperatureIsMinQuery(_repository).Execute(id))
-                Console.WriteLine("Temperature is alredy at it's minimum");
+            if (new ThermostatCheckTemperatureIsMaxQuery(_repository).Execute(id))
+                Console.WriteLine("Temperature is alredy at it's maximum");
             else
             {
-                new ThermostatDecreaseTemperatureCommand(_repository).Execute(id);
-                Console.WriteLine("Temperature Decreased!");
-            }          
-        }catch (ArgumentException ex)
+                new ThermostatIncreaseTemperatureCommand(_repository).Execute(id);
+                Console.WriteLine("Temperature Increased!");
+            }
+        }
+        catch (ArgumentException ex)
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     public void IncreaseTemperature()
@@ -182,11 +235,33 @@ public class ThermostatController
 
         Guid id = new Guid(selectedId);
 
+        if (!new ThermostatCheckIsOnQuery(_repository).Execute(id))
+        {
+            Console.WriteLine("Thermostat must be turned on!");
+            if(TurnChoice(id))
+            {
+                try
+                {
+                    if (new ThermostatCheckTemperatureIsMaxQuery(_repository).Execute(id))
+                        Console.WriteLine("Temperature is alredy at it's maximum");
+                    else
+                    {
+                        new ThermostatIncreaseTemperatureCommand(_repository).Execute(id);
+                        Console.WriteLine("Temperature Increased!");
+                    }
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine($"ERROR: {ex.Message}");
+                }
+            }
+            Thread.Sleep(1500);
+            return;
+        }
+
         try
         {
-            if (!new ThermostatCheckIsOnQuery(_repository).Execute(id))
-                Console.WriteLine("Thermostat must be turned on!");
-            else if (new ThermostatCheckTemperatureIsMaxQuery(_repository).Execute(id))
+            if (new ThermostatCheckTemperatureIsMaxQuery(_repository).Execute(id))
                 Console.WriteLine("Temperature is alredy at it's maximum");
             else
             {
@@ -197,6 +272,7 @@ public class ThermostatController
         {
             Console.WriteLine($"ERROR: {ex.Message}");
         }
+        Thread.Sleep(1500);
     }
 
     private void ShowThermostats()
@@ -217,18 +293,6 @@ public class ThermostatController
             var t = thermostats[i];
             Console.WriteLine($"{i + 1}. {t.Name}\n{t}");
         }
-    }
-
-    private void ShowChoices()
-    {
-        Console.WriteLine("0 - Go back to device selection menu \n" +
-                          "1 - Add thermostat \n" +
-                          "2 - Remove thermostat \n" +
-                          "3 - Switch On \n" +
-                          "4 - Switch Off \n" +
-                          "5 - Increase temperature \n" +
-                          "6 - Decrease temperature \n" +
-                          "7 - Set temperature \n");
     }
 
     public void ShowMenu(ThermostatController controller)
@@ -328,6 +392,7 @@ public class ThermostatController
         if (thermostats.Count == 0)
         {
             Console.WriteLine("No thermostats available");
+            Thread.Sleep(1500);
             return null;
         }
 
@@ -335,12 +400,14 @@ public class ThermostatController
         if (!int.TryParse(Console.ReadLine(), out int num))
         {
             Console.WriteLine("Invalid number");
+            Thread.Sleep(1500);
             return null;
         }
 
         if (num < 1 || num > thermostats.Count)
         {
             Console.WriteLine("There is no corresponding thermostat");
+            Thread.Sleep(1500);
             return null;
         }
 
@@ -351,7 +418,40 @@ public class ThermostatController
         catch (ArgumentException ex)
         {
             Console.WriteLine($"ERROR: {ex.Message}");
+            Thread.Sleep(1500);
             return null;
+        }
+    }
+
+    private bool TurnChoice(Guid id)
+    {
+        Console.WriteLine("Do you want to turn the thermostat on?");
+        Console.Write("Select (Y/N): ");
+        string choice = Console.ReadLine().ToLower();
+        switch (choice)
+        {
+            case "y":
+                SmartSwitchOn(id);
+                return true;
+                break;
+            case "n":
+                return false;
+                break;
+            default:
+                Console.WriteLine("Invalid choice");
+                return false;
+                break;
+        }
+    }
+
+    private void SmartSwitchOn(Guid id)
+    {
+        try
+        {
+            new ThermostatSwitchOnCommand(_repository).Execute(id);
+        }catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
         }
     }
 }
