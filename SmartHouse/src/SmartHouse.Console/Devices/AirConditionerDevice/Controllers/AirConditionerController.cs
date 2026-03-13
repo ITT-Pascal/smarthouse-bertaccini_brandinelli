@@ -409,7 +409,7 @@ public class AirConditionerController
                 Console.Write("\x1b[3J");
                 controller.ShowAirConditioners();
 
-                Console.WriteLine("--- SMART HOUSE SYSTEM ---");
+                Console.WriteLine("---- SELECT AN OPTION ----");
                 Console.WriteLine("(Use the arrows keys to move, Enter to select)\n");
 
                 for (int i = 0; i < options.Length; i++)
