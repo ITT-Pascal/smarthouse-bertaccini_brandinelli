@@ -261,23 +261,28 @@ public class DoorController
 
         Guid id = new Guid(selectedId);
 
-        try
+        if (!new DoorCheckIsOnQuery(_repository).Execute(id))
         {
-            if (!new DoorCheckIsOnQuery(_repository).Execute(id))
-                Console.WriteLine("Door must be on!");
-            else if (new DoorCheckIsLockedQuery(_repository).Execute(id))
-                Console.WriteLine("Door must be unlocked!");
-            else if (new DoorCheckIsOpenQuery(_repository).Execute(id))
-                Console.WriteLine("Door is alredy open");
-            else
+            Console.WriteLine("Door must be on!");
+            if (TurnChoice(id))
             {
-                new OpenDoorCommand(_repository).Execute(id);
-                Console.WriteLine("Opened door");
+                try
+                {
+                    if (new DoorCheckIsLockedQuery(_repository).Execute(id))
+                        Console.WriteLine("Door must be unlocked!");
+                    else if (new DoorCheckIsOpenQuery(_repository).Execute(id))
+                        Console.WriteLine("Door is alredy open");
+                    else
+                    {
+                        new OpenDoorCommand(_repository).Execute(id);
+                        Console.WriteLine("Opened door");
+                    }
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine($"ERROR: {ex.Message}");
+                }
             }
-        }
-        catch (ArgumentException ex)
-        {
-            Console.WriteLine($"ERROR: {ex.Message}");
         }
         Thread.Sleep(1500);
     }
@@ -293,20 +298,26 @@ public class DoorController
 
         Guid id = new Guid(selectedId);
 
-        try 
+        if (!new DoorCheckIsOnQuery(_repository).Execute(id))
         {
-            if (!new DoorCheckIsOnQuery(_repository).Execute(id))
-                Console.WriteLine("Door must be on!");
-            else if (!new DoorCheckIsOpenQuery(_repository).Execute(id))
-                Console.WriteLine("Door is alredy closed");
-            else
+            Console.WriteLine("Door must be on!");
+            if (TurnChoice(id))
             {
-                new CloseDoorCommand(_repository).Execute(id);
-                Console.WriteLine("Closed door");
+                try
+                {
+                    if (!new DoorCheckIsOpenQuery(_repository).Execute(id))
+                        Console.WriteLine("Door is alredy closed");
+                    else
+                    {
+                        new CloseDoorCommand(_repository).Execute(id);
+                        Console.WriteLine("Closed door");
+                    }
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine($"ERROR: {ex.Message}");
+                }
             }
-        }catch (ArgumentException ex)
-        {
-            Console.WriteLine($"ERROR: {ex.Message}");
         }
         Thread.Sleep(1500);
     }
@@ -462,6 +473,39 @@ public class DoorController
             Console.WriteLine($"ERROR: {ex.Message}");
             Thread.Sleep(1500);
             return null;
+        }
+    }
+
+    private bool TurnChoice(Guid id)
+    {
+        Console.WriteLine("Do you want to turn the door on?");
+        Console.Write("Select (Y/N): ");
+        string choice = Console.ReadLine().ToLower();
+        switch (choice)
+        {
+            case "y":
+                SmartSwitchOn(id);
+                return true;
+                break;
+            case "n":
+                return false;
+                break;
+            default:
+                Console.WriteLine("Invalid choice");
+                return false;
+                break;
+        }
+    }
+
+    private void SmartSwitchOn(Guid id)
+    {
+        try
+        {
+            new DoorSwitchOnCommand(_repository).Execute(id);
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}");
         }
     }
 }
