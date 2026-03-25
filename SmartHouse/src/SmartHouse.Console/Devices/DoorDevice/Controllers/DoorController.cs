@@ -187,23 +187,28 @@ public class DoorController
 
         Guid id = new Guid(selectedId);
 
-        try
-        {
-            if (!new DoorCheckIsOnQuery(_repository).Execute(id))
-                Console.WriteLine("Door must be on!");
-            else if (new DoorCheckIsOpenQuery(_repository).Execute(id))
-                Console.WriteLine("Door must be closed!");
-            else if (new DoorCheckIsLockedQuery(_repository).Execute(id))
-                Console.WriteLine("Door is alredy locked!");
-            else
+        if (!new DoorCheckIsOnQuery(_repository).Execute(id))
             {
-                new LockDoorCommand(_repository).Execute(id);
-                Console.WriteLine("Door locked!");
+                Console.WriteLine("Door must be on!");
+                if (TurnChoice(id))
+                {
+                    try
+                    {
+                        if (new DoorCheckIsOpenQuery(_repository).Execute(id))
+                            Console.WriteLine("Door must be closed!");
+                        else if (new DoorCheckIsLockedQuery(_repository).Execute(id))
+                            Console.WriteLine("Door is alredy locked!");
+                        else
+                        {
+                            new LockDoorCommand(_repository).Execute(id);
+                            Console.WriteLine("Door locked!");
+                        }
+                    }catch (ArgumentException ex)
+                    {
+                        Console.WriteLine($"ERROR: {ex.Message}");
+                    }
+                }
             }
-        }catch (ArgumentException ex)
-        {
-            Console.WriteLine($"ERROR: {ex.Message}");
-        }
         Thread.Sleep(1500);
     }
 
@@ -221,32 +226,38 @@ public class DoorController
         if (!new DoorCheckIsOnQuery(_repository).Execute(id))
         {
             Console.WriteLine("Door must be on!");
+            if (TurnChoice(id))
+            {
+                goto Here;
+            }            
             Thread.Sleep(1500);
             return;
         }
-        else if (!new DoorCheckIsLockedQuery(_repository).Execute(id))
-        {
-            Console.WriteLine("Door is alredy unlocked!");
-            Thread.Sleep(1500);
-            return;
-        }
+        Here:
+            if (!new DoorCheckIsLockedQuery(_repository).Execute(id))
+            {
+                Console.WriteLine("Door is alredy unlocked!");
+                Thread.Sleep(1500);
+                return;
+            }
 
-        Console.Write("Current Pin: ");
-        if(!int.TryParse(Console.ReadLine(),out int currentpin))
-        {
-            Console.WriteLine("Invalid Pin");
-            Thread.Sleep(1500);
-            return;
-        }
+            Console.Write("Current Pin: ");
+            if (!int.TryParse(Console.ReadLine(), out int currentpin))
+            {
+                Console.WriteLine("Invalid Pin");
+                Thread.Sleep(1500);
+                return;
+            }
 
-        try
-        {
-            new UnlockDoorCommand(_repository).Execute(id, currentpin);
-            Console.WriteLine("Door unlocked!");
-        }catch (ArgumentException ex)
-        {
-            Console.WriteLine($"ERROR: {ex.Message}");
-        }
+            try
+            {
+                new UnlockDoorCommand(_repository).Execute(id, currentpin);
+                Console.WriteLine("Door unlocked!");
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"ERROR: {ex.Message}");
+            }
         Thread.Sleep(1500);
     }
 
